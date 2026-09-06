@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Organization__c</fullName><deleteConstraint>Restrict</deleteConstraint><label>Organization</label><referenceTo>Sports_Organization__c</referenceTo><relationshipLabel>Sports Programs</relationshipLabel><relationshipName>Sports_Programs</relationshipName><required>true</required><type>Lookup</type></CustomField>

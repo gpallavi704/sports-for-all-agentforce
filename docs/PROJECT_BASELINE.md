@@ -7,7 +7,7 @@
 
 ## Product objective
 
-Build an accessible **Sports for All Guide** that helps athletes, parents, coaches, and volunteers:
+Build an accessible Agentforce agent named **Sport Compass** that helps athletes, parents, coaches, and volunteers:
 
 - Discover a suitable inclusive or adaptive sports program.
 - Understand accommodations, eligibility, costs, equipment, and participation requirements.
@@ -17,10 +17,17 @@ Build an accessible **Sports for All Guide** that helps athletes, parents, coach
 
 ## Proposed experience and architecture
 
-- **Agentforce:** Sports for All Guide agent with topics, actions, instructions, guardrails, tests, and escalation.
+- **Agentforce:** Sport Compass agent with topics, actions, instructions, guardrails, tests, and escalation.
 - **Data Cloud:** Curated program data, lightweight anonymous participant profiles, segments/insights, and interaction outcomes.
 - **ChatGPT app:** Preferred conversational client, connected through an MCP server to the Agentforce Agent API.
 - **Fallback:** If ChatGPT/MCP integration becomes risky, demonstrate the working Agentforce journey directly and use a static recommendation card or plain-text response.
+
+## Naming decision
+
+- **Project/platform:** Sports for All
+- **Agent label:** Sport Compass
+- **Salesforce/API identifier:** `SportCompass`
+- **Tagline:** Find your sport. Navigate your next step.
 
 ## Agent topics
 
@@ -168,4 +175,3 @@ A parent asks the Sports for All ChatGPT app which competitive sport could suit 
 - Exact source and approval status of non-fencing program data.
 - Human-escalation destination and ownership.
 - Agent API and Data Cloud capabilities actually enabled in the provisioned Salesforce org.
-

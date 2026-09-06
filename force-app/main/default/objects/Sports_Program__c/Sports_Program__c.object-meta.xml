@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Structured inclusive sports program inventory used for deterministic matching.</description>
+    <label>Sports Program</label>
+    <nameField><label>Program Name</label><type>Text</type></nameField>
+    <pluralLabel>Sports Programs</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

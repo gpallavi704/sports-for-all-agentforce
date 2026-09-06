@@ -1,6 +1,10 @@
-# Sports for All Guide
+# Sports for All — Sport Compass
 
 An accessible, multilingual Agentforce solution that helps athletes, parents, coaches, and volunteers discover inclusive sports programs, understand accommodations, and receive personalized next steps.
+
+- **Agent name:** Sport Compass
+- **Salesforce/API identifier:** `SportCompass`
+- **Tagline:** Find your sport. Navigate your next step.
 
 The Builder Track MVP uses fencing and wheelchair fencing as its richest reference journey while demonstrating a reusable architecture for additional sports and governing bodies.
 
@@ -10,7 +14,7 @@ The Builder Track MVP uses fencing and wheelchair fencing as its richest referen
 ChatGPT App
     -> MCP Server
         -> Agentforce Agent API
-            -> Sports for All Guide Agent
+            -> Sport Compass Agent
                 -> Agentforce Data Library
                 -> Data Cloud
                 -> Flow / Apex actions
