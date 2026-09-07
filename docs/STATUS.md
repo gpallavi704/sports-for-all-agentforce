@@ -2,14 +2,14 @@
 
 Checkpoint: September 6 Pacific / September 7 UTC, 2026. This page supersedes active-version and pending-work statements in earlier checkpoints.
 
-Latest update: version 10 presentation fix passed a fresh browser retest with three bullets, three original public links and no native file-citation section. The 43 local tests pass. Two CLI fixture URL checks failed because the CLI requests Markdown-stripped responses; generated responses contained URLs. See [evidence and channel limits](agentforce/RESPONSE_PRESENTATION_V10.md). The full current-version journey and headless client remain pending.
+Latest update: version 12 is active with mobile-length instructions and no automatic closing offers. Version 11 replaced the historical classification summary in the indexed library and the user's six-turn test returned helpful classification boundaries without old numerical requirements. See [current presentation evidence](agentforce/RESPONSE_PRESENTATION_V12.md). The 43 local tests pass. Historical CLI URL-check failures remain documented in [channel limits](agentforce/RESPONSE_PRESENTATION_V10.md). The full current-version support journey and headless client remain pending.
 
 ## Implemented
 
 - Salesforce DX project, dedicated agent runtime identity and scoped permissions.
 - Three discovery objects with 39 fields, private sharing and six synthetic records: one sport, one organization, three published programs and one unpublished negative fixture.
 - Ten indexed public-source summaries, prepared by the project and not approved by USA Fencing.
-- Version 10 active, with seven routes, eight external action definitions and twenty exact public URLs.
+- Version 12 active, with seven routes, eight external action definitions and twenty exact public URLs.
 - Two source-checked public club identities: Salt City Swords in Salt Lake City and Wasatch Fencing in Kaysville. Accessibility, equipment and class availability remain unverified.
 - Separate real-club and fictional-program actions bound to the actual current message before reasoning.
 - Signed support drafts, deterministic reply review and confirmation, expiry and server-side validation, idempotent synthetic Case creation and a fixed queue. Cancellation and revision invalidate pending drafts.
@@ -38,7 +38,7 @@ Earlier v6 browser and v7 support failures remain documented. Their passing succ
 
 ## Pending, in order
 
-1. Record one uninterrupted v10 Salesforce journey: cited guidance, discovery, support draft, cancellation/revision, explicit confirmation, returned Case and queue verification.
+1. Record one uninterrupted current-version Salesforce journey: cited guidance, discovery, support draft, cancellation/revision, explicit confirmation, returned Case and queue verification.
 2. Expand failure, expiry, concurrency, grounding and multi-turn tests.
 3. Revalidate the current agent through the API in a controlled enable/test/disable window. Verify external non-confirmation and caller/session isolation.
 4. Implement authenticated MCP transport and a connection method, then connect ChatGPT. The executable currently supports mocks only. External writes require a trusted confirmation interface.

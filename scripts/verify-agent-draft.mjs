@@ -24,7 +24,12 @@ for (const name of ['Fencing_Program_Guide', 'Accommodation_Support', 'Registrat
 assert.match(source, /welcome: \|\s+Hi, I'm Sport Compass, your AI guide to fencing and parafencing/);
 assert.match(source, /additional_parameter__disable_citation: True/);
 assert.match(source, /citations_enabled: False/);
-assert.match(source, /about 120 words/);
+assert.match(source, /35 to 60 words/);
+assert.match(source, /Do not append optional offers or closing questions/);
+assert.doesNotMatch(source, /Offer expansion instead|Offer more detail rather|offer detail instead/);
+assert.match(source, /Do not automatically repeat an accessibility checklist/);
+const classificationSource = readFileSync(new URL('../knowledge/curated/SC_KB_06_Classification_Process.txt', import.meta.url), 'utf8');
+assert.doesNotMatch(classificationSource, /\b(?:four|eight|4|8) weeks\b|minimum age of 13|minimum National Provisional/i);
 assert.doesNotMatch(source, /Preserve native file citations|Keep native source markers/);
 assert.match(source, /run @actions\.Find_Public_Clubs\s+with latestUserMessage = @system_variables\.user_input/);
 const realClubs = source.split('subagent Find_Real_Clubs:')[1].split('\nsubagent ')[0];

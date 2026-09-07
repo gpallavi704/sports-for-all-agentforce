@@ -8,14 +8,14 @@ This Agentforce for Good Builder Track MVP focuses on fencing. Other sports, rev
 
 ## What works today
 
-- Version 10 is active in the development org.
+- Version 12 is active in the development org.
 - Ten indexed, project-prepared summaries ground guidance in USA Fencing and Zendesk sources. They are not USA Fencing-approved.
 - Two source-checked public club listings are separate from explicitly fictional program examples. Accessibility, equipment and parafencing availability require provider confirmation.
 - Apex performs deterministic discovery using mandatory current-message lookups.
 - Synthetic support requests use signed drafts, explicit confirmation, server-side validation and idempotent Case creation in a fixed support queue.
 - A local mock-only MCP server, Agent API client and caller-bound session broker have 43 passing local tests. ChatGPT is not connected.
 
-The latest deployed Apex suite passed 30 selected tests. Support tests passed on version 8; version 9 changes knowledge-link formatting and passed a separate browser check. An uninterrupted version 10 browser-to-Case demo remains pending. These results are not production-readiness or accessibility certification.
+The latest deployed Apex suite passed 30 selected tests. Support tests passed on version 8; version 9 changes knowledge-link formatting and passed a separate browser check. An uninterrupted current-version browser-to-Case demo remains pending. These results are not production-readiness or accessibility certification.
 
 The [version 10 presentation fix](docs/agentforce/RESPONSE_PRESENTATION_V10.md) adds shorter guidance and suppresses native file citations while keeping original public links. The fresh browser retest passed. CLI preview strips Markdown, so URL-presence assertions for two CLI fixtures failed; the limitation is recorded rather than treated as a pass.
 
