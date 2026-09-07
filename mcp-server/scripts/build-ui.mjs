@@ -1,0 +1,11 @@
+import { build } from 'esbuild';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const result=await build({ entryPoints:[fileURLToPath(new URL('../ui/first-visit.mjs',import.meta.url))],bundle:true,write:false,format:'iife',platform:'browser',target:'es2022',minify:true,legalComments:'none' });
+const css=await readFile(new URL('../ui/first-visit.css',import.meta.url),'utf8');
+const icon=await readFile(new URL('../../assets/branding/sport-compass-chatgpt-256.png',import.meta.url));
+const template=await readFile(new URL('../ui/first-visit.html',import.meta.url),'utf8');
+const html=template.replace('/* STYLE */',()=>css).replace('/* SCRIPT */',()=>result.outputFiles[0].text.replace(/<\/script/gi,'<\\/script')).replace('ICON_DATA',()=>'data:image/png;base64,'+icon.toString('base64'));
+await mkdir(new URL('../dist/',import.meta.url),{recursive:true});
+await writeFile(new URL('../dist/first-visit.html',import.meta.url),html);
+console.log('Built self-contained first-visit UI ('+Buffer.byteLength(html)+' bytes).');

@@ -23,7 +23,18 @@ export class SessionBroker {
     // Exclude internal variables, action payloads, raw citations and _links.
     // Text remains untrusted content, not permission to invoke another tool.
     return (result?.messages || []).filter(m => m.type === 'Inform' && typeof m.message === 'string').slice(0, 10).map(m => ({
-      text: m.message.slice(0, 12000).replace(/https?:\/\/[^\s<>"\])]+/g, url => this.#publicUrls.has(url) ? url : '[unapproved link omitted]')
+      text: m.message.slice(0, 12000).replace(/https?:\/\/[^\s<>"\])]+/g, url => {
+        if (this.#publicUrls.has(url)) return url;
+        // Sentence punctuation and a missing root slash are presentation
+        // differences, not permission to allow a new host/path/query string.
+        const candidate = url.replace(/[.,;:!?]+$/, '');
+        const punctuation = url.slice(candidate.length);
+        try {
+          const parsed = new URL(candidate);
+          if (this.#publicUrls.has(parsed.href)) return parsed.href + punctuation;
+        } catch { /* fail closed */ }
+        return '[unapproved link omitted]';
+      })
     }));
   }
   async start(principal) {

@@ -1,14 +1,48 @@
-# Sport Compass MCP - local mock server, not deployed
+# Sport Compass MCP
+
+Latest: the public Salesforce-backed connection now includes interactive club
+cards and a first-visit planner. All 63 local tests pass. The private tunnel runs
+the live public profile with four tools, including `show_visit_planner`. The card
+reuses the latest guidance snapshot; checklist controls make no further AI calls.
+See [interactive UI evidence and limits](../docs/agentforce/INTERACTIVE_FIRST_VISIT.md)
+and the [live connection checkpoint](../docs/agentforce/LIVE_PUBLIC_CHATGPT.md).
+
+Run `npm ci --ignore-scripts` and `npm run build:ui` before starting the public
+entrypoint. The generated UI is not committed. `npm test` also builds it.
+
+The public entrypoint is `src/stdio-public.mjs --approved-public-guidance`.
+It pins SportCompassGuide version 1, whose only external actions are public club
+lookup and knowledge retrieval. This private development connection is anonymous
+with short-lived bearer conversation handles, not end-user OAuth. Do not submit
+private data or reuse this adapter for an agent with business-write actions.
+The Salesforce integration policy is enabled for the approved demo.
+
+The original `src/stdio.mjs --mock` remains available and credential-free.
+Do not run mock and live tunnel profiles simultaneously on the same tunnel.
+
+## Previous checkpoints
+
+The mock-only and disabled-policy descriptions below record earlier checkpoints
+and do not override the current live connection status above.
 
 Implemented: a bounded Agent API client, caller-bound in-memory session broker,
 three tool contracts and a working SDK-based local MCP stdio server. A separate
 Salesforce outbound token provider and macOS Keychain helper are now implemented;
 see [private credential setup](../docs/agentforce/LOCAL_CREDENTIAL_SETUP.md).
-**This is not an MCP HTTP server, inbound OAuth implementation, connected ChatGPT app or
-live Agent API session proof.** A controlled Salesforce token/identity/read-denial
+**The connected ChatGPT app is mock-only. This is not an MCP HTTP server,
+inbound OAuth implementation or live-backed ChatGPT connection.** A controlled Salesforce token/identity/read-denial
 check passed; see [evidence](../docs/agentforce/LIVE_AUTH_CHECKPOINT.md). The app was
 restored to disabled. No credentials are stored here. The executable is
 mock-only; the separate outbound API client remains disabled by default.
+
+Latest controlled version 17 retry: after private credential restoration, session
+start, two guidance replies, session end and token-revocation acknowledgment
+succeeded. App disablement was independently verified afterward; Case aggregates
+were unchanged. This does not prove answer quality or a Salesforce-backed ChatGPT
+connection. The runner supports `--guidance-only` after its existing
+approval flag and runtime agent ID to limit a controlled test to two questions.
+Do not use it outside an approved enable/test/disable window. See the
+[version 17 API checkpoint](../docs/agentforce/LIVE_GUIDANCE_V17.md).
 
 Run tests with Node 22 or later:
 
@@ -28,7 +62,18 @@ absolute path to `src/stdio.mjs` and the argument `--mock`. `npm run start:mock`
 also starts the server interactively; it waits for MCP JSON messages on stdin and
 is not a conversational terminal. Normal logs go to stderr, never protocol stdout.
 No network port is opened, and unsupported flags such as `--live` fail closed.
-No global MCP configuration, ChatGPT connection or tunnel was created.
+These local commands do not create a global MCP configuration, ChatGPT connection
+or tunnel. Separately, an empty development tunnel is now registered and visible
+in the intended personal ChatGPT account. Its dedicated key is stored in Keychain,
+the official Mac client is downloaded, and a mock-only profile passed the local
+configuration diagnostic. After correcting the saved key, the user started a
+foreground mock tunnel: its local health and readiness checks passed, with at
+least three successful HTTP 204 polls. The user created and connected Sport Compass
+Test, then reported successful start, message and end results in ChatGPT. These
+remote results are user-reported, not independently reviewed raw tool traces.
+The 43 local tests and stdio smoke test also passed again. Salesforce remains
+disconnected from the MCP executable. See the
+[tunnel checkpoint](../docs/agentforce/CHATGPT_TUNNEL_CHECKPOINT.md).
 
 The local server returns a fixed protocol acknowledgment, not fabricated fencing
 facts or simulated Salesforce query results. Every successful response contains
@@ -76,7 +121,12 @@ assumption. Future writes require a trusted human confirmation UI, draft digest,
 caller/session binding and replay-safe server verification; tool annotations or
 an LLM boolean cannot substitute for that.
 
-## Release gates - still open
+## Historical release gates before the public-only connection
+
+Some gates below were completed or narrowed for the private public-guidance
+demo. Current operations and remaining limits are in the two checkpoints linked
+at the top. These historical steps are not instructions to disable the running
+approved demo or replace it with the mock profile.
 
 1. Obtain explicit approval to commit/activate Sport Compass; verify its runtime
    `0Xx…` agent ID. The existing `1bY…`/`1bZ…` authoring IDs are not usable here.
@@ -98,7 +148,7 @@ an LLM boolean cannot substitute for that.
    it is not a background job. Failed upstream cleanup is currently best-effort.
 6. Live-test start/send/end, caller separation, limits, prompt injection, citations
    and the external-consent boundary. Mock tests prove code contracts only.
-7. Connect ChatGPT; complete keyboard/screen-reader and required hackathon skill
+7. Validate a Salesforce-backed ChatGPT connection; complete keyboard/screen-reader and required hackathon skill
    reviews. No translation, live callback or real provider data is implemented.
 
 ## Sources checked September 6–7, 2026

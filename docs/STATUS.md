@@ -1,10 +1,26 @@
 # Sport Compass current status
 
+Latest interactive update, September 7: the live ChatGPT app now renders public
+club cards and a first-visit planner backed by the existing Salesforce guide.
+There are four MCP tools and 63 passing local tests. Topic choices, one-step
+questions and copying run locally without more AI calls. A live Wasatch card,
+choice changes, keyboard navigation and manual-copy fallback passed, including
+after approved CSP enforcement was enabled. Combined search-and-planning wording
+can still miss a known club; a focused Kaysville lookup passed. See
+[interactive evidence and limits](agentforce/INTERACTIVE_FIRST_VISIT.md).
+Everything below records earlier checkpoints, not the current tool count.
+
+Latest connection update, September 7: the Salesforce-backed public MCP smoke test passed three turns and session cleanup. SportCompassGuide version 1 is active, the original SportCompass version 17 is unchanged, and the private tunnel now runs the live public profile. The integration is enabled for this approved demo. All 53 local tests pass. A fresh ChatGPT conversation returned Wasatch Fencing Club and clickable public links through the live connector. The branded Sport Compass app is now connected with its icon and three public-guidance tools. Broader acceptance testing remains pending. See [live public connection](agentforce/LIVE_PUBLIC_CHATGPT.md). Earlier mock-only and disabled-policy statements below describe previous checkpoints.
+
 Checkpoint: September 6 Pacific / September 7 UTC, 2026. This page supersedes active-version and pending-work statements in earlier checkpoints.
 
 Latest update: version 17 is active with mobile-length instructions and no automatic closing offers. Version 11 replaced the historical classification summary in the indexed library and the user's six-turn test returned helpful classification boundaries without old numerical requirements. See [current presentation evidence](agentforce/RESPONSE_PRESENTATION_V12.md). The 43 local tests pass. Historical CLI URL-check failures remain documented in [channel limits](agentforce/RESPONSE_PRESENTATION_V10.md). The full current-version support journey and headless client remain pending.
 
 ## Implemented
+
+Latest live API checkpoint: after the user restored the Salesforce credentials privately, the version 17 guidance-only test passed session start, two Inform responses, contextual follow-up and session end. Token revocation was acknowledged and app disablement independently verified after the test. Case aggregates were unchanged. Source-link rendering and equipment wording still need improvement; this is a lifecycle pass, not full answer-quality acceptance. The OpenAI tunnel and connected ChatGPT mock were not changed. See [version 17 API checkpoint](agentforce/LIVE_GUIDANCE_V17.md).
+
+ChatGPT connection checkpoint: **Sport Compass Test** is connected through the **Sport Compass Development** Secure MCP Tunnel. The user reported successful start, message and end tool results in ChatGPT, all explicitly local mock with no Salesforce access. App visibility and local tunnel health were independently checked; the remote raw tool trace was not independently reviewed. All 43 local tests and the stdio smoke test passed at that checkpoint. The separate live Salesforce guidance API test now passes, but Salesforce-backed MCP remains pending. See [tunnel checkpoint](agentforce/CHATGPT_TUNNEL_CHECKPOINT.md).
 
 Email presentation: version 17 uses a copyable draft addressed to Sport Compass Team. The real test inbox stays in org configuration and is omitted from action output. The redacted mailto/button path is removed; sending is not implemented. See [Preview fallback](agentforce/EMAIL_PREVIEW_V16.md).
 
@@ -32,7 +48,7 @@ Latest support checkpoint: the exact confirmation phrase is fixed and a live CLI
 | Actual support record | Synthetic Case 00001011 verified in the support queue; retries produced no duplicate for the request | No real participant or provider contact |
 | Knowledge links | v9 browser answer rendered four exact source/navigation destinations without citation suffixes | One answer; destination sites were not opened |
 | Least privilege | Five denied CRM objects and six demo records checked | Data Cloud and external caller isolation need separate review |
-| Agent API | Historical v2 lifecycle and targeted matching checks passed | Current-version API regression remains pending |
+| Agent API | Current v17 two-turn guidance lifecycle passed after credential restoration; historical v2 matching checks passed | Current matching, adversarial consent/isolation, clickable citations and inclusive equipment wording need separate validation |
 
 Ten synthetic Cases, 00001003 through 00001012, are recorded as test evidence. No Cases were removed during this update.
 
@@ -44,8 +60,8 @@ Earlier v6 browser and v7 support failures remain documented. Their passing succ
 
 1. Record one uninterrupted current-version Salesforce journey: cited guidance, discovery, support draft, cancellation/revision, explicit confirmation, returned Case and queue verification.
 2. Expand failure, expiry, concurrency, grounding and multi-turn tests.
-3. Revalidate the current agent through the API in a controlled enable/test/disable window. Verify external non-confirmation and caller/session isolation.
-4. Implement authenticated MCP transport and a connection method, then connect ChatGPT. The executable currently supports mocks only. External writes require a trusted confirmation interface.
+3. Build on the passing v17 guidance API lifecycle with current matching, source-link and equipment-wording regressions. Verify external non-confirmation and caller/session isolation separately. Keep the integration disabled outside approved test windows.
+4. Implement and validate the live MCP boundary before connecting Salesforce. ChatGPT mock start/message/end succeeded according to the user's reported results. The executable currently supports mocks only. Tunnel visibility does not prove per-user authentication or session isolation. External writes require a trusted confirmation interface.
 5. Obtain domain review, verified provider data, official support routes and an agreed translation contract/language if multilingual output is included.
 6. Run the organizer-provided Accessibility Expert Skill and RAI Self Check Skill. They are not installed in this session. Complete keyboard/screen-reader, plain-language and adversarial testing on the chosen client.
 7. Confirm submission limits, distinguish built from planned architecture, and prepare captions, recording and evidence-backed impact claims.

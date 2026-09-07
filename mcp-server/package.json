@@ -3,16 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "keychain:build": "node scripts/build-keychain.mjs",
     "keychain:setup": "./dist/sport-compass-keychain setup",
-    "test": "node --test test/*.test.mjs",
+    "build:ui": "node scripts/build-ui.mjs",
+    "preview:ui": "node scripts/preview-ui.mjs",
+    "test": "node scripts/build-ui.mjs && node --test test/*.test.mjs",
     "start:mock": "node src/stdio.mjs --mock",
     "smoke:mock": "node scripts/smoke-mock.mjs"
   },
   "dependencies": {
+    "@modelcontextprotocol/ext-apps": "1.7.5",
     "@modelcontextprotocol/sdk": "1.30.0",
     "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

@@ -4,24 +4,42 @@ Sport Compass helps athletes, families and coaches navigate fencing and wheelcha
 
 **Find your sport. Navigate your next step.**
 
-This Agentforce for Good Builder Track MVP focuses on fencing. Other sports, reviewed translation and additional client channels are planned, not implemented capabilities.
+This Agentforce for Good Builder Track MVP focuses on fencing. Salesforce Agentforce powers both the native Salesforce experience and a private Sport Compass app inside ChatGPT. Other sports, reviewed multilingual support and a standalone mobile app remain planned.
+
+Latest checkpoint: September 7, 2026.
 
 ## What works today
 
-- Version 17 is active in the development org.
+- The original Sport Compass version 17 is active in the development org. Its native support-request demo remains intact.
 - Ten indexed, project-prepared summaries ground guidance in USA Fencing and Zendesk sources. They are not USA Fencing-approved.
 - Two source-checked public club listings are separate from explicitly fictional program examples. Accessibility, equipment and parafencing availability require provider confirmation.
 - Apex performs deterministic discovery using mandatory current-message lookups.
 - Synthetic support requests use signed drafts, explicit confirmation, server-side validation and idempotent Case creation in a fixed support queue.
-- A local mock-only MCP server, Agent API client and caller-bound session broker have 43 passing local tests. ChatGPT is not connected.
+- A separate Salesforce public guide, SportCompassGuide version 1, powers the connected private ChatGPT app. It uses the same public knowledge library and club lookup, with no Case, email, booking or private-record actions.
+- The branded ChatGPT app has its own Sport Compass icon and four MCP tools: start, ask, end and show the first-visit planner. The user can ask natural questions without typing technical session commands.
+- Interactive club cards show public sources and explicit `Needs confirmation` labels for wheelchair fencing, step-free access and equipment.
+- The first-visit planner offers selectable preparation topics, a checklist, one-question-at-a-time mode, a copyable contact draft and personal progress marks.
+- There are 63 passing local integration/UI-contract tests. Live Salesforce-backed ChatGPT text and interactive-card checks are recorded separately.
 
-The latest deployed Apex suite passed 30 selected tests. Support tests passed on version 8; version 9 changes knowledge-link formatting and passed a separate browser check. An uninterrupted current-version browser-to-Case demo remains pending. These results are not production-readiness or accessibility certification.
+The planner's controls run locally in the card. They do not make additional AI calls or update Salesforce. Copying produces an unsent draft, not an email integration. In ChatGPT, clipboard restrictions can trigger a selected-text fallback for manual copying.
 
-The [version 10 presentation fix](docs/agentforce/RESPONSE_PRESENTATION_V10.md) adds shorter guidance and suppresses native file citations while keeping original public links. The fresh browser retest passed. CLI preview strips Markdown, so URL-presence assertions for two CLI fixtures failed; the limitation is recorded rather than treated as a pass.
+The latest recorded Apex deployment suite passed 30 selected tests. An uninterrupted current-version native browser-to-Case demo remains pending. None of these results establish production readiness, full grounding accuracy or accessibility certification.
+
+## Try the interactive demo
+
+With the private Sport Compass app selected in ChatGPT, ask:
+
+> Find a real fencing club in Kaysville, UT. Show the interactive club card.
+
+Then use **Plan my visit**, choose preparation topics and select **Build my checklist**. Try **One step at a time**, **Copy my plan**, or the expandable friendly message. If manual-copy text appears, use Command-C on Mac.
+
+The focused lookup returned Wasatch Fencing Club in the live test. A combined search-and-planning question incorrectly returned no listing, so query/routing reliability still needs improvement. Unknown accessibility must never be treated as proof of inaccessibility or as a verified accessible match.
+
+This is an account-connected private development app, not a publicly published ChatGPT directory listing. The Mac and approved private tunnel must remain running. See [interactive setup and evidence](docs/agentforce/INTERACTIVE_FIRST_VISIT.md).
 
 ## Architecture
 
-Current:
+Native Salesforce demo:
 
 ```text
 Agentforce Preview -> Sport Compass
@@ -30,20 +48,29 @@ Agentforce Preview -> Sport Compass
     -> Signed draft -> explicit confirmation -> synthetic Case -> support queue
 ```
 
-Planned external channel:
+Working private ChatGPT channel:
 
 ```text
-ChatGPT -> authenticated MCP transport -> Agentforce Agent API -> Sport Compass
+ChatGPT -> private Secure MCP Tunnel -> public-guidance MCP adapter
+        -> Salesforce Agentforce API -> SportCompassGuide
+        -> public knowledge and public club lookup
+
+Latest successful guidance -> session-bound snapshot -> interactive first-visit card
+                                                      -> local choices and copying
 ```
 
-The external integration app remains disabled. External model text cannot serve as human consent. A trusted confirmation interface and live caller/session-isolation tests are required before external write access. The configured native confirmation flag did not produce a separate second prompt in the latest deterministic support test. Do not describe it as two independent gates.
+The Salesforce integration policy is enabled for the approved private public-guidance demo. Salesforce credentials stay server-side in the existing macOS Keychain setup, not in ChatGPT tool arguments or the widget.
+
+The public adapter is anonymous, not athlete login or end-user OAuth. Short-lived conversation handles are bearer capabilities. The shared Salesforce runtime identity still has permissions required by the native demo; the public guide restricts its action surface rather than claiming that identity is globally read-only. Do not connect private records or business-write actions to this adapter. Those require a separate authenticated authorization and trusted human-confirmation design.
 
 ## Repository layout
 
 - `force-app/`: editable Agent Script, Apex, objects, public club metadata, permissions and reporting.
 - `knowledge/`: curated sources and retrieval fixtures.
 - `data/`: labeled synthetic seed data.
-- `mcp-server/`: integration source, mock transport, credential helper source and tests.
+- `mcp-server/`: live public and mock entrypoints, session handling, UI resource, credential helper source and tests.
+- `mcp-server/ui/`: interactive first-visit HTML, CSS and JavaScript.
+- `assets/branding/`: original icon, compact ChatGPT upload asset and design notes.
 - `scripts/`: scoped setup and verification. Live tests can create synthetic Cases; review before running.
 - `docs/`: current status, build plan, architecture and historical test evidence.
 
@@ -64,7 +91,28 @@ node scripts/verify-agent-draft.mjs
 
 These checks need no Salesforce credentials and create no CRM records.
 
-Start with [current status](docs/STATUS.md), [build plan](docs/BUILD_PLAN.md), [support evidence](docs/agentforce/SUPPORT_FIX_V8.md) and [MCP setup](mcp-server/README.md). Earlier checkpoint documents are historical. Architecture images show the intended design, not proof that every component is live.
+To inspect the UI with labelled fixture data:
+
+```sh
+cd mcp-server
+npm run build:ui
+npm run preview:ui
+```
+
+Open `http://127.0.0.1:4177`. The local preview supports phone-width and dark-theme checks and does not contact Salesforce. Build the UI before starting the live public entrypoint. Generated `mcp-server/dist/` output is excluded from Git.
+
+The UI uses the official MCP Apps SDK with a self-contained bundle. Existing MCP SDK, MCP Apps and esbuild versions are pinned in the package lock. No additional paid service or public web hosting was introduced.
+
+## Verified and still pending
+
+- Verified locally: 63 tests, responsive card at 375-pixel width, dark theme, topic selection, checklist, one-step controls, copying and progress marks.
+- Verified in ChatGPT: live Wasatch card, source links, changing topics, keyboard activation and next-question navigation, and manual-copy fallback. The card continued working after the user approved enabling developer-mode CSP enforcement.
+- Still pending: combined-query reliability, broader multi-turn/adversarial tests, domain review, complete screen-reader/keyboard review and the organizer-provided Accessibility Expert and RAI Self Check skills.
+- Not implemented: email sending, calls, bookings, payments, external Case creation, permanent saved plans, verified provider-accessibility feeds, public app submission or production hosting.
+
+The two supported card identities mirror committed Salesforce public-club metadata and appear only when the latest Salesforce reply includes the exact identity and approved website. This is not a direct structured Apex result or an accessibility audit. Card choices reset when the card is recreated; they are not persisted to Salesforce or used as proof of attendance.
+
+Start with [interactive planner](docs/agentforce/INTERACTIVE_FIRST_VISIT.md), [live Salesforce/ChatGPT connection](docs/agentforce/LIVE_PUBLIC_CHATGPT.md), [current status](docs/STATUS.md), [support evidence](docs/agentforce/SUPPORT_FIX_V8.md) and [MCP setup](mcp-server/README.md). Earlier checkpoint documents are historical. Architecture images show the intended design, not proof that every component is live.
 
 ## Data and safety
 

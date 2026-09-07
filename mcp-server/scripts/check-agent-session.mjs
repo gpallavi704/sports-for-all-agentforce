@@ -3,11 +3,12 @@ import { createKeychainReader, createSalesforceTokenProvider, ORG_URL } from '..
 import { assessMatchingAnswer } from '../src/matching-acceptance.mjs';
 
 const args = process.argv.slice(2);
-if (args.length !== 2 || args[0] !== '--approved-agent-check' || !/^0Xx[a-zA-Z0-9]{15}$/.test(args[1])) {
+const guidanceOnly = args.length === 3 && args[2] === '--guidance-only';
+if ((!guidanceOnly && args.length !== 2) || args[0] !== '--approved-agent-check' || !/^0Xx[a-zA-Z0-9]{15}$/.test(args[1])) {
   console.error('APPROVED_RUNTIME_AGENT_CHECK_REQUIRED'); process.exit(1);
 }
 let token; let session; let phase = 'authentication';
-const report = { started: false, turns: [], ended: false, revocationAcknowledged: false };
+const report = { scenario: guidanceOnly ? 'guidance-only' : 'guidance-and-matching', started: false, turns: [], ended: false, revocationAcknowledged: false };
 const getToken = createSalesforceTokenProvider({ enabled: true, readCredentials: createKeychainReader({ enabled: true }) });
 const client = new AgentApiClient({ orgUrl: ORG_URL, agentId: args[1], liveEnabled: true, timeoutMs: 60000,
   getAccessToken: async () => { token = await getToken(); return token; },
@@ -27,7 +28,8 @@ try {
     'For fictional demo programs only, now search Salt Lake City, UT for a 25-year-old beginner with mobility and equipment preferences. Use the configured demo program records.',
     'Find beginner demo programs in Atlantis, ZZ for a 25-year-old. Do not invent any examples if none are stored.',
   ];
-  for (let index = 0; index < prompts.length; index++) {
+  const selectedPrompts = guidanceOnly ? prompts.slice(0, 2) : prompts;
+  for (let index = 0; index < selectedPrompts.length; index++) {
     phase = `turn-${index + 1}`;
     const response = await client.send(session, index + 1, prompts[index]);
     const messages = (response.messages || []).filter(message => message.type === 'Inform' && typeof message.message === 'string').slice(0, 6).map(message => message.message.slice(0, 10000)
@@ -58,7 +60,7 @@ try {
   }
   token = undefined; session = undefined;
 }
-report.lifecyclePassed = report.started && report.turns.length === 5 && !report.failurePhase && report.ended && report.revocationAcknowledged;
+report.lifecyclePassed = report.started && report.turns.length === (guidanceOnly ? 2 : 5) && !report.failurePhase && report.ended && report.revocationAcknowledged;
 // Lifecycle success is not a semantic quality, safety or grounding score.
 console.log(JSON.stringify({ ...report, turns: report.turns.map(({ messages, matchingChecks }, i) => ({ turn: i + 1, informCount: messages.length, matchingChecks })) }, null, 2));
 process.exitCode = report.lifecyclePassed && !report.matchingAcceptanceFailed ? 0 : 1;
