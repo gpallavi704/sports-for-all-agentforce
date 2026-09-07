@@ -13,8 +13,8 @@ const tests = JSON.parse(readFileSync('knowledge/retrieval-tests.json', 'utf8'))
 assert.ok(tests.length, 'No matching tests');
 const source = readFileSync('force-app/main/default/aiAuthoringBundles/SportCompass/SportCompass.agent', 'utf8');
 const externalTargets = [...source.matchAll(/^\s+target: "([^"]+)"/gm)].map(m => m[1]);
-assert.equal(externalTargets.length, 3);
-assert.ok(externalTargets.every(t => t === 'standardInvocableAction://streamKnowledgeSearch'), 'Stop: new actions require test safety review');
+assert.equal(externalTargets.length, 4);
+assert.deepEqual(externalTargets.sort(), ['apex://MatchSportsProgramsAction', ...Array(3).fill('standardInvocableAction://streamKnowledgeSearch')].sort(), 'Stop: new actions require test safety review');
 const publicUrls = new Set();
 for (const f of readdirSync('knowledge/curated')) {
   for (const m of readFileSync('knowledge/curated/' + f, 'utf8').matchAll(/https:\/\/[^\s]+/g)) publicUrls.add(m[0]);

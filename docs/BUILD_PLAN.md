@@ -2,15 +2,9 @@
 
 ## Mission
 
-Latest knowledge checkpoint: classification routed correctly with process-only, historical-season-aware guidance. All ten fixtures returned expected sources and original public URLs; three registration wording improvements were then retested separately. See [classification and knowledge regression](agentforce/CLASSIFICATION_REFINEMENT.md). This is not production or domain-team acceptance; program matching is the next implementation increment.
+Build one credible fencing journey from ChatGPT through MCP to Agentforce: discover appropriate demo programs, understand source-backed next steps, and request human support with consent. The agent remains inactive and program records remain fictional.
 
-Trusted URL update: four user-approved exact hosts are deployed with image-only CSP. Three targeted live tests now return readable links across all four hosts; existing settings and CRM access were preserved. See [verification](agentforce/TRUSTED_URLS.md). Full acceptance and classification-routing/historical-source issues remain open. The prior checkpoint below records the pre-allowlist failures.
-
-Latest checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Generic template routes are removed. All ten knowledge fixtures retrieved expected sources, but all redacted original-source URLs; the initial classification test also failed its decision boundary. See [knowledge acceptance findings](agentforce/KNOWLEDGE_ACCEPTANCE.md), [routing and live tests](agentforce/DRAFT_ROUTING_AND_LIVE_TESTS.md) and [security cleanup](agentforce/SECURITY_CLEANUP.md). Older paragraphs below describe earlier states. The suite is not an acceptance pass; org-wide URL configuration requires approval and Data Cloud policy review remains open.
-
-Deliver one credible, accessible journey from ChatGPT through MCP to Salesforce Agentforce:
-
-> A parent near Salt Lake City asks for an inclusive competitive sport for a 12-year-old athlete with limited mobility. Sport Compass recommends wheelchair fencing using approved knowledge and structured program data, provides a cited next-step checklist, declines to make medical or classification decisions, and creates a human-support Case with consent.
+[Current status and pending items](STATUS.md) is the consolidated source of truth. Dated documents under agentforce/ preserve historical findings and evidence; resolved issues in those earlier snapshots are not current blockers.
 
 ## Locked decisions
 
@@ -53,13 +47,14 @@ Deliverables:
 - [x] Create the Service Agent and its dedicated user record
 - [ ] Confirm the builder user can create and activate an agent
 - [x] Confirm Data Cloud/Data Library exists
-- [x] Confirm initial six prototype knowledge files were indexed (being replaced with sourced summaries)
-- [ ] Confirm Flow, Apex, Case, API, and External Client App access
+- [x] Ten sourced summaries indexed; six superseded synthetic knowledge PDFs removed from the library
+- [x] Confirm Apex deployment and live invocable execution
+- [ ] Confirm Flow, Case intake, runtime Agent API, and External Client App access
 - [ ] Record missing licenses and permissions
 
 Exit condition: a basic test agent can be created and invoked inside Salesforce.
 
-Current checkpoint: Sport Compass remains an uncommitted, inactive draft. CLI is installed and authorized as `sport-compass`. Three discovery objects and 39 fields are deployed, with Private sharing, publication/demo flags, scoped curator/reader permission sets, and six synthetic records. Effective agent record-access checks passed for published read-only records and an unpublished denial case. The saved draft is backed up separately. Existing Salesforce base permissions still grant Contact read/edit and Case read/create; this must be reviewed alongside generic template actions before activation. See [deployment status](agentforce/DATA_FOUNDATION_DEPLOYMENT.md) and [entitlements](agentforce/ENTITLEMENTS.md). These checks are not runtime agent acceptance tests.
+Current checkpoint: the dedicated agent user and inactive draft are configured. The discovery schema, synthetic data, knowledge library, least-privilege controls and read-only matcher are deployed. Scoped Apex tests pass. API/ChatGPT integration and consent-enforced Case intake remain pending. See [current status](STATUS.md).
 
 Builder project ID: `1bYgL000000Xf2nUAC`. Draft version ID: `1bZgL000000rPgDUAU`. These identify the authoring project and version; do not treat them as the runtime Agent API agent ID.
 
@@ -70,8 +65,8 @@ Deliverables:
 - [x] `Sport__c` metadata foundation
 - [x] `Sports_Organization__c` metadata foundation
 - [x] `Sports_Program__c` metadata foundation
-- [ ] `Participant_Preference__c`
-- [ ] `Agent_Interaction__c`
+- [ ] Optional after core journey: `Participant_Preference__c`
+- [ ] Optional after core journey: `Agent_Interaction__c`
 - [ ] Case escalation fields
 - [ ] Permission set with least-privilege object, field, class, and Flow access
 - [ ] Package manifest
@@ -83,10 +78,10 @@ Exit condition: sample sports programs can be queried and a support Case can be 
 
 Deliverables:
 
-- [ ] Synthetic sports CSV
-- [ ] Synthetic organizations CSV
-- [ ] Synthetic programs CSV
-- [ ] At least one verified and one unverified accessibility example
+- [x] Synthetic sports JSON
+- [x] Synthetic organizations JSON
+- [x] Synthetic programs JSON
+- [x] Simulated documented and unknown accessibility examples; neither represents real-world verification
 - [x] Curate first 10 public-source summaries: six official-site pages and four Zendesk articles
 - [ ] Extend to 15–20 sources after current-season and subject-matter review
 - [x] Preserve source URL and displayed update date; explicitly mark missing dates
@@ -102,12 +97,12 @@ Exit condition: at least 8 of 10 knowledge questions return the correct source w
 
 Deliverables:
 
-- [ ] `MatchSportsProgramsAction` Apex invocable
-- [ ] Compatibility ranking based only on user-selected preferences and verified program attributes
+- [x] `MatchSportsProgramsAction` read-only demo Apex invocable
+- [x] Deterministic listing-evidence ranking using self-selected preferences; synthetic verification explicitly distinguished from real verification
 - [ ] `CreateSportsSupportCaseAction` with explicit-consent enforcement
 - [ ] `RecordAgentInteractionAction`
-- [ ] Apex tests at or above 90% for custom classes
-- [ ] Negative tests for age mismatch, missing program, and unverified accommodation
+- [x] Ten matcher Apex tests; 100% matcher line coverage (remaining classes not built)
+- [x] Matcher tests for class age bands, no matches, unknown/stale features, publication, parent visibility, object/record access and bounded batches
 
 Exit condition: actions pass tests and return stable, agent-friendly response contracts.
 
@@ -124,7 +119,9 @@ Deliverables:
 - [x] Draft subagent: Registration Support
 - [x] Attach Answer Questions with Knowledge to fencing, accommodation and registration subagents
 - [x] Remove unrelated template routing/actions; registration, accommodation and scope routes trace-verified (remaining routes need tests)
-- [ ] Add search, match, checklist, Case, and interaction actions
+- [x] Add read-only demo search/matching action; verify real action invocation, no-match and refusal paths
+- [ ] Add consent-enforced Case action and test the complete next-step journey
+- [ ] Optional after core journey: persisted checklists and interaction actions
 - [ ] Configure low-confidence and sensitive-topic escalation
 - [x] Run ten live-actions draft-preview knowledge tests plus targeted safety retests; see current checkpoint for remaining review gates
 
@@ -255,8 +252,8 @@ Data Cloud analytics, advanced translation, and custom result cards must not blo
 
 ## Immediate next actions
 
-1. Complete Gate 1 org and local-tooling audit.
-2. Finish Gate 2 metadata and least-privilege permission set.
-3. Generate the curated synthetic seed dataset.
-4. Deploy the first increment and validate it in the org.
-5. Build and test deterministic actions.
+1. Verify matcher invocation and demo/unknown/no-match behavior in live draft preview.
+2. Design and implement consent-enforced human-support intake with minimal authority.
+3. Confirm Agent API/client credentials and MCP hosting/session contracts.
+4. Connect and test one end-to-end ChatGPT journey.
+5. Complete domain, accessibility/RAI, translation and submission checks.

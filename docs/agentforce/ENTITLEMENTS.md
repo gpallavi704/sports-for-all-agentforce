@@ -1,6 +1,6 @@
 # Sport Compass entitlement model
 
-Current update: the direct Secure Base assignment has been removed from this agent and replaced with SportCompass_Knowledge_Runtime. Effective Account/Contact/Case and Messaging object checks now deny read/create/edit/delete. Runtime licenses and published program read access remain. See [security cleanup](SECURITY_CLEANUP.md). Live retrieval, generic-action removal and Data Cloud policy review are still activation gates.
+Current update: the direct Secure Base assignment has been removed from this agent and replaced with SportCompass_Knowledge_Runtime. Effective Account/Contact/Case and Messaging object checks deny read/create/edit/delete. Runtime licenses and published program read access remain. Generic template actions have been removed; live knowledge retrieval and demo matching have been tested. Data Cloud policy review and external API identity/session isolation remain release gates. See [current status](../STATUS.md).
 
 ## MVP identities
 
@@ -21,7 +21,8 @@ No new profiles or human users were created. Do not give anonymous users adminis
 - That group contains only the dedicated Sport Compass agent user at this checkpoint. It does not include managers automatically.
 - Reader set has no create/edit/delete/View All/Modify All grants. Organization contact email, phone and accessibility-contact fields are deliberately not granted by this set.
 - Curator set grants create/read/edit to owned/shared records; it is not a substitute for system-administrator permissions.
-- A program matcher must additionally enforce publication and active flags, parent publication, explicit field selection and user-mode queries. Sharing alone does not ensure business-policy eligibility.
+- The deployed matcher enforces publication, demo flags, active flags where defined, independently visible parents, explicit field selection and user-mode queries. Sharing alone does not ensure business-policy eligibility.
+- SportCompass_Program_Matching grants the agent access only to MatchSportsProgramsAction; it adds no object, field or write privileges. Ten rolled-back Apex tests include object denial, record sharing and hidden-parent isolation. Test users exist only inside tests, not as persistent org users.
 - Published demo records remain fictional: every output must preserve their demo status. The program data has no real participant or member information.
 - These rules are additive. Future grants, ownership, role hierarchy, administrator privileges or system-mode code can change effective access; maintain negative tests.
 
@@ -35,7 +36,7 @@ Salesforce UserRecordAccess was queried by the administrator for the dedicated a
 - Object metadata reports Private internal and external sharing for all three custom objects.
 - Four program records have valid parent lookups and Is_Demo__c=true; their parents also carry Is_Demo__c=true.
 
-These are effective record-access checks, not an end-to-end agent-session or Apex user-mode test. Agent activation and API integration remain pending.
+These record-access results are supplemented by user-mode Apex tests and live draft action traces in [program matching](PROGRAM_MATCHING.md). Agent activation and external API integration remain pending; draft tests do not prove API caller isolation.
 
 ## Historical CRM access finding — assignment now removed
 
@@ -48,7 +49,7 @@ The existing Salesforce AgentforceServiceAgentSecureBase permission set grants:
 
 No View All Data or Modify All Data grants were observed in the inventoried agent assignments. Nevertheless, naming the set Secure Base does not make the agent discovery-only. Effective accessible CRM records depend on sharing and other execution contexts.
 
-The shared standard set was NOT edited or deleted. Its direct assignment to this agent was subsequently removed; no other users were changed. Effective CRM object access now tests as denied. Generic service-template actions remain, and live retrieval under the reduced baseline is not yet verified. New restrictive permission sets cannot subtract existing grants; this is why the broader assignment had to be removed rather than overlaid.
+The shared standard set was NOT edited or deleted. Its direct assignment to this agent was subsequently removed; no other users were changed. Effective CRM object access tests as denied. Generic service-template actions have since been removed, and live retrieval under the reduced baseline has been verified. New restrictive permission sets cannot subtract existing grants; this is why the broader assignment had to be removed rather than overlaid.
 
 ## Interpreting Ajay's suggestion
 

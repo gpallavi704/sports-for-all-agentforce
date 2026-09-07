@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses><apexClass>MatchSportsProgramsAction</apexClass><enabled>true</enabled></classAccesses>
+    <description>Invoke read-only demo matching. Requires existing Discovery Read; no object, field or record-write grants.</description>
+    <label>Sport Compass Program Matching</label>
+</PermissionSet>
