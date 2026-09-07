@@ -13,6 +13,7 @@ const selected = process.argv[3]?.split(',');
 const tests = JSON.parse(readFileSync('knowledge/retrieval-tests.json', 'utf8')).filter(t => !selected || selected.includes(t.id));
 assert.ok(tests.length, 'No matching tests');
 const source = readFileSync('force-app/main/default/aiAuthoringBundles/SportCompass/SportCompass.agent', 'utf8');
+const nativeCitationsEnabled = /citations_enabled: True/.test(source);
 const externalTargets = [...source.matchAll(/^\s+target: "([^"]+)"/gm)].map(m => m[1]);
 assert.equal(externalTargets.length, 8);
 assert.deepEqual(externalTargets.sort(), ['apex://MatchSportsProgramsAction', 'apex://FindPublicFencingClubsAction', ...Array(3).fill('standardInvocableAction://streamKnowledgeSearch'), 'apex://ReviewSportsSupportReplyAction', 'apex://PrepareSportsSupportAction', 'apex://CreateSportsSupportCaseAction'].sort(), 'Stop: new actions require test safety review');
@@ -39,7 +40,7 @@ function sf(args) {
 }
 const org = sf(['data', 'query', '--query', 'SELECT Id FROM Organization']).records[0].Id;
 assert.equal(org, '00DgL00000c7pj3UAA', 'Wrong org');
-const report = { testedAt: new Date().toISOString(), draftSha256: createHash('sha256').update(source).digest('hex'), mode: 'draft-live-actions', activated: false, freshSessionPerTest: true, automatedChecksAreNotSemanticApproval: true, results: [] };
+const report = { testedAt: new Date().toISOString(), draftSha256: createHash('sha256').update(source).digest('hex'), mode: 'draft-live-actions', activated: false, nativeCitationsEnabled, freshSessionPerTest: true, automatedChecksAreNotSemanticApproval: true, results: [] };
 const dir = 'temp/knowledge-live';
 mkdirSync(dir, { recursive: true });
 const output = resolve(dir, new Date().toISOString().replace(/[:.]/g, '-') + '.json');
@@ -55,6 +56,8 @@ for (const test of tests) {
     const utterance = 'Synthetic hackathon evaluation only. No real person, medical information or incident is involved. Answer the following fictional/general question: ' + test.question;
     const result = sf(['agent', 'preview', 'send', '--authoring-bundle', 'SportCompass', '--session-id', sessionId, '--utterance', utterance]);
     row.messages = (result.messages || []).map(m => ({ type: m.type, text: sanitize(m.message || ''), citationLabels: (m.citedReferences || []).map(c => sanitize(c.label || '')) }));
+    // Detect storage destinations before sanitizing, but never persist the raw URLs.
+    row.storageCitationExposed = /X-Amz-|amazonaws\.com|aedl-agentforce_data_library/i.test(JSON.stringify(result.messages || []));
     const answer = row.messages.map(m => m.text).join('\n');
     const originalSourceUrl = readFileSync('knowledge/curated/' + test.source, 'utf8').match(/^SOURCE URL: (.+)$/m)?.[1];
     row.originalSourceUrl = originalSourceUrl;
@@ -86,4 +89,6 @@ for (const test of tests) {
   }
   if (row.sessionEnded === false) { process.exitCode = 1; break; }
 }
-if (report.results.some(r => r.error || r.urlRedacted || !r.expectedSourceCited || !r.originalSourceUrlPresent || r.expectedTopicMatched === false || r.requiredNavigationUrls?.some(u => !u.present))) process.exitCode = 1;
+// Public source links remain required. Native file-label assertions apply only
+// when that output mode is enabled. Link presence alone is not semantic grounding proof.
+if (report.results.some(r => r.error || r.urlRedacted || (!nativeCitationsEnabled && r.storageCitationExposed) || (nativeCitationsEnabled && !r.expectedSourceCited) || !r.originalSourceUrlPresent || r.expectedTopicMatched === false || r.requiredNavigationUrls?.some(u => !u.present))) process.exitCode = 1;

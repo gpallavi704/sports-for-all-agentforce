@@ -125,3 +125,12 @@ test('tool schemas and dispatch reject identity, SOQL, variables and consent inj
   assert.ok(started.conversationHandle);
   assert.ok(tools.every(t => t.securitySchemes[0].type === 'oauth2' && t.inputSchema.additionalProperties === false));
 });
+
+test('response projection excludes temporary storage citations and signed link parameters', async () => {
+  const signed = 'https://files.example.invalid/summary.txt?X-Amz-Signature=fixture-only&X-Amz-Expires=1200';
+  const { broker } = fixture({ send: async () => ({ messages: [{ type: 'Inform', message: `[Try Fencing](https://www.usafencing.org/try) [File](${signed})`, citedReferences: [{ url: signed }] }] }) });
+  const { conversationHandle } = await broker.start('alice');
+  const result = await broker.send('alice', conversationHandle, 'Explain the first visit');
+  assert.ok(JSON.stringify(result).includes('https://www.usafencing.org/try'));
+  assert.doesNotMatch(JSON.stringify(result), /X-Amz-|fixture-only|files\.example/);
+});
