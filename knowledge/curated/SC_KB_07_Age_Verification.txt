@@ -1,0 +1,24 @@
+TITLE: Completing age verification through the official portal
+SOURCE TITLE: How to complete your Age Verification
+SOURCE URL: https://usafencing.zendesk.com/hc/en-us/articles/29039352416781-How-to-complete-your-Age-Verification
+SOURCE PUBLISHER: USA Fencing (Zendesk Help Center)
+SOURCE UPDATED: 2026-04-03 17:25 (timezone not displayed)
+RETRIEVED: 2026-09-06
+LANGUAGE: English
+APPLICABLE SEASON: Not specified; portal workflow guidance
+CONTENT TYPE: Project-prepared summary of public official-source material, not an official USA Fencing publication or endorsement.
+REVIEW STATUS: Source compared by AI curator; USA Fencing subject-matter approval pending.
+
+WHY VERIFICATION MATTERS
+The article explains that age verification is needed before registering for regional or national tournaments. Unverified age can cause event options to appear unavailable in the registration interface.
+
+PORTAL STEPS
+1. Sign in to the USA Fencing membership portal: https://member.usafencing.org
+2. Open the user menu and choose Edit Profile.
+3. Under Personal Information, open Age Verification.
+4. Follow the portal's document-upload and verification workflow.
+
+The article describes government-issued identification or documents showing the fencer's name and birth date, and links to additional help on the verification workflow.
+
+SCOPE NOTE (PROJECT EDITORIAL)
+Documents belong in the official portal, not in Sport Compass chat or its general support Case. This guide does not verify the user's identity, confirm completion or grant competition eligibility. Interface details and requirements should be checked against the linked article when needed.

@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Sports_Organization__c",
+        "referenceId": "SC_DEMO_ORG"
+      },
+      "Name": "DEMO - Salt Lake Adaptive Fencing",
+      "Region__c": "Utah - synthetic",
+      "Data_Source__c": "SYNTHETIC HACKATHON DATA - NOT A REAL CLUB",
+      "Website__c": "https://example.org/sport-compass-demo",
+      "Published__c": true,
+      "Is_Demo__c": true
+    }
+  ]
+}

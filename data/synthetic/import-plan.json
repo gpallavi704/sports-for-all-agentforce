@@ -1,0 +1,20 @@
+[
+  {
+    "sobject": "Sport__c",
+    "files": [
+      "sports.json"
+    ]
+  },
+  {
+    "sobject": "Sports_Organization__c",
+    "files": [
+      "organizations.json"
+    ]
+  },
+  {
+    "sobject": "Sports_Program__c",
+    "files": [
+      "programs.json"
+    ]
+  }
+]

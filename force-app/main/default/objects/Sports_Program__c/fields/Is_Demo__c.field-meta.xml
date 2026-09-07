@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Demo__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Fictional hackathon record. Must never be presented as a real provider or verified service.</description>
+    <label>Synthetic Demo Data</label>
+    <type>Checkbox</type>
+</CustomField>

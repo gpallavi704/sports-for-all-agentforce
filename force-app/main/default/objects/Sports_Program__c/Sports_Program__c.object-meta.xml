@@ -5,5 +5,5 @@
     <label>Sports Program</label>
     <nameField><label>Program Name</label><type>Text</type></nameField>
     <pluralLabel>Sports Programs</pluralLabel>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
 </CustomObject>

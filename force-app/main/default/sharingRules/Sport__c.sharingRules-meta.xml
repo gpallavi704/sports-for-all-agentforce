@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>SportCompass_Published_Read</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Read access only for explicitly published Sport Compass discovery records.</description>
+        <label>Sport Compass Published Read</label>
+        <sharedTo><group>SportCompass_Discovery_Readers</group></sharedTo>
+        <criteriaItems>
+            <field>Published__c</field>
+            <operation>equals</operation>
+            <value>true</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

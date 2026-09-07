@@ -1,0 +1,22 @@
+TITLE: Tournament registration - local, regional and national pathways
+SOURCE TITLE: How do I register for a USA Fencing Tournament?
+SOURCE URL: https://usafencing.zendesk.com/hc/en-us/articles/13085696260749-How-do-I-register-for-a-USA-Fencing-Tournament
+SOURCE PUBLISHER: USA Fencing (Zendesk Help Center)
+SOURCE UPDATED: 2025-05-09 16:17 (timezone not displayed)
+RETRIEVED: 2026-09-06
+LANGUAGE: English
+APPLICABLE SEASON: Not specified; verify current event requirements
+CONTENT TYPE: Project-prepared summary of public official-source material, not an official USA Fencing publication or endorsement.
+REVIEW STATUS: Source compared by AI curator; USA Fencing subject-matter approval pending.
+
+LOCAL AND DIVISIONAL EVENTS
+The article directs registration to AskFRED rather than the National Office. It describes Access membership as the minimum membership requirement and refers event questions to the organizer listed on the tournament page.
+https://www.askfred.net
+
+REGIONAL AND NATIONAL EVENTS
+The article directs these registrations through USA Fencing's membership system. It lists Competitive membership or an International Competitive License membership, age verification, and the applicable age eligibility or qualifying points pathway among prerequisites. Access membership alone is not sufficient for these events under the article's guidance.
+Regional events: https://member.usafencing.org/search/tournaments/regional
+National events: https://member.usafencing.org/search/tournaments/national
+
+SCOPE NOTE (PROJECT EDITORIAL)
+These are general prerequisites, not an exhaustive eligibility determination. Event-specific qualification, parafencing classification, dates, prices and availability need separate confirmation. Sport Compass explains the process; it does not register athletes or process payments.

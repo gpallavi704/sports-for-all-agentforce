@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Create and edit owned Sport Compass inventory. No delete, no View All, no CRM privileges.</description>
+    <fieldPermissions><editable>true</editable><field>Sport__c.Active__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sport__c.Adaptive_Available__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sport__c.Description__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sport__c.Is_Demo__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sport__c.Published__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sport__c.Recommended_Experience_Level__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Accessibility_Contact__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Contact_Email__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Contact_Phone__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Data_Source__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Is_Demo__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Last_Verified_Date__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Published__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Region__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Organization__c.Website__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Accessibility_Features__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Accessibility_Verified__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Active__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Adaptive_Equipment_Available__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Capacity_Status__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.City__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Cost_Description__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Experience_Level__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Is_Demo__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Maximum_Age__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Minimum_Age__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Postal_Code__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Published__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Scholarship_Available__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Source_URL__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.State__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Supports_Cognitive__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Supports_Hearing__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Supports_Mobility__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Supports_Visual__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Sports_Program__c.Verification_Date__c</field><readable>true</readable></fieldPermissions>
+    <label>Sport Compass Data Curator</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords><object>Sport__c</object><viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords><object>Sports_Organization__c</object><viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords><object>Sports_Program__c</object><viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+</PermissionSet>

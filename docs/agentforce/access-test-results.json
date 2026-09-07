@@ -1,0 +1,61 @@
+{
+  "orgId": "00DgL00000c7pj3UAA",
+  "agentUserId": "005gL00000Nf47FQAR",
+  "method": "Admin read-only UserRecordAccess query for agent user; not a runtime agent session",
+  "records": [
+    {
+      "refId": "SC_DEMO_SPORT",
+      "type": "Sport__c",
+      "id": "a00gL00001WXtCUQA1",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false,
+      "MaxAccessLevel": "Read"
+    },
+    {
+      "refId": "SC_DEMO_ORG",
+      "type": "Sports_Organization__c",
+      "id": "a01gL00001ocT3kQAE",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false,
+      "MaxAccessLevel": "Read"
+    },
+    {
+      "refId": "SC_DEMO_PROGRAM_1",
+      "type": "Sports_Program__c",
+      "id": "a02gL00000WhbJdQAJ",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false,
+      "MaxAccessLevel": "Read"
+    },
+    {
+      "refId": "SC_DEMO_PROGRAM_2",
+      "type": "Sports_Program__c",
+      "id": "a02gL00000WhbJeQAJ",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false,
+      "MaxAccessLevel": "Read"
+    },
+    {
+      "refId": "SC_DEMO_PROGRAM_3",
+      "type": "Sports_Program__c",
+      "id": "a02gL00000WhbJfQAJ",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false,
+      "MaxAccessLevel": "Read"
+    },
+    {
+      "refId": "SC_DEMO_PROGRAM_PRIVATE",
+      "type": "Sports_Program__c",
+      "id": "a02gL00000WhbJgQAJ",
+      "HasReadAccess": false,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false,
+      "MaxAccessLevel": "None"
+    }
+  ]
+}

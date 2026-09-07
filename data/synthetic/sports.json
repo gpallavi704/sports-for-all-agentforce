@@ -1,0 +1,17 @@
+{
+  "records": [
+    {
+      "attributes": {
+        "type": "Sport__c",
+        "referenceId": "SC_DEMO_SPORT"
+      },
+      "Name": "DEMO - Wheelchair Fencing",
+      "Description__c": "Fictional hackathon inventory. Not an official USA Fencing offering.",
+      "Active__c": true,
+      "Adaptive_Available__c": true,
+      "Recommended_Experience_Level__c": "Beginner",
+      "Published__c": true,
+      "Is_Demo__c": true
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "records": [
+    {
+      "Sport__c": "@SC_DEMO_SPORT",
+      "Organization__c": "@SC_DEMO_ORG",
+      "Is_Demo__c": true,
+      "Published__c": true,
+      "Active__c": true,
+      "City__c": "Salt Lake City",
+      "State__c": "UT",
+      "Postal_Code__c": "84101",
+      "Experience_Level__c": "Beginner",
+      "Source_URL__c": "https://example.org/sport-compass-demo",
+      "Cost_Description__c": "Fictional demo only; confirm real fees directly with a provider.",
+      "attributes": {
+        "type": "Sports_Program__c",
+        "referenceId": "SC_DEMO_PROGRAM_1"
+      },
+      "Name": "DEMO - Youth Wheelchair Fencing Intro",
+      "Program_Code__c": "SC-DEMO-YOUTH-001",
+      "Minimum_Age__c": 10,
+      "Maximum_Age__c": 17,
+      "Capacity_Status__c": "Demo availability only",
+      "Supports_Mobility__c": true,
+      "Adaptive_Equipment_Available__c": true,
+      "Accessibility_Verified__c": true,
+      "Accessibility_Features__c": "SIMULATED VERIFIED SCENARIO: accessible entrance, adapted frame and equipment assumed available for testing. No real-world verification.",
+      "Verification_Date__c": "2026-09-06"
+    },
+    {
+      "Sport__c": "@SC_DEMO_SPORT",
+      "Organization__c": "@SC_DEMO_ORG",
+      "Is_Demo__c": true,
+      "Published__c": true,
+      "Active__c": true,
+      "City__c": "Salt Lake City",
+      "State__c": "UT",
+      "Postal_Code__c": "84101",
+      "Experience_Level__c": "Beginner",
+      "Source_URL__c": "https://example.org/sport-compass-demo",
+      "Cost_Description__c": "Fictional demo only; confirm real fees directly with a provider.",
+      "attributes": {
+        "type": "Sports_Program__c",
+        "referenceId": "SC_DEMO_PROGRAM_2"
+      },
+      "Name": "DEMO - Adult Wheelchair Fencing Intro",
+      "Program_Code__c": "SC-DEMO-ADULT-001",
+      "Minimum_Age__c": 18,
+      "Maximum_Age__c": 99,
+      "Capacity_Status__c": "Demo availability only",
+      "Accessibility_Verified__c": false,
+      "Accessibility_Features__c": "Accessibility and equipment unknown. False feature flags mean unconfirmed, not confirmed absence."
+    },
+    {
+      "Sport__c": "@SC_DEMO_SPORT",
+      "Organization__c": "@SC_DEMO_ORG",
+      "Is_Demo__c": true,
+      "Published__c": true,
+      "Active__c": true,
+      "City__c": "Salt Lake City",
+      "State__c": "UT",
+      "Postal_Code__c": "84101",
+      "Experience_Level__c": "Beginner",
+      "Source_URL__c": "https://example.org/sport-compass-demo",
+      "Cost_Description__c": "Fictional demo only; confirm real fees directly with a provider.",
+      "attributes": {
+        "type": "Sports_Program__c",
+        "referenceId": "SC_DEMO_PROGRAM_3"
+      },
+      "Name": "DEMO - Youth Program Needs Confirmation",
+      "Program_Code__c": "SC-DEMO-UNKNOWN-001",
+      "Minimum_Age__c": 10,
+      "Maximum_Age__c": 17,
+      "Capacity_Status__c": "Unknown",
+      "Accessibility_Verified__c": false,
+      "Accessibility_Features__c": "All accessibility features are unconfirmed. Ask the fictional provider; do not guarantee accommodation."
+    },
+    {
+      "Sport__c": "@SC_DEMO_SPORT",
+      "Organization__c": "@SC_DEMO_ORG",
+      "Is_Demo__c": true,
+      "Published__c": false,
+      "Active__c": true,
+      "City__c": "Salt Lake City",
+      "State__c": "UT",
+      "Postal_Code__c": "84101",
+      "Experience_Level__c": "Beginner",
+      "Source_URL__c": "https://example.org/sport-compass-demo",
+      "Cost_Description__c": "Fictional demo only; confirm real fees directly with a provider.",
+      "attributes": {
+        "type": "Sports_Program__c",
+        "referenceId": "SC_DEMO_PROGRAM_PRIVATE"
+      },
+      "Name": "DEMO - Unpublished Security Test",
+      "Program_Code__c": "SC-DEMO-PRIVATE-001",
+      "Minimum_Age__c": 10,
+      "Maximum_Age__c": 17,
+      "Capacity_Status__c": "Not published",
+      "Accessibility_Verified__c": false,
+      "Accessibility_Features__c": "NEGATIVE ACCESS TEST: this program must not be available to the public discovery reader."
+    }
+  ]
+}

@@ -8,5 +8,5 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Sports Organizations</pluralLabel>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
 </CustomObject>

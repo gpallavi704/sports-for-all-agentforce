@@ -1,0 +1,22 @@
+TITLE: Troubleshooting regional tournament registration
+SOURCE TITLE: Why can't I register for a Regional Tournament?
+SOURCE URL: https://usafencing.zendesk.com/hc/en-us/articles/29044338279565-Why-can-t-I-register-for-a-Regional-Tournament
+SOURCE PUBLISHER: USA Fencing (Zendesk Help Center)
+SOURCE UPDATED: 2024-08-06 19:40 (timezone not displayed)
+RETRIEVED: 2026-09-06
+LANGUAGE: English
+APPLICABLE SEASON: Not specified; older portal guidance requires current confirmation
+CONTENT TYPE: Project-prepared summary of public official-source material, not an official USA Fencing publication or endorsement.
+REVIEW STATUS: Source compared by AI curator; USA Fencing subject-matter approval pending.
+
+THREE COMMON CHECKS
+The article identifies membership level, completion of age verification and event age eligibility as common reasons registration is blocked. It describes membership upgrades through the signed-in membership profile.
+
+POINTS-BASED EXCEPTIONS
+The article describes circumstances where a points-based age exception may need organizer assistance because the registration system does not reflect it automatically. This older article does not establish today's integration behavior or an individual's eligibility.
+
+HUMAN HELP
+For unresolved regional registration issues, the article lists regionalevents@usafencing.org or the regional organizer. It asks the person contacting that official channel to identify the tournament and event, with their name and membership identifier.
+
+SCOPE NOTE (PROJECT EDITORIAL)
+Sport Compass can explain the checklist without accessing the user's account or collecting membership identifiers in public chat. Exact age brackets, exception rules and account status require the current official source or staff confirmation. This document does not authorize manual registration or a guaranteed exception.
