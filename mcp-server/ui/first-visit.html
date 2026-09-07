@@ -1,16 +1,13 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sport Compass | My first visit</title><style>/* STYLE */</style></head>
 <body>
-<main id="app" aria-labelledby="title">
-  <header class="brand"><img src="ICON_DATA" width="44" height="44" alt=""><div><strong>Sport Compass</strong><span>Fencing starts with a first step.</span></div><span class="powered">Salesforce Agentforce</span></header>
-  <div class="intro"><p class="eyebrow">YOUR NEXT STEP</p><h1 id="title">My first fencing visit</h1><p class="sub">A little preparation. A more confident first visit.</p></div>
+<main id="app" aria-labelledby="title" data-view="club">
+  <header class="brand"><img src="ICON_DATA" width="28" height="28" alt=""><strong>Sport Compass</strong><span class="powered">Salesforce Agentforce</span></header>
+  <h1 id="title" class="sr-only">My first fencing visit</h1>
   <p id="loading" role="status">Getting your Salesforce guidance ready...</p>
   <div id="content" hidden>
-    <nav aria-label="Visit plan sections" class="steps">
-      <button id="nav-club" aria-current="step">1 <span>Explore</span></button><button id="nav-prepare">2 <span>Prepare</span></button><button id="nav-plan">3 <span>Take away</span></button>
-    </nav>
-    <section id="panel-club" aria-labelledby="club-heading"><h2 id="club-heading" tabindex="-1">A place to start</h2><div id="clubs"></div>
-      <p class="small">A public listing is not a confirmed wheelchair-fencing program. Ask the club before visiting.</p>
+    <button id="back-to-club" class="quiet back" hidden>Back to club result</button>
+    <section id="panel-club" aria-labelledby="club-heading"><h2 id="club-heading" class="sr-only" tabindex="-1">Club result</h2><div id="clubs"></div>
       <button class="primary" id="plan-visit">Plan my visit <span aria-hidden="true">&#8594;</span></button>
     </section>
     <section id="panel-prepare" aria-labelledby="prepare-heading" hidden><h2 id="prepare-heading" tabindex="-1">What would help you feel prepared?</h2><p class="sub">Choose what matters to you. No medical details needed.</p>
@@ -24,9 +21,9 @@
       <details id="draft-details"><summary>A friendly message to the club</summary><p class="small">Copy and send it yourself using the club's contact details. Nothing is sent by Sport Compass.</p><label for="draft" class="sr-only">Unsent contact message</label><textarea id="draft" readonly rows="6"></textarea><button id="copy-draft">Copy message</button></details>
       <fieldset class="progress"><legend>My preparation progress</legend><p class="small">Your own reminders, not club verification or a booking.</p><label><input type="checkbox" id="progress-questions"> My questions are ready</label><label><input type="checkbox" id="progress-contact"> I contacted the club myself</label><label><input type="checkbox" id="progress-details"> I checked the visit details with the club</label><p id="progress-count" role="status">0 of 3 preparation steps marked</p></fieldset>
     </section>
-    <details class="sources"><summary>Sources and Salesforce guidance</summary><p class="small">Club identity details mirror the project's reviewed public directory. Source checks are not accessibility audits. The checklist contains suggested questions, not claims about a club.</p><div id="source-links"></div><div id="guidance"></div></details>
+    <details id="guidance-sources" class="sources" hidden><summary>Sources and Salesforce guidance</summary><p class="small">Club identity details mirror the project's reviewed public directory. Source checks are not accessibility audits. The checklist contains suggested questions, not claims about a club.</p><div id="source-links"></div><div id="guidance"></div></details>
   </div>
   <p id="feedback" role="status" aria-live="polite" class="feedback"></p>
   <div id="copy-fallback" hidden><label for="copy-text">Copy this text manually</label><textarea id="copy-text" readonly rows="7"></textarea></div>
-  <footer>Choices and checkmarks stay in this card while it is open. Copy your plan before leaving. No booking, email or Salesforce record update.</footer>
+  <footer id="planner-notice" hidden>Choices and checkmarks stay in this card while it is open. Copy your plan before leaving. No booking, email or Salesforce record update.</footer>
 </main><script>/* SCRIPT */</script></body></html>

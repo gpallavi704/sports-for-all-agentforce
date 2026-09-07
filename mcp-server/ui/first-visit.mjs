@@ -14,11 +14,14 @@ const say = text => { $('feedback').textContent = text; };
 const el = (tag, text, cls) => { const node = document.createElement(tag); if(text) node.textContent=text; if(cls)node.className=cls; return node; };
 function go(panel) {
   $('copy-fallback').hidden=true; $('copy-text').value='';
+  $('app').dataset.view=panel;
+  $('back-to-club').hidden=panel==='club';
+  $('planner-notice').hidden=panel==='club';
+  $('guidance-sources').hidden=panel==='club';
   for (const name of ['club','prepare','plan']) {
     $('panel-'+name).hidden = name !== panel;
-    if(name===panel)$('nav-'+name).setAttribute('aria-current','step'); else $('nav-'+name).removeAttribute('aria-current');
   }
-  $(panel==='club'?'club-heading':panel==='prepare'?'prepare-heading':'plan-heading').focus();
+  $(panel==='club'?'plan-visit':panel==='prepare'?'prepare-heading':'plan-heading').focus();
   say('');
 }
 function link(text, url) {
@@ -56,10 +59,12 @@ function render(data){
   snapshot=data; club=data.clubs[0];
   $('loading').hidden=true; $('content').hidden=false; $('clubs').replaceChildren();
   for(const item of data.clubs){
-    const card=el('article',null,'club'); card.append(el('span','PUBLIC CLUB LISTING','listing'),el('h3',item.name),el('p',item.city+', '+item.state,'location'));
-    const facts=el('div',null,'facts');
-    for(const label of ['Wheelchair fencing','Step-free access','Loaner equipment']){const row=el('div',null,'fact');row.append(el('span',label),el('span','Needs confirmation','status'));facts.append(row);}
-    card.append(facts); const links=el('div',null,'links');links.append(link('Club website',item.website),link('Directory source',item.sourceUrl));card.append(links,el('p','Source checked '+item.checkedOn+'. Not an accessibility audit.','small'));
+    const card=el('article',null,'club'); card.append(el('h3',item.name),el('p',item.city+', '+item.state+' · Public listing','location'));
+    const uncertainty=el('p',null,'uncertainty');
+    uncertainty.append(el('strong','Needs confirmation: '),document.createTextNode('wheelchair fencing, step-free access and loaner equipment.'));
+    card.append(uncertainty);
+    const links=el('div',null,'links');links.append(link('Club website',item.website));card.append(links);
+    const evidence=el('details',null,'club-evidence');evidence.append(el('summary','Listing source'),link('Division club directory',item.sourceUrl),el('p','Checked '+item.checkedOn+'. Not an accessibility audit.','small'));card.append(evidence);
     if(data.clubs.length>1){const select=el('button','Plan for '+item.name);select.addEventListener('click',()=>chooseClub(item));card.append(select);}
     $('clubs').append(card);
   }
@@ -72,7 +77,7 @@ for(const item of needs){
   const label=el('label');const input=document.createElement('input');input.type='checkbox';input.id='need-'+item.id;input.checked=selected.has(item.id);input.addEventListener('change',()=>{input.checked?selected.add(item.id):selected.delete(item.id);questionIndex=0;updatePlan();if(!selected.size)say('Choose at least one topic to build your checklist.');else say('');});
   const words=el('span');words.append(el('strong',item.label),el('span',item.hint,'hint'));label.append(input,words);$('preferences').append(label);
 }
-for(const name of ['club','prepare','plan'])$('nav-'+name).addEventListener('click',()=>go(name));
+$('back-to-club').addEventListener('click',()=>go('club'));
 $('plan-visit').addEventListener('click',()=>go('prepare'));
 $('build-plan').addEventListener('click',()=>{updatePlan();go('plan');});
 $('edit-needs').addEventListener('click',()=>go('prepare'));

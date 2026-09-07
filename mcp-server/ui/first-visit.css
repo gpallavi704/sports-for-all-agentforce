@@ -3,3 +3,22 @@
 @media(max-width:420px){#app{padding:16px}.brand{gap:8px}.brand div>span{font-size:12px}.powered{font-size:11px;max-width:65px}.club{padding:16px}.fact{align-items:flex-start;gap:8px}.steps button{padding:10px 6px;font-size:13px}.question-header{align-items:flex-start;flex-direction:column}.row>button{flex:1}.status{max-width:130px}.links{gap:8px 16px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 :root[data-theme=dark]{color-scheme:dark;--bg:#12202d;--ink:#edf3f8;--muted:#b5c4d1;--line:#637787;--soft:#1c3041;--primary:#c5e2fc;--on-primary:#112d46;--accent:#ffb4bc;--focus:#ffb4bc;--warn-bg:#49361a;--warn:#ffdc9a}
+
+/* Compact result first. Preparation controls appear only after an explicit click. */
+#app{max-width:640px;padding:16px}
+.brand{gap:8px;padding-bottom:12px;margin-bottom:14px}
+.brand strong{font-size:14px}.powered{font-size:12px;max-width:none}
+.club{border:0;border-radius:0;padding:0;margin:0 0 12px;background:transparent}
+.club+.club{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.club h3{font-size:21px;line-height:1.3;margin:0 0 4px;text-wrap:balance}
+.club .location{font-size:14px;margin:0 0 10px}
+.uncertainty{font-size:14px;line-height:1.5;color:var(--muted);margin:0 0 8px}
+.uncertainty strong{color:var(--ink);font-weight:650}
+.links{margin:0;gap:12px}.links a{font-size:14px}
+.club-evidence{border:0;margin:0;padding:0;font-size:13px}
+.club-evidence summary{font-size:13px;font-weight:500;min-height:44px;padding:10px 0;color:var(--muted)}
+.club-evidence>a{display:inline-flex;align-items:center;min-height:44px}
+.club-evidence .small{margin:4px 0 12px;font-size:13px}
+.back{margin:0 0 16px}.feedback:empty{display:none}
+#app[data-view=club] #plan-visit{width:100%}
+@media(max-width:420px){.brand{flex-wrap:wrap}.powered{max-width:100px;text-align:right}.club{padding:0}.club h3{font-size:20px}}

@@ -17,9 +17,9 @@ Latest checkpoint: September 7, 2026.
 - Synthetic support requests use signed drafts, explicit confirmation, server-side validation and idempotent Case creation in a fixed support queue.
 - A separate Salesforce public guide, SportCompassGuide version 1, powers the connected private ChatGPT app. It uses the same public knowledge library and club lookup, with no Case, email, booking or private-record actions.
 - The branded ChatGPT app has its own Sport Compass icon and four MCP tools: start, ask, end and show the first-visit planner. The user can ask natural questions without typing technical session commands.
-- Interactive club cards show public sources and explicit `Needs confirmation` labels for wheelchair fencing, step-free access and equipment.
+- Compact club cards show the club name, location, website and one visible `Needs confirmation` note. Listing sources expand on demand; **Plan my visit** opens the optional checklist.
 - The first-visit planner offers selectable preparation topics, a checklist, one-question-at-a-time mode, a copyable contact draft and personal progress marks.
-- There are 63 passing local integration/UI-contract tests. Live Salesforce-backed ChatGPT text and interactive-card checks are recorded separately.
+- There are 64 passing local integration/UI-contract tests. Live Salesforce-backed ChatGPT text and interactive-card checks are recorded separately.
 
 The planner's controls run locally in the card. They do not make additional AI calls or update Salesforce. Copying produces an unsent draft, not an email integration. In ChatGPT, clipboard restrictions can trigger a selected-text fallback for manual copying.
 
@@ -31,7 +31,7 @@ With the private Sport Compass app selected in ChatGPT, ask:
 
 > Find a real fencing club in Kaysville, UT. Show the interactive club card.
 
-Then use **Plan my visit**, choose preparation topics and select **Build my checklist**. Try **One step at a time**, **Copy my plan**, or the expandable friendly message. If manual-copy text appears, use Command-C on Mac.
+The compact result appears first, without a three-tab dashboard. Use **Plan my visit**, choose preparation topics and select **Build my checklist**. Try **One step at a time**, **Copy my plan**, or the expandable friendly message. **Back to club result** returns to the compact card. If manual-copy text appears, use Command-C on Mac. General fencing questions should stay conversational unless an interactive plan is requested.
 
 The focused lookup returned Wasatch Fencing Club in the live test. A combined search-and-planning question incorrectly returned no listing, so query/routing reliability still needs improvement. Unknown accessibility must never be treated as proof of inaccessibility or as a verified accessible match.
 
@@ -105,8 +105,8 @@ The UI uses the official MCP Apps SDK with a self-contained bundle. Existing MCP
 
 ## Verified and still pending
 
-- Verified locally: 63 tests, responsive card at 375-pixel width, dark theme, topic selection, checklist, one-step controls, copying and progress marks.
-- Verified in ChatGPT: live Wasatch card, source links, changing topics, keyboard activation and next-question navigation, and manual-copy fallback. The card continued working after the user approved enabling developer-mode CSP enforcement.
+- Verified locally: 64 tests, compact card at 375-pixel width, dark theme, optional checklist, one-step keyboard controls and return navigation. Earlier checks covered copying and progress marks.
+- Verified in ChatGPT: the compact v2 Wasatch card, opening and building its checklist, and returning to the compact result. Earlier checks covered source links, changing topics, keyboard navigation and manual-copy fallback with developer-mode CSP enforcement enabled. ChatGPT can still add a short summary beneath the card.
 - Still pending: combined-query reliability, broader multi-turn/adversarial tests, domain review, complete screen-reader/keyboard review and the organizer-provided Accessibility Expert and RAI Self Check skills.
 - Not implemented: email sending, calls, bookings, payments, external Case creation, permanent saved plans, verified provider-accessibility feeds, public app submission or production hosting.
 

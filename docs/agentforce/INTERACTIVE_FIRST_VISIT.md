@@ -7,15 +7,16 @@ writes.
 
 ## Experience
 
-1. Ask a natural fencing or first-visit question with Sport Compass selected.
+1. Ask a club-search question or explicitly request an interactive visit plan with Sport Compass selected. General guidance should remain conversational.
 2. Salesforce Agentforce supplies public guidance and club links.
 3. ChatGPT calls `show_visit_planner` with the same opaque conversation handle.
-4. The card shows a public club identity, sources and explicit unknown access,
-   wheelchair-fencing and equipment statuses.
-5. Choose topics, build a checklist, switch to one-question-at-a-time mode, copy
+4. The compact card shows a public club identity, location, website and one visible
+   `Needs confirmation` note. Expand **Listing source** to see its provenance and date.
+5. Select **Plan my visit**, choose topics, build a checklist, switch to one-question-at-a-time mode, copy
    the plan or copy an unsent contact draft. Personal progress marks are optional.
 
-Explore, Prepare and Take away controls run entirely inside the rendered card.
+The initial card no longer has Explore, Prepare and Take away tabs. Preparation
+is optional, and **Back to club result** returns to the compact view. Controls run entirely inside the rendered card.
 They make no further AI or Salesforce calls. The card does not send email, contact
 clubs, book visits, create Cases, collect diagnoses or update Salesforce records.
 
@@ -87,13 +88,22 @@ The preview listens only on `127.0.0.1:4177`. It is clearly labelled as a fixtur
 test, does not call Salesforce and captures link attempts instead of opening a
 provider website. It is not evidence of live retrieval.
 
-Observed local checks: 63 automated tests pass; the fixture card renders at
-375-pixel width and in dark mode; topic selection, four-question checklist,
-one-step navigation, clipboard copy and personal progress marks work. Full
+Observed local checks: 64 automated tests pass; the compact fixture card renders at
+375-pixel width in light and dark modes. Opening the planner, building a checklist,
+Enter-key next-question navigation and returning to the compact result were retested.
+Earlier checks covered topic selection, clipboard copy and personal progress marks. Full
 screen-reader testing and the organizer's Accessibility Expert and RAI Self Check
 reviews are still pending. These observations are not a WCAG certification.
 
 ## Live ChatGPT verification
+
+Compact revision: the existing private app was refreshed to the v2 template. A
+[fresh Salesforce-backed test](https://chatgpt.com/c/6a9ea130-1d14-83e8-8971-438b51693561)
+returned Wasatch Fencing Club in the compact view. **Plan my visit**, **Build my
+checklist** and **Back to club result** worked in ChatGPT. The host still added a
+short textual summary beneath the card, so suppressing repeated text remains
+best-effort model guidance rather than a guaranteed renderer behavior. No
+Salesforce agent definition, CRM business record or external contact was changed.
 
 The refreshed private app exposes all four tools and the HTML template. In this
 [live test conversation](https://chatgpt.com/c/6a9e99d5-8ac0-83e8-82f0-5d2cf6ea4ce4),
@@ -119,7 +129,8 @@ not presented as the updated plan.
 
 The existing private tunnel must run the public entrypoint, with the resource
 built. Refresh the existing Sport Compass app's tools in ChatGPT settings after
-changing the manifest. A fresh chat avoids stale tool catalogs and expired
+changing the manifest. The compact revision uses `ui://sport-compass/first-visit-v2.html`
+so an old cached card does not mask the change. A fresh chat avoids stale tool catalogs and expired
 conversation handles. Keep the Mac awake and the tunnel process running.
 
 A unique widget domain is not configured. ChatGPT flags this as required for

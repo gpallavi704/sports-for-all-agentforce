@@ -1,9 +1,11 @@
 # Sport Compass MCP
 
 Latest: the public Salesforce-backed connection now includes interactive club
-cards and a first-visit planner. All 63 local tests pass. The private tunnel runs
+cards and an optional first-visit planner. All 64 local tests pass. The private tunnel runs
 the live public profile with four tools, including `show_visit_planner`. The card
 reuses the latest guidance snapshot; checklist controls make no further AI calls.
+The `first-visit-v2.html` resource starts with a compact club result and a
+**Plan my visit** button. Source details and preparation controls expand on demand.
 See [interactive UI evidence and limits](../docs/agentforce/INTERACTIVE_FIRST_VISIT.md)
 and the [live connection checkpoint](../docs/agentforce/LIVE_PUBLIC_CHATGPT.md).
 

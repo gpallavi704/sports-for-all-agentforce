@@ -2,7 +2,9 @@
 
 Latest interactive update, September 7: the live ChatGPT app now renders public
 club cards and a first-visit planner backed by the existing Salesforce guide.
-There are four MCP tools and 63 passing local tests. Topic choices, one-step
+The latest compact layout puts the optional checklist behind **Plan my visit**
+and source details behind **Listing source**, with no three-tab dashboard.
+There are four MCP tools and 64 passing local tests. Topic choices, one-step
 questions and copying run locally without more AI calls. A live Wasatch card,
 choice changes, keyboard navigation and manual-copy fallback passed, including
 after approved CSP enforcement was enabled. Combined search-and-planning wording

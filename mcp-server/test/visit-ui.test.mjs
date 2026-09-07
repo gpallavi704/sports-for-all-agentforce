@@ -87,3 +87,19 @@ test('UI source uses safe text rendering, no model calls, storage, telemetry or 
   const html=readFileSync(new URL('../ui/first-visit.html',import.meta.url),'utf8');
   assert.match(html,/role="status"/);assert.match(html,/No booking, email or Salesforce record update/);
 });
+
+test('compact card keeps planner opt-in, removes three-tab navigation and retains source/uncertainty',()=>{
+  const html=readFileSync(new URL('../ui/first-visit.html',import.meta.url),'utf8');
+  const js=readFileSync(new URL('../ui/first-visit.mjs',import.meta.url),'utf8');
+  assert.match(html,/id="app"[^>]*data-view="club"/);
+  assert.match(html,/id="panel-prepare"[^>]*hidden/);
+  assert.match(html,/id="panel-plan"[^>]*hidden/);
+  assert.match(html,/id="back-to-club"[^>]*hidden/);
+  assert.doesNotMatch(html,/id="nav-(club|prepare|plan)"|class="intro"/);
+  assert.match(js,/Needs confirmation: /);
+  assert.match(js,/Listing source/);
+  assert.match(js,/Not an accessibility audit/);
+  assert.match(js,/'plan-visit'\).addEventListener\('click',\(\)=>go\('prepare'\)\)/);
+  assert.match(js,/'back-to-club'\).addEventListener\('click',\(\)=>go\('club'\)\)/);
+  assert.equal(VISIT_URI,'ui://sport-compass/first-visit-v2.html');
+});
