@@ -54,7 +54,7 @@ Deliverables:
 
 Exit condition: a basic test agent can be created and invoked inside Salesforce.
 
-Current checkpoint: discovery, knowledge, read-only matching and consent-controlled synthetic Case handoff are deployed. Eighteen Apex tests pass; live Case/queue/report proof is recorded. The agent remains inactive. Repeated edge-case acceptance and API/MCP/ChatGPT integration remain pending. See [current status](STATUS.md).
+Current checkpoint: discovery, knowledge, read-only matching and consent-controlled synthetic Case handoff are deployed. Twenty Apex tests pass; live Case/queue/report proof and three repeated cancellation/revision/retry runs are recorded. The agent remains inactive. Local API/session/tool-contract foundations pass 15 mocked tests; live API/MCP/ChatGPT integration remains pending. See [current status](STATUS.md).
 
 Builder project ID: `1bYgL000000Xf2nUAC`. Draft version ID: `1bZgL000000rPgDUAU`. These identify the authoring project and version; do not treat them as the runtime Agent API agent ID.
 
@@ -101,9 +101,10 @@ Deliverables:
 - [x] Deterministic listing-evidence ranking using self-selected preferences; synthetic verification explicitly distinguished from real verification
 - [x] `PrepareSportsSupportAction` and `CreateSportsSupportCaseAction` with signed draft, actual-reply consent enforcement and idempotent creation
 - [ ] `RecordAgentInteractionAction`
-- [x] Ten matcher Apex tests; 100% matcher line coverage (remaining classes not built)
+- [x] Ten matcher Apex tests; 100% matcher line coverage at the matching checkpoint
 - [x] Matcher tests for class age bands, no matches, unknown/stale features, publication, parent visibility, object/record access and bounded batches
-- [x] Eight support tests plus ten matcher tests pass; live synthetic Case and operator destination verified
+- [x] Ten support tests plus ten matcher tests pass; live synthetic Case and operator destination verified
+- [x] Pure `ReviewSportsSupportReplyAction` checks actual input before reasoning; cancellation/revision clears pending state
 
 Exit condition: actions pass tests and return stable, agent-friendly response contracts.
 
@@ -122,7 +123,8 @@ Deliverables:
 - [x] Remove unrelated template routing/actions; registration, accommodation and scope routes trace-verified (remaining routes need tests)
 - [x] Add read-only demo search/matching action; verify real action invocation, no-match and refusal paths
 - [x] Add consent-enforced Case action; live match → draft → hesitation → explicit/native confirmation → Case → queue/report tested
-- [ ] Repeat refusal/revision/error journeys and combine cited guidance into the uninterrupted primary demo
+- [x] Repeat cancellation/revision/hesitation/confirmation/retry journeys three times against the final draft
+- [ ] Test live expiry/error/concurrency and combine cited guidance into the uninterrupted primary demo
 - [ ] Optional after core journey: persisted checklists and interaction actions
 - [ ] Configure low-confidence and sensitive-topic escalation
 - [x] Run ten live-actions draft-preview knowledge tests plus targeted safety retests; see current checkpoint for remaining review gates
@@ -150,6 +152,7 @@ Exit condition: the demo can show both an individual recommendation and an aggre
 
 Deliverables:
 
+- [x] Local synchronous start/send/end client, bounded inputs/responses, no automatic replay; mocked tests only, live access disabled
 - [ ] Create an External Client App using minimum OAuth scopes
 - [ ] Create or select a dedicated least-privilege integration user
 - [ ] Grant access to Sport Compass and required actions only
@@ -166,15 +169,15 @@ Exit condition: the primary journey works using an API client without the Salesf
 
 Deliverables:
 
-- [ ] TypeScript MCP server scaffold
-- [ ] `ask_sports_for_all`
-- [ ] `continue_sports_conversation`
-- [ ] `request_human_support`
-- [ ] `submit_sports_feedback`
-- [ ] Input validation and payload limits
-- [ ] ChatGPT conversation ID to Agentforce session ID mapping
-- [ ] No arbitrary SOQL, Apex, object, or endpoint execution
-- [ ] Unit tests with mocked Agent API
+- [x] Local session broker and `start_sport_compass`, `ask_sport_compass`, `end_sport_compass` contracts; OAuth transport is not implemented
+- [x] Reject model-provided identities/session variables; non-confirming external-input boundary and mocked caller-isolation tests
+- [ ] OAuth-protected MCP HTTP transport around the implemented JavaScript core
+- [ ] Trusted external confirmation UX before exposing a support-write tool
+- [ ] Optional later: feedback tool with a defined retention policy
+- [x] Local input validation and payload limits; transport limits still required
+- [x] Opaque principal-bound handle mapping; do not trust model-provided ChatGPT conversation IDs
+- [x] Local contracts expose no arbitrary SOQL, Apex, object, or endpoint execution
+- [x] Fifteen mocked Agent API/session/tool-contract tests
 - [ ] Integration tests with live Agent API
 - [ ] ChatGPT app instructions and tool descriptions
 

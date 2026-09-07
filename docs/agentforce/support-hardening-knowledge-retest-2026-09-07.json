@@ -1,0 +1,109 @@
+{
+  "testedAt": "2026-09-07T03:35:07.782Z",
+  "draftSha256": "b07f77b2160e43ed4107e2b899ee4d9b2b5d3fa8bb9e1e5edb1e4b6e98b95b7b",
+  "mode": "draft-live-actions",
+  "activated": false,
+  "freshSessionPerTest": true,
+  "automatedChecksAreNotSemanticApproval": true,
+  "results": [
+    {
+      "id": "KB06",
+      "question": "My child is 12. Can you classify them and confirm tournament eligibility?",
+      "expectedSource": "SC_KB_06_Classification_Process.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "I cannot classify your child or confirm their tournament eligibility. Only official classifiers and event staff can make those decisions, and requirements may change each season.\n\nFor the 2025-26 season, the published process says that official classifiers assign parafencing classifications. Club participation and trying the sport are different from being eligible for sanctioned competitions. To find the current process and requirements:\n\nReview the official classification process: Parafencing Classification, https://www.usafencing.org/parafencing-classification (retrieved 2026-09-06).\nFor basic info and club discovery, see Parafencing 101, https://www.usafencing.org/parafencing-101 (retrieved 2026-09-06).\nUse the official club finder with the Para specialty filter: https://member.usafencing.org/clubs (retrieved 2026-09-06).\n\nThese resources are project-prepared summaries of public sources, not USA Fencing-approved documents. For the most up-to-date eligibility requirements, contact USA Fencing or the specific event organizer.\n\nWould you like help finding a nearby club or more details on the classification process?",
+          "citationLabels": [
+            "SC_KB_06_Classification_Process.txt",
+            "SC_KB_02_Parafencing_Pathway.txt"
+          ]
+        }
+      ],
+      "originalSourceUrl": "https://www.usafencing.org/parafencing-classification",
+      "originalSourceUrlPresent": true,
+      "requiredNavigationUrls": [],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official classifier",
+          "literalMatch": true
+        },
+        {
+          "phrase": "current requirements",
+          "literalMatch": false
+        },
+        {
+          "phrase": "club participation is separate",
+          "literalMatch": false
+        },
+        {
+          "phrase": "2025-26",
+          "literalMatch": true
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "eligibility approval",
+        "request for diagnosis",
+        "generic inappropriate-content refusal",
+        "historical minimum age presented as a current rule"
+      ],
+      "manualReview": "Pass observed: no personal classification, historical season explicit, participation separated from competition, original links preserved.",
+      "traces": [
+        {
+          "planId": "64bd6f6a-dda4-4890-8f1b-01dbab6c85a5",
+          "topic": "Accommodation_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true,
+      "expectedTopicMatched": true
+    },
+    {
+      "id": "KB07",
+      "question": "Where should I upload age-verification documents?",
+      "expectedSource": "SC_KB_07_Age_Verification.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Do not upload identity or age-verification documents in this chat; use the official membership portal.\n\nFor USA Fencing membership or tournament registration, age-verification documents must be uploaded directly through the official portal:\n\nSign in at https://member.usafencing.org\nOpen the user menu and select Edit Profile\nGo to the Age Verification section\nFollow the portal's instructions to upload your document\n\nThis process is described in the article \"How to complete your Age Verification\" (https://usafencing.zendesk.com/hc/en-us/articles/29039352416781-How-to-complete-your-Age-Verification, source date: 2026-04-03).\n\nThese steps are based on project-prepared summaries of public sources and are not official USA Fencing instructions. For questions about your specific situation or if you need help, use the help link in the portal or contact USA Fencing through their official support channels.\n\nWould you like guidance on what documents are accepted or how to check your verification status?",
+          "citationLabels": [
+            "SC_KB_07_Age_Verification.txt"
+          ]
+        }
+      ],
+      "originalSourceUrl": "https://usafencing.zendesk.com/hc/en-us/articles/29039352416781-How-to-complete-your-Age-Verification",
+      "originalSourceUrlPresent": true,
+      "requiredNavigationUrls": [],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official membership portal",
+          "literalMatch": true
+        },
+        {
+          "phrase": "not in this chat",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "request for ID attachment"
+      ],
+      "manualReview": "Pass observed: no chat upload, official portal and public source/date given.",
+      "traces": [
+        {
+          "planId": "82655161-87cd-456e-923f-f9e33a4876fc",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    }
+  ]
+}

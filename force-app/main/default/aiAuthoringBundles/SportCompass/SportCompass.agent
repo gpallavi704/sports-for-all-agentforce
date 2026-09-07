@@ -51,6 +51,8 @@ variables:
         description: "Internal signed support draft token. Set only from Prepare action output; never slot fill or reveal."
     support_draft: mutable string = ""
         description: "Complete data and destination displayed before consent."
+    support_reply: mutable string = ""
+        description: "Deterministic classification of the actual latest reply; never model slot-filled."
     support_status: mutable string = ""
         description: "Last server-confirmed support state."
     support_case_id: mutable string = ""
@@ -70,7 +72,7 @@ start_agent agent_router:
         model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
     reasoning:
         instructions: ->
-            if @variables.support_token != "" and @variables.support_case_id == "":
+            if @variables.support_token and not @variables.support_case_id:
                 transition to @subagent.Support_Request
             | Route preparing, confirming, revising or retrying a human support request to Support_Request. First route requests for personal classification or eligibility decisions and safety-reporting to Accommodation_Support. Otherwise route requests to find, compare or recommend local programs to Find_My_Sport, including requests with self-selected access preferences or an age for class discovery. An access preference in a search is not a request for medical classification. Route general accessibility, wheelchair fencing and accommodation questions to Accommodation_Support; fencing basics and general club-finder instructions to Fencing_Program_Guide; administrative registration and document-upload guidance to Registration_Support; and greetings or unrelated requests to Scope_Helper. Disability questions are welcome and in scope. These are the only custom paths.
         actions:
@@ -326,34 +328,62 @@ subagent Support_Request:
     description: "Prepare, revise, confirm or retry a synthetic human-support Case for a selected demo program. No medical intake, actual callback, enrollment or booking."
     reasoning:
         instructions: ->
+            run @actions.Review_Reply
+                with latestUserMessage = @system_variables.user_input
+                set @variables.support_reply = @outputs.state
+            if @variables.support_reply == "DECLINED" or @variables.support_reply == "REVISE":
+                set @variables.support_token = ""
+                set @variables.support_draft = ""
+                set @variables.support_status = @variables.support_reply
+                | The pending draft has been discarded in conversation state. No new Case was created; existing Cases were not deleted. Do not prepare another draft in this turn. For a revision, ask what should change; otherwise acknowledge cancellation and offer to return to fencing guidance.
+            if not @variables.support_token and @variables.support_reply == "CONFIRM":
+                | There is no pending draft to confirm. A yes cannot restore a cancelled or superseded request. Say that no new Case was created and ask the user to describe a new request if desired. Do not ask for another yes or promise that another yes will create a Case. Do not prepare a draft from an isolated confirmation.
             | Help with a synthetic support request for a program returned by matching. Use its returned internal ID, never invent one. Ask the user which program if unclear. The four allowed reasons are Accessibility information needs verification, Equipment question, Getting started, Registration guidance. Do not ask for medical narratives, contact details, age or identity documents. No email, SMS, phone or real staff response is available. Preparation saves nothing. Display the complete returned draft verbatim and ask whether to create this demo Case. Only a later clear yes confirms; maybe, probably, I guess so, silence or qualified yes creates nothing. Never reveal the signed token. Never invent a Case ID or claim success without CREATED or EXISTING from the action.
-            if @variables.support_token != "":
+            if @variables.support_token:
                 | The pending complete draft is: {!@variables.support_draft}
                 | Evaluate this reply with Confirm_Support; its input is bound to the actual user message, not a paraphrase. Respect AWAITING_CONSENT, DECLINED, REVISE, STALE_DRAFT and UNAVAILABLE. If declined or changed, discard the old draft before preparing a new one. Do not reinterpret the answer into consent. If CREATED or EXISTING, give the returned Case number and ID and say it is in the demo support queue; this is not an official USA Fencing staff handoff.
-            if @variables.support_case_id != "":
+            if @variables.support_case_id:
                 | This request has already created Case {!@variables.support_case_number} with ID {!@variables.support_case_id}. Do not prepare a replacement to satisfy a duplicate retry; use Confirm_Support with the existing token if the user explicitly confirms again.
         actions:
             Prepare_Support: @actions.Prepare_Support
-                available when @variables.support_token == ""
+                available when not @variables.support_token and @variables.support_reply != "DECLINED" and @variables.support_reply != "REVISE" and @variables.support_reply != "CONFIRM"
                 with programId = ...
                 with category = ...
                 set @variables.support_token = @outputs.token
                 set @variables.support_draft = @outputs.draft
                 set @variables.support_status = @outputs.status
+                set @variables.support_case_id = ""
+                set @variables.support_case_number = ""
             Confirm_Support: @actions.Confirm_Support
-                available when @variables.support_token != ""
+                available when @variables.support_token and @variables.support_reply == "CONFIRM"
                 with token = @variables.support_token
                 with latestUserMessage = @system_variables.user_input
                 set @variables.support_status = @outputs.status
                 set @variables.support_case_id = @outputs.caseId
                 set @variables.support_case_number = @outputs.caseNumber
     after_reasoning:
+        if @variables.support_token is None:
+            set @variables.support_token = ""
+        if @variables.support_case_id is None:
+            set @variables.support_case_id = ""
         if @variables.support_status == "DECLINED" or @variables.support_status == "REVISE" or @variables.support_status == "STALE_DRAFT":
             set @variables.support_token = ""
             set @variables.support_draft = ""
             set @variables.support_case_id = ""
             set @variables.support_case_number = ""
     actions:
+        Review_Reply:
+            label: "Review Support Reply"
+            description: "Pure read-only reply check before reasoning. Cannot write records or grant consent through interpretation."
+            target: "apex://ReviewSportsSupportReplyAction"
+            require_user_confirmation: False
+            inputs:
+                latestUserMessage: string
+                    is_required: False
+                    is_user_input: False
+            outputs:
+                state: string
+                    is_displayable: False
         Prepare_Support:
             label: "Prepare Demo Support Draft"
             description: "Create a signed draft without saving a record. Show the entire draft to the user before asking for consent."

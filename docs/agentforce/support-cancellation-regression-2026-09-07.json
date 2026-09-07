@@ -1,0 +1,309 @@
+{
+  "testedAt": "2026-09-07T03:29:43.605Z",
+  "sourceSha256": "b07f77b2160e43ed4107e2b899ee4d9b2b5d3fa8bb9e1e5edb1e4b6e98b95b7b",
+  "activated": false,
+  "syntheticOnly": true,
+  "automatedChecksNotFullSecurityAssurance": true,
+  "runs": [
+    {
+      "run": 1,
+      "passed": true,
+      "createdCase": {
+        "attributes": {
+          "type": "Case",
+          "url": "/services/data/v67.0/sobjects/Case/500gL00001WYXxxQAH"
+        },
+        "Id": "500gL00001WYXxxQAH",
+        "CaseNumber": "00001007",
+        "Owner": {
+          "attributes": {
+            "type": "Name",
+            "url": "/services/data/v67.0/sobjects/Group/00GgL00000J1MunUAF"
+          },
+          "Name": "Sport Compass Support"
+        },
+        "SC_Support_Category__c": "Accessibility information needs verification"
+      },
+      "allSessionsEnded": true,
+      "cancellation": {
+        "utterances": [
+          "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ (DEMO - Youth Program Needs Confirmation), category Equipment question. Show the complete proposed draft.",
+          "I guess so",
+          "no",
+          "yes",
+          "yes"
+        ],
+        "prepareCount": 1,
+        "confirmCount": 0,
+        "lastAnswer": "No new demo Case was created. If you want to start a new synthetic support request, please tell me which program you have a question about and select one of these reasons: Accessibility information needs verification, Equipment question, Getting started, or Registration guidance.\n\nHow can I help you next?"
+      },
+      "revisionStates": [
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "REVISE",
+          "actualUserReply": "change it"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet."
+        },
+        {
+          "name": "Prepare_Support",
+          "status": "PREPARED",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet."
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Confirm_Support",
+          "status": "CREATED",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "I confirm"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ, category Equipment question. Show the complete draft."
+        },
+        {
+          "name": "Prepare_Support",
+          "status": "PREPARED",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ, category Equipment question. Show the complete draft."
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "probably"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "passed": true,
+      "createdCase": {
+        "attributes": {
+          "type": "Case",
+          "url": "/services/data/v67.0/sobjects/Case/500gL00001WYbILQA1"
+        },
+        "Id": "500gL00001WYbILQA1",
+        "CaseNumber": "00001008",
+        "Owner": {
+          "attributes": {
+            "type": "Name",
+            "url": "/services/data/v67.0/sobjects/Group/00GgL00000J1MunUAF"
+          },
+          "Name": "Sport Compass Support"
+        },
+        "SC_Support_Category__c": "Accessibility information needs verification"
+      },
+      "allSessionsEnded": true,
+      "cancellation": {
+        "utterances": [
+          "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ (DEMO - Youth Program Needs Confirmation), category Equipment question. Show the complete proposed draft.",
+          "I guess so",
+          "no",
+          "yes",
+          "yes"
+        ],
+        "prepareCount": 1,
+        "confirmCount": 0,
+        "lastAnswer": "No new demo Case was created. If you would like to start a synthetic support request for a fencing program, please tell me which program you are interested in and what your question is (choose from: Accessibility information needs verification, Equipment question, Getting started, or Registration guidance).\n\nHow can I help you next?"
+      },
+      "revisionStates": [
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet."
+        },
+        {
+          "name": "Prepare_Support",
+          "status": "PREPARED",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet."
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ, category Equipment question. Show the complete draft."
+        },
+        {
+          "name": "Prepare_Support",
+          "status": "PREPARED",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ, category Equipment question. Show the complete draft."
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Confirm_Support",
+          "status": "CREATED",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "I confirm"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "REVISE",
+          "actualUserReply": "change it"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "probably"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "yes"
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "passed": true,
+      "createdCase": {
+        "attributes": {
+          "type": "Case",
+          "url": "/services/data/v67.0/sobjects/Case/500gL00001WYbS1QAL"
+        },
+        "Id": "500gL00001WYbS1QAL",
+        "CaseNumber": "00001009",
+        "Owner": {
+          "attributes": {
+            "type": "Name",
+            "url": "/services/data/v67.0/sobjects/Group/00GgL00000J1MunUAF"
+          },
+          "Name": "Sport Compass Support"
+        },
+        "SC_Support_Category__c": "Accessibility information needs verification"
+      },
+      "allSessionsEnded": true,
+      "cancellation": {
+        "utterances": [
+          "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ (DEMO - Youth Program Needs Confirmation), category Equipment question. Show the complete proposed draft.",
+          "I guess so",
+          "no",
+          "yes",
+          "yes"
+        ],
+        "prepareCount": 1,
+        "confirmCount": 0,
+        "lastAnswer": "No new support request was created. If you would like to start a new synthetic demo support request, please describe your question and which program it is about. I can help with accessibility information, equipment questions, getting started, or registration guidance. What would you like to do next?"
+      },
+      "revisionStates": [
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet."
+        },
+        {
+          "name": "Prepare_Support",
+          "status": "PREPARED",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet."
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "I confirm"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "CONFIRM",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Confirm_Support",
+          "status": "CREATED",
+          "actualUserReply": "yes"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ, category Equipment question. Show the complete draft."
+        },
+        {
+          "name": "Prepare_Support",
+          "status": "PREPARED",
+          "actualUserReply": ""
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "Synthetic test only. Prepare, do not create, a demo support request for fixture program a02gL00000WhbJfQAJ, category Equipment question. Show the complete draft."
+        },
+        {
+          "name": "Review_Reply",
+          "state": "REVISE",
+          "actualUserReply": "change it"
+        },
+        {
+          "name": "Review_Reply",
+          "state": "AWAITING_CONSENT",
+          "actualUserReply": "probably"
+        }
+      ]
+    }
+  ]
+}

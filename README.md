@@ -1,6 +1,6 @@
 # Sports for All — Sport Compass
 
-An accessible, multilingual Agentforce solution that helps athletes, parents, coaches, and volunteers discover inclusive sports programs, understand accommodations, and receive personalized next steps.
+An Agentforce hackathon prototype helping athletes, parents, coaches and volunteers navigate fencing guidance, synthetic inclusive-program examples and next steps. Accessibility and reviewed multilingual support are product goals, not completed certifications.
 
 - **Agent name:** Sport Compass
 - **Salesforce/API identifier:** `SportCompass`
@@ -8,7 +8,7 @@ An accessible, multilingual Agentforce solution that helps athletes, parents, co
 
 The Builder Track MVP uses fencing and wheelchair fencing as its richest reference journey while demonstrating a reusable architecture for additional sports and governing bodies.
 
-## MVP Architecture
+## Target MVP Architecture
 
 ```text
 ChatGPT App
@@ -21,15 +21,15 @@ ChatGPT App
                 -> Service Cloud Case escalation
 ```
 
-## Core Capabilities
+## Scope and capabilities
 
 - Inclusive sport and program discovery
 - Grounded USA Fencing guidance with citations
 - Personalized next-step checklists
 - Accessibility and accommodation support
-- Multilingual interaction
+- Planned reviewed multilingual interaction
 - Responsible-AI boundaries and human escalation
-- Interaction and unmet-demand measurement
+- Synthetic unresolved-support reporting; broader interaction measurement is planned
 
 ## Repository Layout
 
@@ -41,7 +41,11 @@ ChatGPT App
 
 ## Current Status
 
-Architecture and MVP scope are established. Salesforce metadata, seed data, Agentforce configuration, and MCP integration will be added incrementally.
+The inactive Salesforce draft includes ten sourced knowledge summaries, deterministic demo-program matching and a consent-controlled synthetic Case → support queue handoff. Twenty Apex tests and three repeated support journeys pass. Seven synthetic Cases are retained as demo/test evidence.
+
+The [local integration core](mcp-server/README.md) includes an Agent API client, session broker and proposed MCP contracts with 15 mocked tests. It is **not deployed or connected to ChatGPT**; authentication, hosting and activation remain release gates. External model-produced text is not accepted as human consent.
+
+See [current status and open items](docs/STATUS.md), [build plan](docs/BUILD_PLAN.md) and [support hardening](docs/agentforce/SUPPORT_HARDENING.md). Historical diagrams describe the intended architecture, not proof that every component is live.
 
 ## Data Policy
 

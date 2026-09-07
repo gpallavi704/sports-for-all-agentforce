@@ -15,9 +15,11 @@ The [architecture-aligned findings](ARCHITECTURE_ALIGNED_FINDINGS.md) preserve t
 - Ten knowledge fixtures returned expected source documents and readable public URLs; targeted classification/privacy/navigation checks passed in observed tests. Broader acceptance remains open.
 - Read-only MatchSportsProgramsAction and its class-access-only permission set deployed. Ten Apex tests passed with 100% matcher line coverage, including object denial, record sharing and hidden parent records. Line coverage is not proof of every security property.
 - Matcher wired into Find My Sport in the inactive draft. Live demo matching, no-match and private-data/write-request refusal checks passed; unknown accessibility remains visible.
-- Consent-controlled demo Case service, signed draft preparation, actual-user-message binding, native confirmation and idempotent retries deployed; 18 combined Apex tests passed.
+- Consent-controlled demo Case service, signed draft preparation, actual-user-message binding, native confirmation and idempotent retries deployed; 20 combined Apex tests passed.
+- Deterministic pre-reasoning reply review clears cancelled/superseded drafts. Bare confirmations cannot prepare replacement drafts. Final three-run live suite passed cancellation → yes → yes, revision, hesitation, creation and duplicate-retry checks.
 - Sport Compass Support queue, Case record type/fields, builder operator access, two list views and an unresolved-category summary report deployed.
-- Live matching → displayed draft → hesitant consent/zero Cases → explicit/native confirmation → actual Case 00001003 → queue/list/report verified. One synthetic Case retained for the demo; no real participant data or external callback channel.
+- Live matching → displayed draft → hesitant consent/zero Cases → explicit/native confirmation → actual Case 00001003 → queue/list/report verified. Six later acceptance-test Cases (00001004–00001009) are retained alongside it; no real participant data or external callback channel.
+- Local Agent API client, caller-bound session broker and three proposed MCP tool contracts; 15 mocked Node tests pass. No listener, OAuth middleware, credential provider, hosting or ChatGPT connection exists yet. Outbound access is disabled by default. See [integration core](../mcp-server/README.md).
 
 See [program matching](agentforce/PROGRAM_MATCHING.md) and [support handoff](agentforce/SUPPORT_HANDOFF.md) for evidence and limits. The older dated checkpoints are historical evidence, not the current build state.
 
@@ -25,9 +27,9 @@ See [program matching](agentforce/PROGRAM_MATCHING.md) and [support handoff](age
 
 | Work | Completion condition |
 | --- | --- |
-| Support acceptance/hardening | Repeat live refusal/revision/error paths; validate cancellation and expiry across turns, concurrency and caller/session isolation. Keep intake synthetic and structured; no callback channel is implemented. |
+| Support acceptance/hardening | Final cancellation/revision/retry suite passed three times. Live expiry/error/concurrency and external caller/session isolation remain unverified. Keep intake synthetic and structured; no callback channel is implemented. |
 | Agent API | Confirm external-client-app capability and minimum OAuth scopes; scoped runtime identity; commit/activation only after approval; start/send/end session, error and isolation tests. |
-| MCP and ChatGPT | Tool contracts, protected server deployment, secret management, caller-to-session binding, input/rate limits, no arbitrary SOQL, live end-to-end test. Confirm integration ownership/hosting with Jon. |
+| MCP and ChatGPT | Local contracts/session binding/input limits are mocked-tested. Still need OAuth-protected transport, hosting, credential lifecycle and live tests. External model text cannot count as human consent: current adapter is non-confirming guidance only. Confirm integration ownership/hosting and trusted confirmation UX with Jon. |
 | End-to-end demo | Combine tested knowledge guidance and matching/support components into one recorded journey, then repeat through the chosen client. Current proof uses direct draft preview, not ChatGPT. |
 
 ## Pending — evidence and team decisions
@@ -37,7 +39,7 @@ See [program matching](agentforce/PROGRAM_MATCHING.md) and [support handoff](age
 - Confirm submission deadline, demo duration, actual Builder Track deliverable rules and required skill access.
 - Run the hackathon's Accessibility Expert Skill and RAI Self Check Skill; record findings and fixes. Neither skill is available in this Codex session's installed skill list; obtain the organizer-provided tools/environment.
 - Keyboard/screen-reader review of the actual client, plain-language review, prompt-injection and multi-turn regressions, stale/conflicting-source handling, failure/rate-limit tests.
-- Repeat key agent scenarios at least three times, including hesitant consent creating zero Cases and retries creating exactly one Case. One live positive/hesitation journey and unit-level retry checks currently pass; broader repeated acceptance remains pending.
+- Three repeated support journeys now pass, including hesitation/cancellation creating zero new Cases and retries leaving one Case per confirmed request. Repeat other knowledge, accessibility and failure scenarios before release; three runs are not a production reliability estimate.
 - Complete Data Cloud dataspace policy review before private ingestion. CRM permissions alone do not govern Data Cloud.
 - Privacy/retention design for public interaction telemetry and support intake; authenticated own-member-record access is not implemented or required for anonymous discovery.
 - Demo recording, architecture update, setup guide, reproducible test evidence and honest impact/scalability claims.

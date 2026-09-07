@@ -56,13 +56,20 @@ public with sharing class SportCompassSupportService {
             r.token=payload+'.'+signature;r.draft=d.text;return r;
         } catch(Exception e){return result('UNAVAILABLE','Support preparation is unavailable or the program is not accessible. No Case was created.');}
     }
+    public static String reviewReply(String latestUserMessage) {
+        String answer=latestUserMessage==null?'':latestUserMessage.trim().toLowerCase();
+        if(new Set<String>{'no','no thanks','cancel','discard','do not create','do not create it'}.contains(answer))return 'DECLINED';
+        if(new Set<String>{'change','change it','edit','revise'}.contains(answer)||answer.startsWith('change it to '))return 'REVISE';
+        if(new Set<String>{'yes','yes please','yes, please','confirm','i confirm'}.contains(answer))return 'CONFIRM';
+        return 'AWAITING_CONSENT';
+    }
     public static Result confirm(String token,String latestUserMessage) {
         try {
             authorize();
-            String answer=latestUserMessage==null?'':latestUserMessage.trim().toLowerCase();
-            if(new Set<String>{'no','no thanks','cancel','discard'}.contains(answer)) return result('DECLINED','No Case was created. Discard this draft.');
-            if(new Set<String>{'change','change it','edit','revise'}.contains(answer)) return result('REVISE','No Case was created. Discard this token and prepare a revised draft.');
-            if(!new Set<String>{'yes','yes please','yes, please','confirm','i confirm'}.contains(answer))
+            String reply=reviewReply(latestUserMessage);
+            if(reply=='DECLINED') return result('DECLINED','No new Case was created. Discard this draft; existing Cases are not deleted.');
+            if(reply=='REVISE') return result('REVISE','No new Case was created. Discard this token and prepare a revised draft.');
+            if(reply!='CONFIRM')
                 return result('AWAITING_CONSENT','No Case was created. Consent must be an unambiguous yes to the displayed draft. Maybe, probably, silence or qualified consent is not confirmation.');
             if(String.isBlank(token)||token.length()>12000) throw new SupportException('Invalid token');
             List<String> parts=token.split('\\.');
