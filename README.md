@@ -8,7 +8,7 @@ This Agentforce for Good Builder Track MVP focuses on fencing. Other sports, rev
 
 ## What works today
 
-- Version 15 is active in the development org.
+- Version 17 is active in the development org.
 - Ten indexed, project-prepared summaries ground guidance in USA Fencing and Zendesk sources. They are not USA Fencing-approved.
 - Two source-checked public club listings are separate from explicitly fictional program examples. Accessibility, equipment and parafencing availability require provider confirmation.
 - Apex performs deterministic discovery using mandatory current-message lookups.

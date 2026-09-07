@@ -7,14 +7,12 @@ function sf(args) {
   assert.equal(value.status,0);return value.result;
 }
 let session;
-const testRecipient=process.env.SPORT_COMPASS_TEST_EMAIL;
-assert.ok(testRecipient,'Set SPORT_COMPASS_TEST_EMAIL to the configured demo inbox; it is not logged.');
 try {
   session=sf(['agent','preview','start','--api-name','SportCompass']).sessionId;
   const turns=[
     ['Find a real fencing club in Salt Lake City, Utah.',/Salt City Swords/],
     ['What about Kaysville, Utah?',/Wasatch Fencing/],
-    ['Help me email this club about trying wheelchair fencing.',/demo/i]
+    ['Help me email this club about trying wheelchair fencing.',/Sport Compass Team/]
   ];
   for(const [question,expected] of turns) {
     const reply=sf(['agent','preview','send','--api-name','SportCompass','--session-id',session,'--utterance',question]);
@@ -22,8 +20,8 @@ try {
     assert.match(text,expected);
     if(question.startsWith('What about'))assert.doesNotMatch(text,/Salt City Swords|no reviewed/i);
     if(question.startsWith('Help me')) {
-      assert.ok(text.includes(testRecipient),'Expected configured test recipient');
-      assert.match(text,/not.*club|test (?:address|recipient|inbox)|demo.only/i);
+      assert.doesNotMatch(text,/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|mailto:|URL_Redacted|Open in email|DEMO ONLY|\u2014/i);
+      assert.match(text,/not.*club/i);
       assert.match(text,/draft|review|copy/i);
       assert.doesNotMatch(text,/I (?:have )?(?:sent|emailed)|successfully sent/i);
     }

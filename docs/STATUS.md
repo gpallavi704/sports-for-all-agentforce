@@ -2,16 +2,18 @@
 
 Checkpoint: September 6 Pacific / September 7 UTC, 2026. This page supersedes active-version and pending-work statements in earlier checkpoints.
 
-Latest update: version 15 is active with mobile-length instructions and no automatic closing offers. Version 11 replaced the historical classification summary in the indexed library and the user's six-turn test returned helpful classification boundaries without old numerical requirements. See [current presentation evidence](agentforce/RESPONSE_PRESENTATION_V12.md). The 43 local tests pass. Historical CLI URL-check failures remain documented in [channel limits](agentforce/RESPONSE_PRESENTATION_V10.md). The full current-version support journey and headless client remain pending.
+Latest update: version 17 is active with mobile-length instructions and no automatic closing offers. Version 11 replaced the historical classification summary in the indexed library and the user's six-turn test returned helpful classification boundaries without old numerical requirements. See [current presentation evidence](agentforce/RESPONSE_PRESENTATION_V12.md). The 43 local tests pass. Historical CLI URL-check failures remain documented in [channel limits](agentforce/RESPONSE_PRESENTATION_V10.md). The full current-version support journey and headless client remain pending.
 
 ## Implemented
 
-Latest support checkpoint: the exact confirmation phrase is fixed and a live CLI regression created only synthetic Case 00001012, with no duplicate. The subsequent conversational disclosure deployment passed 12 support Apex tests; its fresh browser retest remains pending. See [support update](agentforce/SUPPORT_CONVERSATIONAL_V12.md). Version 15 remains active.
+Email presentation: version 17 uses a copyable draft addressed to Sport Compass Team. The real test inbox stays in org configuration and is omitted from action output. The redacted mailto/button path is removed; sending is not implemented. See [Preview fallback](agentforce/EMAIL_PREVIEW_V16.md).
+
+Latest support checkpoint: the exact confirmation phrase is fixed and a live CLI regression created only synthetic Case 00001012, with no duplicate. The subsequent conversational disclosure deployment passed 12 support Apex tests; its fresh browser retest remains pending. See [support update](agentforce/SUPPORT_CONVERSATIONAL_V12.md). Version 17 remains active.
 
 - Salesforce DX project, dedicated agent runtime identity and scoped permissions.
 - Three discovery objects with 39 fields, private sharing and six synthetic records: one sport, one organization, three published programs and one unpublished negative fixture.
 - Ten indexed public-source summaries, prepared by the project and not approved by USA Fencing.
-- Version 15 active, with seven routes, eight external action definitions and twenty exact public URLs.
+- Version 17 active, with seven routes, eight external action definitions and twenty exact public URLs.
 - Two source-checked public club identities: Salt City Swords in Salt Lake City and Wasatch Fencing in Kaysville. Accessibility, equipment and class availability remain unverified.
 - Separate real-club and fictional-program actions bound to the actual current message before reasoning.
 - Signed support drafts, deterministic reply review and confirmation, expiry and server-side validation, idempotent synthetic Case creation and a fixed queue. Cancellation and revision invalidate pending drafts.

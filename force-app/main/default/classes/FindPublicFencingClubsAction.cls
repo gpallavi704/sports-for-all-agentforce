@@ -122,20 +122,18 @@ public with sharing class FindPublicFencingClubsAction {
             && listing.Source_Checked_On__c >= Date.today().addDays(-90);
     }
 
-    // Reviewed public contact routes only. This constructs a draft URL; it never sends mail.
+    // Copyable prototype draft only. The configured test inbox stays out of model-visible output.
     @TestVisible private static Map<String,Object> emailHandoff(String website) {
         Date checked=Date.newInstance(2026,9,7);
         if(Date.today()<checked || Date.today()>checked.addDays(90)) return null;
         if(!WEBSITES.contains(website))return null;
         String recipient=System.Label.SportCompass_Demo_Email.trim();
         if(!Pattern.matches('[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}',recipient))return null;
-        String subject='DEMO ONLY - Beginner fencing inquiry';
+        String subject='Beginner fencing inquiry';
         String body='Hello, I am interested in an introductory fencing visit. Do you offer wheelchair fencing, step-free access and loaner frames or equipment? Please let me know the available beginner options. Thank you.';
-        return new Map<String,Object>{'recipient'=>recipient,'subject'=>subject,'body'=>body,
+        return new Map<String,Object>{'recipientLabel'=>'Sport Compass Team','subject'=>subject,'body'=>body,
             'sourceUrl'=>website,'checkedOn'=>String.valueOf(checked),
-            'mailtoUrl'=>'mailto:'+recipient+'?subject='+EncodingUtil.urlEncode(subject,'UTF-8').replace('+','%20')
-                +'&body='+EncodingUtil.urlEncode(body,'UTF-8').replace('+','%20'),
             'isDemo'=>true,
-            'delivery'=>'DEMO ONLY: user-approved test recipient, not the club email. Opens a draft only. Review and press Send yourself. Nothing is sent by Sport Compass.'};
+            'delivery'=>'Prototype destination: project team, not the club. Copyable draft only; nothing has been sent.'};
     }
 }

@@ -122,12 +122,13 @@ private class FindPublicFencingClubsActionTest {
         Integer writes=Limits.getDmlStatements(),calls=Limits.getCallouts();
         Map<String,Object> contact=FindPublicFencingClubsAction.emailHandoff('https://www.saltcityswords.com/');
         if(Date.today()>=Date.newInstance(2026,9,7)&&Date.today()<=Date.newInstance(2026,12,6)) {
-            System.assertEquals(System.Label.SportCompass_Demo_Email.trim(),contact.get('recipient'));
-            String url=(String)contact.get('mailtoUrl');
-            System.assert(url.startsWith('mailto:'+System.Label.SportCompass_Demo_Email.trim()+'?subject='));
+            System.assertEquals('Sport Compass Team',contact.get('recipientLabel'));
+            System.assertEquals('Beginner fencing inquiry',contact.get('subject'));
+            System.assert(!contact.containsKey('recipient'));
+            System.assert(!contact.containsKey('mailtoUrl'));
+            System.assert(!JSON.serialize(contact).contains(System.Label.SportCompass_Demo_Email.trim()));
             System.assertEquals(true,contact.get('isDemo'));
-            System.assert(url.contains('&body=Hello%2C%20'));
-            System.assert(!url.contains('&cc=')&&!url.contains('&bcc='));
+            System.assert(((String)contact.get('delivery')).contains('nothing has been sent'));
         } else System.assertEquals(null,contact);
         System.assertEquals(null,FindPublicFencingClubsAction.emailHandoff('https://evil.example/'));
         System.assertEquals(writes,Limits.getDmlStatements());System.assertEquals(calls,Limits.getCallouts());

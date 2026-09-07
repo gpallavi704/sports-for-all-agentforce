@@ -8,7 +8,7 @@ Sports for All / Sport Compass, API name `SportCompass`. Fencing and wheelchair 
 
 ## 1. Accept the Salesforce journey
 
-Version 15 is active. Selected Apex tests passed 30/30 and local integration tests passed 43/43. Support passed on v8; current presentation evidence is recorded in STATUS.md.
+Version 17 is active. Selected Apex tests passed 30/30 and local integration tests passed 43/43. Support passed on v8; current presentation evidence is recorded in STATUS.md.
 
 - [ ] Run one uninterrupted current-version browser journey through matching, consent and support queue verification.
 - [ ] Verify exact citations, unknown accessibility, real/demo boundaries and no invented records.
