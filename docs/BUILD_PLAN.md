@@ -2,7 +2,7 @@
 
 ## Mission
 
-Latest security checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Live retrieval under this baseline, generic-action cleanup and Data Cloud policy review are still pending. See [security cleanup](agentforce/SECURITY_CLEANUP.md); older checkpoint paragraphs below describe the state before this change.
+Latest checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Generic template routes are removed and two live knowledge lookups succeeded under this baseline. Original-source URLs render URL_Redacted, so citation usability remains unresolved. See [routing and live tests](agentforce/DRAFT_ROUTING_AND_LIVE_TESTS.md) and [security cleanup](agentforce/SECURITY_CLEANUP.md). Older checkpoint paragraphs below describe earlier states; Data Cloud policy review and full acceptance testing remain open.
 
 Deliver one credible, accessible journey from ChatGPT through MCP to Salesforce Agentforce:
 
@@ -113,13 +113,13 @@ Deliverables:
 
 - [x] Create Service Agent labeled `Sport Compass` (Version 1 Draft)
 - [x] Connect library API `USA_Fencing_Approved_Knowledge`; current label `Sport Compass Fencing Sources` (10 public-source summaries replacing synthetic PDFs)
-- [x] Configure global instructions and disclosure (preview welcome still needs verification)
+- [x] Configure global instructions and disclosure; initial live-preview welcome verified
 - [x] Draft subagent: Find My Sport
 - [x] Draft subagent: Fencing Program Guide
 - [x] Draft subagent: Accommodation Support
 - [x] Draft subagent: Registration Support
 - [x] Attach Answer Questions with Knowledge to fencing, accommodation and registration subagents
-- [ ] Remove unrelated template routing/actions and verify effective routing
+- [x] Remove unrelated template routing/actions; registration, accommodation and scope routes trace-verified (remaining routes need tests)
 - [ ] Add search, match, checklist, Case, and interaction actions
 - [ ] Configure low-confidence and sensitive-topic escalation
 - [ ] Run at least 10 Agent Builder tests

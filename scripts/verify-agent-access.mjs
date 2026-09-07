@@ -42,4 +42,4 @@ for (const name of ['AgentforceServiceAgentUserPsg', 'SportCompass_Discovery_Rea
 }
 const licenses = query("SELECT PermissionSetLicense.DeveloperName FROM PermissionSetLicenseAssign WHERE AssigneeId = '" + userId + "'").map(r => r.PermissionSetLicense.DeveloperName);
 for (const name of baseline.licenses) assert.ok(licenses.includes(name), 'Missing runtime license: ' + name);
-console.log(JSON.stringify({ passed: true, deniedObjects: objects.length, checkedDemoRecords: records.length, runtimeAssignmentsAndLicensesPresent: true, scope: 'Effective object/record access only; live retrieval, FLS, action context and Data Cloud policy still need testing.' }, null, 2));
+console.log(JSON.stringify({ passed: true, deniedObjects: objects.length, checkedDemoRecords: records.length, runtimeAssignmentsAndLicensesPresent: true, scope: 'Effective object/record access only; this script does not test live retrieval, FLS, action context or Data Cloud policy.' }, null, 2));

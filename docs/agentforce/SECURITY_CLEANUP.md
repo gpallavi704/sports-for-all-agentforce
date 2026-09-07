@@ -27,8 +27,8 @@ Do not confuse these checks with an authenticated end-user runtime test or full 
 
 ## Remaining activation gates
 
-1. Run actual knowledge retrieval as the agent to confirm the minimal baseline is sufficient. Do not claim retrieval is verified merely because Knowledge permission and AI licenses remain. If Salesforce requires additional platform grants, add only demonstrated dependencies and repeat access checks.
-2. Remove unrelated generic service-template subagents/actions from the draft. They still exist and can fail under the reduced permissions.
+1. Two actual knowledge lookups now succeeded in live-actions draft preview under this baseline; full retrieval acceptance and usable original-source URLs remain open. See [runtime smoke tests](DRAFT_ROUTING_AND_LIVE_TESTS.md). Do not treat draft preview as a published Agent API test.
+2. Unrelated generic service-template subagents/actions have now been removed and the saved draft read back. Registration, accommodation and greeting routes were trace-verified; remaining paths need testing.
 3. Review the generated NextGen permission set's default Data Cloud dataspace scope: dataAccessLevel=ALL and objectAccessLevel=BY_POLICY. This is separate from Salesforce CRM permissions; validate data policy and library-only grounding before loading any private Data Cloud content.
 4. Verify custom Apex/Flow execution contexts, field access, prompt-injection boundaries and publication filtering.
 5. Case intake is not implemented. This checkpoint intentionally removes Case access; a later consent-enforced intake design will need an explicit, carefully tested privilege decision.
