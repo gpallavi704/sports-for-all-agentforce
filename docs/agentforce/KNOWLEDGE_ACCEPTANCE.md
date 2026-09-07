@@ -2,6 +2,8 @@
 
 September 6 Pacific / September 7 UTC, 2026. Inactive draft only.
 
+Later update: the user approved the four Trusted URL hosts. They are deployed with image-only CSP; three targeted tests now return readable links from all four hosts. See [Trusted URL verification](TRUSTED_URLS.md). The failures below remain historical evidence; full acceptance and classification issues are not closed.
+
 ## Results are not an acceptance pass
 
 The first complete ten-case run retrieved the expected uploaded source in every answer (10/10), but every answer contained URL_Redacted (0/10 usable-link passes). A consequential semantic failure also occurred: KB06 applied a historical minimum-age statement to the fictional child and declared them ineligible before disclaiming decision authority. That is a failure, not mitigated by the later disclaimer.
@@ -33,9 +35,9 @@ This instruction-only approach did not resolve redaction in either a local live-
 
 Native file citations remain temporary signed URLs. Raw traces are Git-ignored. Only sanitized answers and citation labels are included in committed evidence; no signed URL is published.
 
-## Proposed next change — needs approval
+## Original proposal — subsequently approved and deployed
 
-Salesforce's [allowlist notice](https://help.salesforce.com/s/articleView?id=005135034&language=en_US&type=1) states that Trusted URL additions apply across the org, not just this agent. Confirm approval before trying these four explicit HTTPS hosts (no wildcards):
+Salesforce's [allowlist notice](https://help.salesforce.com/s/articleView?id=005135034&language=en_US&type=1) states that Trusted URL additions apply across the org, not just this agent. The user subsequently approved these four explicit HTTPS hosts (no wildcards):
 
 - www.usafencing.org
 - member.usafencing.org

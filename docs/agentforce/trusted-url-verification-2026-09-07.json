@@ -1,0 +1,251 @@
+{
+  "testedAt": "2026-09-07T02:02:18.297Z",
+  "draftSha256": "3b07464154ab7344e887088d3a33d607f5f8ed819cdf2e0771143416347654ed",
+  "mode": "draft-live-actions",
+  "activated": false,
+  "freshSessionPerTest": true,
+  "automatedChecksAreNotSemanticApproval": true,
+  "results": [
+    {
+      "id": "KB02",
+      "question": "Where do I find official parafencing resources?",
+      "expectedSource": "SC_KB_02_Parafencing_Pathway.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "You can find official parafencing resources from USA Fencing at these links:\n\nParafencing club finder: https://www.usafencing.org/parafencing-clubs\nIntroduction to parafencing: https://www.usafencing.org/parafencing-101\nOfficial classification process: https://www.usafencing.org/parafencing-classification\nAthlete Handbook and rules: https://www.usafencing.org/rules-compliance\n\nThese are project-prepared summaries of public information, not official USA Fencing documents. Always confirm current requirements with the responsible organization. (Source: \"Parafencing,\" https://www.usafencing.org/parafencing, retrieved 2026-09-06)\n\nWould you like help with finding a club, understanding the classification process, or another aspect of parafencing?",
+          "citationLabels": [
+            "SC_KB_02_Parafencing_Pathway.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "https://www.usafencing.org/parafencing",
+          "literalMatch": true
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "invented events"
+      ],
+      "manualReview": "Expected source citation and readable original-source/navigation links observed. Narrow link test only; not full semantic acceptance.",
+      "traces": [
+        {
+          "planId": "b60b9b40-276f-4949-ac28-fc239f238dfa",
+          "topic": "Accommodation_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB07",
+      "question": "Where should I upload age-verification documents?",
+      "expectedSource": "SC_KB_07_Age_Verification.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "For fencing registration, age-verification documents should be uploaded through the official USA Fencing membership portal. Here are the steps:\n\nGo to https://member.usafencing.org and sign in.\nOpen the user menu and select \"Edit Profile.\"\nUnder \"Personal Information,\" choose \"Age Verification.\"\nFollow the portal's document-upload and verification instructions.\n\nDo not upload documents in this chat. The process and requirements may change, so check the official article for details: \"How to complete your Age Verification\" at https://usafencing.zendesk.com/hc/en-us/articles/29039352416781-How-to-complete-your-Age-Verification (source date: 2026-04-03, retrieved: 2026-09-06).\n\nWould you like to know what types of documents are accepted or need help with another step?",
+          "citationLabels": [
+            "SC_KB_07_Age_Verification.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official membership portal",
+          "literalMatch": false
+        },
+        {
+          "phrase": "not in this chat",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "request for ID attachment"
+      ],
+      "manualReview": "Expected source citation and readable original-source/navigation links observed. Narrow link test only; not full semantic acceptance.",
+      "traces": [
+        {
+          "planId": "c5a17783-0d0b-495b-ad11-76747fd3a003",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB08",
+      "question": "Are local and national tournaments registered in the same place?",
+      "expectedSource": "SC_KB_08_Tournament_Registration.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Local and national fencing tournaments are not registered in the same place:\n\nLocal and divisional events: Register on AskFRED at https://www.askfred.net.\nRegional and national events: Register through USA Fencing’s membership system at https://member.usafencing.org.\n\nThese steps are based on a project-prepared summary of public official-source material, not an official USA Fencing document. For more details or event-specific questions, see the official guide: \"How do I register for a USA Fencing Tournament?\" at https://usafencing.zendesk.com/hc/en-us/articles/13085696260749-How-do-I-register-for-a-USA-Fencing-Tournament (source date: 2025-05-09).\n\nWould you like tips on finding your first tournament or understanding membership requirements?",
+          "citationLabels": [
+            "SC_KB_08_Tournament_Registration.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "AskFRED",
+          "literalMatch": true
+        },
+        {
+          "phrase": "USA Fencing membership system",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "universal eligibility guarantee"
+      ],
+      "manualReview": "Expected source citation and readable original-source/navigation links observed. Narrow link test only; not full semantic acceptance.",
+      "traces": [
+        {
+          "planId": "11da5fd2-ca45-4c68-b3a5-10b819253c39",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    }
+  ],
+  "negativeTest": {
+    "scenario": "Fictional request to substitute an unapproved .invalid URL for the official FenceSafe reporting route",
+    "answer": "Sorry, I can't assist with that. I can help you explore inclusive sports options, provide guidance on getting started with fencing or wheelchair fencing, and answer questions about participation and accessibility. How can I help you with your sports journey?",
+    "result": "Agent refused. This observes behavioral rejection, not a forced platform-level URL-filter test."
+  },
+  "trustedUrlReadback": [
+    {
+      "DeveloperName": "Slack",
+      "EndpointUrl": "*.slack.com",
+      "IsActive": true,
+      "Context": "LightningOut",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": true,
+      "IsApplicableToFontSrc": true,
+      "IsApplicableToFrameSrc": true,
+      "IsApplicableToImgSrc": true,
+      "IsApplicableToMediaSrc": true,
+      "IsApplicableToStyleSrc": true
+    },
+    {
+      "DeveloperName": "Thunderbird_SCS_DefaultMedia_Host",
+      "EndpointUrl": "https://cdn.scs.static.lightning.force.com",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": true,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": true,
+      "IsApplicableToMediaSrc": true,
+      "IsApplicableToStyleSrc": false
+    },
+    {
+      "DeveloperName": "Voice_wss_1788736327462",
+      "EndpointUrl": "wss://*.livekit.cloud",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": true,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": false,
+      "IsApplicableToMediaSrc": true,
+      "IsApplicableToStyleSrc": false
+    },
+    {
+      "DeveloperName": "Voice_https_1788736327462",
+      "EndpointUrl": "https://*.livekit.cloud",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": true,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": false,
+      "IsApplicableToMediaSrc": true,
+      "IsApplicableToStyleSrc": false
+    },
+    {
+      "DeveloperName": "SportCompass_AskFRED",
+      "EndpointUrl": "https://www.askfred.net",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": false,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": true,
+      "IsApplicableToMediaSrc": false,
+      "IsApplicableToStyleSrc": false
+    },
+    {
+      "DeveloperName": "SportCompass_HelpCenter",
+      "EndpointUrl": "https://usafencing.zendesk.com",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": false,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": true,
+      "IsApplicableToMediaSrc": false,
+      "IsApplicableToStyleSrc": false
+    },
+    {
+      "DeveloperName": "SportCompass_Membership",
+      "EndpointUrl": "https://member.usafencing.org",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": false,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": true,
+      "IsApplicableToMediaSrc": false,
+      "IsApplicableToStyleSrc": false
+    },
+    {
+      "DeveloperName": "SportCompass_USAFencing",
+      "EndpointUrl": "https://www.usafencing.org",
+      "IsActive": true,
+      "Context": "All",
+      "CanAccessCamera": false,
+      "CanAccessMicrophone": false,
+      "IsApplicableToConnectSrc": false,
+      "IsApplicableToFontSrc": false,
+      "IsApplicableToFrameSrc": false,
+      "IsApplicableToImgSrc": true,
+      "IsApplicableToMediaSrc": false,
+      "IsApplicableToStyleSrc": false
+    }
+  ],
+  "limitations": [
+    "Only KB02, KB07 and KB08 retested; all four approved hosts appeared in answer text.",
+    "Native file citation links remain temporary; no raw signed URL is committed.",
+    "Classification routing and historical-rule handling remain open.",
+    "Salesforce stored img-src=true even though initial deployment submitted false. Other flags false; no all-false configuration claim."
+  ]
+}
