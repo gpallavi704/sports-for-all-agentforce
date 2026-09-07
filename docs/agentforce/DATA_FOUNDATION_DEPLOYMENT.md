@@ -1,5 +1,7 @@
 # Data foundation deployment checkpoint
 
+Historical deployment checkpoint. Subsequent agent permission cleanup and current verification are recorded in [SECURITY_CLEANUP.md](SECURITY_CLEANUP.md).
+
 September 6, 2026 Pacific / September 7 UTC. Target: sport-compass, org 00DgL00000c7pj3UAA.
 
 ## Applied

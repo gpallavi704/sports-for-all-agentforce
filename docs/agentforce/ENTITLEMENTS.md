@@ -1,5 +1,7 @@
 # Sport Compass entitlement model
 
+Current update: the direct Secure Base assignment has been removed from this agent and replaced with SportCompass_Knowledge_Runtime. Effective Account/Contact/Case and Messaging object checks now deny read/create/edit/delete. Runtime licenses and published program read access remain. See [security cleanup](SECURITY_CLEANUP.md). Live retrieval, generic-action removal and Data Cloud policy review are still activation gates.
+
 ## MVP identities
 
 | Identity | Current implementation | Boundary |
@@ -35,7 +37,7 @@ Salesforce UserRecordAccess was queried by the administrator for the dedicated a
 
 These are effective record-access checks, not an end-to-end agent-session or Apex user-mode test. Agent activation and API integration remain pending.
 
-## Unresolved CRM access risk — activation gate
+## Historical CRM access finding — assignment now removed
 
 The existing Salesforce AgentforceServiceAgentSecureBase permission set grants:
 
@@ -46,7 +48,7 @@ The existing Salesforce AgentforceServiceAgentSecureBase permission set grants:
 
 No View All Data or Modify All Data grants were observed in the inventoried agent assignments. Nevertheless, naming the set Secure Base does not make the agent discovery-only. Effective accessible CRM records depend on sharing and other execution contexts.
 
-The managed/base set was NOT removed or edited, and existing generic service-template actions remain. Before activation, review the platform's required base permissions, replace/remove unnecessary grants where supported, remove generic CRM actions, verify FLS and sharing, and run negative CRM-access tests. New restrictive permission sets cannot subtract existing grants. Do not claim the current agent has zero CRM access.
+The shared standard set was NOT edited or deleted. Its direct assignment to this agent was subsequently removed; no other users were changed. Effective CRM object access now tests as denied. Generic service-template actions remain, and live retrieval under the reduced baseline is not yet verified. New restrictive permission sets cannot subtract existing grants; this is why the broader assignment had to be removed rather than overlaid.
 
 ## Interpreting Ajay's suggestion
 

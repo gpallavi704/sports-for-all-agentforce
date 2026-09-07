@@ -2,6 +2,8 @@
 
 ## Mission
 
+Latest security checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Live retrieval under this baseline, generic-action cleanup and Data Cloud policy review are still pending. See [security cleanup](agentforce/SECURITY_CLEANUP.md); older checkpoint paragraphs below describe the state before this change.
+
 Deliver one credible, accessible journey from ChatGPT through MCP to Salesforce Agentforce:
 
 > A parent near Salt Lake City asks for an inclusive competitive sport for a 12-year-old athlete with limited mobility. Sport Compass recommends wheelchair fencing using approved knowledge and structured program data, provides a cited next-step checklist, declines to make medical or classification decisions, and creates a human-support Case with consent.

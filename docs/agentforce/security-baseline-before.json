@@ -1,0 +1,24 @@
+{
+  "orgId": "00DgL00000c7pj3UAA",
+  "agentUserId": "005gL00000Nf47FQAR",
+  "capturedDateUTC": "2026-09-07",
+  "directBaseAssignmentId": "0PagL00000iFHNPSA4",
+  "basePermissionSetId": "0PSgL00000LL7fsWAD",
+  "basePermissionSetName": "AgentforceServiceAgentSecureBase",
+  "basePermissionSetType": "Standard",
+  "runtimeGroupId": "0PGgL000003Zp7iWAC",
+  "runtimeGroupName": "AgentforceServiceAgentUserPsg",
+  "runtimeComponents": ["AgentforceServiceAgentUser", "EinsteinGPTPromptTemplateUser", "GenieUserEnhancedSecurity"],
+  "baseEnabledSystemPermissions": ["EmailSingle", "EditTask", "ActivitiesAccess", "AllowViewKnowledge", "CanAccessCE"],
+  "baseObjectGrants": {
+    "Contact": ["Read", "Edit"],
+    "Case": ["Read", "Create"],
+    "MessagingEndUser": ["Read"],
+    "MessagingSession": ["Read", "Edit"]
+  },
+  "baseFieldGrants": {"MessagingSession.CaseId": ["Read", "Edit"]},
+  "otherAssignmentsPreserved": ["Einstein Agent User profile", "AgentforceServiceAgentUserPsg", "SportCompass971474299_Permissions", "NextGen_1bYgL000000Xf2nUAC_Permissions", "SportCompass_Discovery_Read"],
+  "backupLimit": "Standard base permission set and runtime group could not be retrieved as metadata. Grants were read through API queries instead. Generated custom sets were exported to the separate local backup project.",
+  "rollbackCommand": "sf org assign permset --name AgentforceServiceAgentSecureBase --on-behalf-of sportcompass@00dgl00000c7pj31869622422.ext --target-org sport-compass --json",
+  "rollbackWarning": "Restores broad Contact/Case/email/activity/messaging grants. Review and keep the agent inactive before using. Never delete the shared standard set."
+}

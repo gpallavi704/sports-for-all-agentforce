@@ -1,0 +1,123 @@
+{
+  "orgId": "00DgL00000c7pj3UAA",
+  "agentUserId": "005gL00000Nf47FQAR",
+  "checkedDateUTC": "2026-09-07",
+  "method": "Administrator read-only Tooling UserEntityAccess and UserRecordAccess queries; not a live agent invocation",
+  "beforeObjects": [
+    {
+      "EntityDefinitionId": "Account",
+      "IsReadable": false,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "Contact",
+      "IsReadable": true,
+      "IsCreatable": false,
+      "IsEditable": true,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "Case",
+      "IsReadable": true,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "MessagingEndUser",
+      "IsReadable": true,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "MessagingSession",
+      "IsReadable": true,
+      "IsCreatable": false,
+      "IsEditable": true,
+      "IsDeletable": false
+    }
+  ],
+  "afterObjects": [
+    {
+      "EntityDefinitionId": "Account",
+      "IsReadable": false,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "Contact",
+      "IsReadable": false,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "Case",
+      "IsReadable": false,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "MessagingEndUser",
+      "IsReadable": false,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    },
+    {
+      "EntityDefinitionId": "MessagingSession",
+      "IsReadable": false,
+      "IsCreatable": false,
+      "IsEditable": false,
+      "IsDeletable": false
+    }
+  ],
+  "afterRecords": [
+    {
+      "RecordId": "a02gL00000WhbJgQAJ",
+      "HasReadAccess": false,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false
+    },
+    {
+      "RecordId": "a02gL00000WhbJfQAJ",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false
+    },
+    {
+      "RecordId": "a02gL00000WhbJeQAJ",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false
+    },
+    {
+      "RecordId": "a02gL00000WhbJdQAJ",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false
+    },
+    {
+      "RecordId": "a00gL00001WXtCUQA1",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false
+    },
+    {
+      "RecordId": "a01gL00001ocT3kQAE",
+      "HasReadAccess": true,
+      "HasEditAccess": false,
+      "HasDeleteAccess": false
+    }
+  ],
+  "licenses": [
+    "GenieDataPlatformStarterPsl",
+    "EinsteinGPTPromptTemplatesPsl",
+    "AgentforceServiceAgentUserPsl"
+  ]
+}
