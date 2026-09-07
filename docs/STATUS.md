@@ -6,6 +6,8 @@ Latest update: version 12 is active with mobile-length instructions and no autom
 
 ## Implemented
 
+Latest support checkpoint: the exact confirmation phrase is fixed and a live CLI regression created only synthetic Case 00001012, with no duplicate. The subsequent conversational disclosure deployment passed 12 support Apex tests; its fresh browser retest remains pending. See [support update](agentforce/SUPPORT_CONVERSATIONAL_V12.md). Version 12 remains active.
+
 - Salesforce DX project, dedicated agent runtime identity and scoped permissions.
 - Three discovery objects with 39 fields, private sharing and six synthetic records: one sport, one organization, three published programs and one unpublished negative fixture.
 - Ten indexed public-source summaries, prepared by the project and not approved by USA Fencing.
@@ -30,7 +32,7 @@ Latest update: version 12 is active with mobile-length instructions and no autom
 | Least privilege | Five denied CRM objects and six demo records checked | Data Cloud and external caller isolation need separate review |
 | Agent API | Historical v2 lifecycle and targeted matching checks passed | Current-version API regression remains pending |
 
-Nine synthetic Cases, 00001003 through 00001011, remain as test evidence. No Cases were removed during repository cleanup.
+Ten synthetic Cases, 00001003 through 00001012, are recorded as test evidence. No Cases were removed during this update.
 
 The native confirmation setting remains enabled, but v8 deterministic execution created the Case after the first exact accepted confirmation without a second native prompt. Only the observed actual-message and signed-draft gates should be claimed. See [support evidence](agentforce/SUPPORT_FIX_V8.md).
 

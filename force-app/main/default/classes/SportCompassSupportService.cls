@@ -35,12 +35,10 @@ public with sharing class SportCompassSupportService {
         return rows[0];
     }
     private static String draftText(Sports_Program__c p,String category) {
-        return 'SYNTHETIC DEMO SUPPORT REQUEST\nProgram: '+p.Name+'\nProgram location: '+p.City__c+', '+p.State__c
-            +'\nReason: '+category+'\nAccessibility information: Needs confirmation; not real-world verification.'
-            +'\nDestination: Sport Compass Support demo queue in this Salesforce org.'
-            +'\nResponse channel: Demo queue only. No email, phone, SMS or real staff response promised.'
-            +'\nSaved on confirmation: this summary, selected program reference, category, demo and consent flags, technical request key and runtime user, plus standard Salesforce audit fields.'
-            +'\nNo name, age, diagnosis, contact details or transcript will be saved by this action.';
+        return 'I can create a demo support request for '+p.Name+' ('+p.City__c+', '+p.State__c+') about '+category+'.'
+            +'\n\nIt goes only to the Sport Compass Support demo queue. No real provider is contacted or reply promised. Accessibility is unverified.'
+            +'\n\nCreating it saves this summary, program, reason, demo/consent flags and technical audit identifiers.'
+            +' No name, age, diagnosis, contact details or transcript is saved by this action.';
     }
     public static Result prepare(String programId,String category) {
         try {
@@ -58,9 +56,12 @@ public with sharing class SportCompassSupportService {
     }
     public static String reviewReply(String latestUserMessage) {
         String answer=latestUserMessage==null?'':latestUserMessage.trim().toLowerCase();
-        if(new Set<String>{'no','no thanks','cancel','discard','do not create','do not create it'}.contains(answer))return 'DECLINED';
+        // Only whole-message, explicit phrases are accepted. Never use contains/startsWith for consent.
+        if(new Set<String>{'no','no thanks','cancel','cancel the request','cancel the request.','discard','do not create','do not create it'}.contains(answer))return 'DECLINED';
         if(new Set<String>{'change','change it','edit','revise'}.contains(answer)||answer.startsWith('change it to '))return 'REVISE';
-        if(new Set<String>{'yes','yes please','yes, please','confirm','i confirm'}.contains(answer))return 'CONFIRM';
+        if(new Set<String>{'yes','yes please','yes, please','confirm','i confirm',
+            'yes create this demo case','yes create this demo case.',
+            'yes, create this demo case','yes, create this demo case.'}.contains(answer))return 'CONFIRM';
         return 'AWAITING_CONSENT';
     }
     public static Result confirm(String token,String latestUserMessage) {

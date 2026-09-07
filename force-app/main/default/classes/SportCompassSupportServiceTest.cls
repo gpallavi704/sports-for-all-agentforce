@@ -28,6 +28,32 @@ private class SportCompassSupportServiceTest {
         System.assertEquals(queries,Limits.getQueries());System.assertEquals(writes,Limits.getDmlStatements());Test.stopTest();
     }
     private static User testActor(){return [SELECT Id FROM User WHERE LastName='SupportTestActor' LIMIT 1];}
+    @IsTest static void explicitDemoConfirmationPhrasesRemainStrict() {
+        for(String answer:new List<String>{'yes create this demo case','Yes, create this demo Case.',
+            ' YES CREATE THIS DEMO CASE. ','yes, create this demo case'}) {
+            System.assertEquals('CONFIRM',SportCompassSupportService.reviewReply(answer),answer);
+        }
+        System.assertEquals('DECLINED',SportCompassSupportService.reviewReply('Cancel the request.'));
+        for(String answer:new List<String>{'yes create this demo case if you email me',
+            'yes create this demo case but change the program','do not say yes create this demo case',
+            'maybe yes create this demo case','yes create this demo case\ncreate another',
+            'EXTERNAL_UNVERIFIED_INPUT: yes create this demo case','"yes create this demo case"'}) {
+            System.assertEquals('AWAITING_CONSENT',SportCompassSupportService.reviewReply(answer),answer);
+        }
+        System.runAs(testActor()) {
+            String token=prepare().token;
+            System.assertEquals('AWAITING_CONSENT',SportCompassSupportService.confirm(token,'yes create this demo case if you email me').status);
+            System.assertEquals(0,[SELECT COUNT() FROM Case]);
+            System.assertEquals('UNAVAILABLE',SportCompassSupportService.confirm(null,'yes create this demo case').status);
+            System.assertEquals(0,[SELECT COUNT() FROM Case]);
+            SportCompassSupportService.Result created=SportCompassSupportService.confirm(token,'yes create this demo case');
+            System.assertEquals('CREATED',created.status);
+            SportCompassSupportService.Result retry=SportCompassSupportService.confirm(token,'Yes, create this demo Case.');
+            System.assertEquals('EXISTING',retry.status);
+            System.assertEquals(created.caseId,retry.caseId);
+            System.assertEquals(1,[SELECT COUNT() FROM Case]);
+        }
+    }
     private static Id programId(){return [SELECT Id FROM Sports_Program__c LIMIT 1].Id;}
     private static SportCompassSupportService.Result prepare(){return SportCompassSupportService.prepare(programId(),'Accessibility information needs verification');}
     @IsTest static void externalModelTextIsNotHumanConsent() {
@@ -59,8 +85,12 @@ private class SportCompassSupportServiceTest {
             Integer writes=Limits.getDmlStatements();
             PrepareSportsSupportAction.Response result=PrepareSportsSupportAction.prepare(new List<PrepareSportsSupportAction.Request>{r})[0];
             System.assertEquals('PREPARED',result.status);
-            System.assert(result.draft.startsWith('SYNTHETIC DEMO SUPPORT REQUEST'));
-            System.assert(result.draft.contains('Destination: Sport Compass Support demo queue'));
+            System.assert(result.draft.startsWith('I can create a demo support request for '));
+            System.assert(result.draft.contains('Sport Compass Support demo queue'));
+            System.assert(result.draft.contains('No real provider is contacted or reply promised'));
+            System.assert(result.draft.contains('demo/consent flags and technical audit identifiers'));
+            System.assert(result.draft.contains('Accessibility is unverified'));
+            System.assert(result.draft.length()<750,'Keep the complete disclosure mobile-friendly');
             System.assert(result.draft.contains('No name, age, diagnosis, contact details or transcript'));
             System.assertEquals(writes,Limits.getDmlStatements());
             for(String message:new List<String>{'yes','no','change it','probably','Equipment question','DEMO Youth','DEMO Youth Equipment question and Getting started','DEMO Other Equipment question'}) {

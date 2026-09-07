@@ -56,9 +56,9 @@ for(let i=1;i<=runs;i++){
     const assertNoNew=()=>assert.deepEqual(cases().map(c=>c.Id).sort(),[...initial].sort(),'Unexpected Case before confirmation');
     await session(row,'cancellation',async send=>{
       const draft=send('Synthetic test only. Prepare, do not create, a demo support request for fixture program '+program+' (DEMO - Youth Program Needs Confirmation), category Equipment question. Show the complete proposed draft.');
-      assert.match(draft,/SYNTHETIC DEMO SUPPORT REQUEST/i);assertNoNew();
+      assert.match(draft,/I can create a demo support request for/i);assert.match(draft,/technical audit identifiers/i);assertNoNew();
       send('I guess so');assertNoNew();
-      send('no');assertNoNew();
+      send('Cancel the request.');assertNoNew();
       const after=send('yes');assertNoNew();
       assert.doesNotMatch(after,/I.?m going to confirm your request|reply .?yes.? (again|to proceed|to continue)|please reply .?yes/i,'Discarded draft reopened its confirmation');
       const repeat=send('yes');assertNoNew();
@@ -72,9 +72,9 @@ for(let i=1;i<=runs;i++){
       send('Synthetic test only. Prepare, do not create, a demo support request for DEMO - Youth Program Needs Confirmation, category Equipment question. Show the complete draft.');assertNoNew();
       send('change it');assertNoNew();
       const revision=send('Use Accessibility information needs verification as the reason for DEMO - Youth Program Needs Confirmation. Prepare and show the revised draft; do not create a Case yet.');
-      assert.match(revision,/Accessibility information needs verification/);assert.match(revision,/SYNTHETIC DEMO SUPPORT REQUEST/i);assertNoNew();
+      assert.match(revision,/Accessibility information needs verification/);assert.match(revision,/I can create a demo support request for/i);assert.match(revision,/No real provider is contacted/i);assertNoNew();
       send('probably');assertNoNew();
-      send('yes');
+      send('yes create this demo case');
       let created=cases().filter(c=>!initial.has(c.Id));
       if(created.length===0){send('yes');created=cases().filter(c=>!initial.has(c.Id));}
       assert.equal(created.length,1,'Expected one Case after explicit/native confirmation');
@@ -87,7 +87,7 @@ for(let i=1;i<=runs;i++){
     });
     const trace=row.sessions[1].traces.flatMap(t=>t.functions);
     assert.ok(trace.some(f=>f.name==='Review_Reply'&&f.state==='REVISE'),'Revision not deterministically reviewed');
-    assert.ok(trace.some(f=>f.name==='Confirm_Support'&&f.status==='CREATED'&&f.actualUserReply.toLowerCase()==='yes'));
+    assert.ok(trace.some(f=>f.name==='Confirm_Support'&&f.status==='CREATED'&&['yes','yes create this demo case'].includes(f.actualUserReply.toLowerCase())));
     row.passed=true;
   }catch(e){row.passed=false;row.error=e.message;process.exitCode=1;save();console.log(JSON.stringify({run:i,passed:false,error:row.error}));break;}
   save();console.log(JSON.stringify({run:i,passed:row.passed,caseNumber:row.created?.CaseNumber,sessionsEnded:row.sessions.every(s=>s.ended)}));
