@@ -8,7 +8,7 @@ Agentforce for Good Hackathon at Dreamforce 2026, Builder Track. Project: Fencin
 | Demo film (4:50) | https://youtu.be/QsZYSrVZKeU |
 | Documentation (PDF) | `docs/fencing-for-all-documentation.pdf` |
 | Experience design (PDF) | `docs/fencing-for-all-design.pdf` |
-| Interactive prototype (single HTML file, open in a browser) | `docs/fencing-for-all-prototype.html` |
+| Interactive prototype (public page) | https://sites.google.com/havihi.digital/fencing-for-all (source: `docs/fencing-for-all-prototype.html`) |
 | Recorded conversation with the live agent | `docs/fencing-for-all-transcripts.md` |
 | Devpost question answers | `docs/fencing-for-all-devpost-answers.md` |
 | All files, screenshots and the film | https://drive.google.com/drive/folders/1d7Gx7gILMG3orCZ_F01RyLcGTUCG9ssr |

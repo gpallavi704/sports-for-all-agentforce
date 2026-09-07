@@ -18,7 +18,8 @@ header.top h1{font-size:17px;margin:0;font-weight:600}
 header.top .sub{color:var(--muted);font-size:14px}
 .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);margin-left:auto}
 .wrap{display:grid;grid-template-columns:260px minmax(0,1fr) 380px;flex:1;min-height:0}
-@media (max-width:1100px){.wrap{grid-template-columns:minmax(0,1fr)}.side,.aside{display:none}.wrap.show-aside .aside{display:block}}
+@media (max-width:1180px){.wrap{grid-template-columns:minmax(0,1fr) 320px}.side{display:none}}
+@media (max-width:760px){.wrap{grid-template-columns:minmax(0,1fr)}.aside{display:none}.wrap.show-aside .aside{display:block}}
 .side{background:var(--bg2);border-right:1px solid var(--line);padding:16px;font-size:14px}
 .side h2,.aside h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin:18px 0 8px}
 .side h2:first-child{margin-top:0}
@@ -159,9 +160,9 @@ function addUser(text){
 
 function toolChip(t){
   var c=el('div','tool'); c.appendChild(el('span','dot')); c.appendChild(document.createTextNode('Using '));
-  var b=el('b',null,'Sports for All'); c.appendChild(b);
-  var tool = (t.id==='t7'||t.id==='t8') ? 'request_human_support' : (t.id==='t6' ? 'request_human_support' : (t.id==='t1'||t.id==='t2'||t.id==='t3'||t.id==='t4' ? 'ask_sports_for_all' : 'continue_sports_conversation'));
-  c.appendChild(document.createTextNode(' › '+tool)); return c;
+  var b=el('b',null,'Sport Compass'); c.appendChild(b);
+  var native = (t.id==='t6'||t.id==='t7'||t.id==='t8');
+  c.appendChild(document.createTextNode(native ? ' › native Agentforce channel (consent + Case)' : ' › ask')); return c;
 }
 
 function addAgent(t){
@@ -201,7 +202,7 @@ function setAside(t){
   aside.innerHTML='';
   aside.appendChild(el('h2',null,'Behind this answer'));
   var dl=el('dl','kv');
-  [['Channel','ChatGPT app → MCP server → Agentforce Agent API'],['Subagent',t.subagent],['Action',t.action],['Latency',t.latency||'—'],['Output evaluation','']].forEach(function(p){ dl.appendChild(el('dt',null,p[0])); var dd=el('dd'); if(p[0]==='Output evaluation'){ var s=el('span','ok',t.evaluation); dd.appendChild(s); dd.appendChild(document.createTextNode(' (Agentforce Builder trace)')); } else dd.textContent=p[1]; dl.appendChild(dd); });
+  [['Channel', (t.id==='t6'||t.id==='t7'||t.id==='t8') ? 'Agentforce native channel (the external ChatGPT channel is guidance-only by design)' : 'ChatGPT app → Sport Compass MCP server (ask) → Agent API'],['Subagent',t.subagent],['Action',t.action],['Latency',t.latency||'—'],['Output evaluation','']].forEach(function(p){ dl.appendChild(el('dt',null,p[0])); var dd=el('dd'); if(p[0]==='Output evaluation'){ var s=el('span','ok',t.evaluation); dd.appendChild(s); dd.appendChild(document.createTextNode(' (Agentforce Builder trace)')); } else dd.textContent=p[1]; dl.appendChild(dd); });
   aside.appendChild(dl);
   aside.appendChild(el('h2',null,'What the agent did not do'));
   var p=el('p'); p.textContent = (t.id==='t4') ? 'It did not decide eligibility. Only official classifiers and event staff can; it named the process and the person to email.' : (t.id==='t7'||t.id==='t8') ? 'It did not save a name, age, diagnosis, contact detail or transcript. It listed exactly what would be saved and waited for a plain yes.' : (t.id==='t5'||t.id==='t9') ? 'It did not present demo programs as real clubs. Every match is labeled synthetic and the official club finder is the next step.' : 'It did not ask for a diagnosis or a medical document, and it cited the USA Fencing page and retrieval date for each fact.';
