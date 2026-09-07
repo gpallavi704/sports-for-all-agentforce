@@ -1,0 +1,86 @@
+{
+  "checkpoint": "2026-09-07",
+  "activated": false,
+  "sourceSha256": "93bdd429eedb616e82b8349646370fa7000190a2e0f3fb0832aead78b423c67f",
+  "deployments": {
+    "apex": "0AfgL00000Wsx0fSAB",
+    "draft": "0AfgL00000Wsy81SAB",
+    "report": "0AfgL00000WsxK1SAJ",
+    "operatorPermission": "0AfgL00000Wsx3tSAB"
+  },
+  "apex": {
+    "tests": 18,
+    "failures": 0,
+    "coverage": [
+      {
+        "name": "CreateSportsSupportCaseAction",
+        "lines": 9,
+        "uncovered": 0
+      },
+      {
+        "name": "SportCompassSupportService",
+        "lines": 88,
+        "uncovered": 4
+      },
+      {
+        "name": "PrepareSportsSupportAction",
+        "lines": 9,
+        "uncovered": 0
+      },
+      {
+        "name": "MatchSportsProgramsAction",
+        "lines": 101,
+        "uncovered": 0
+      }
+    ]
+  },
+  "live": {
+    "fictionalOnly": true,
+    "matchingAction": "Match_Demo_Programs",
+    "prepareAction": "Prepare_Support",
+    "draftDisplayed": true,
+    "recordsAfterPreparation": 0,
+    "hesitantReply": "I guess so",
+    "recordsAfterHesitation": 0,
+    "firstYes": "Native Agentforce confirmation prompt; still zero Cases",
+    "nativeYes": {
+      "function": "Confirm_Support",
+      "actualBoundUserReply": "yes",
+      "status": "CREATED",
+      "caseNumber": "00001003",
+      "caseId": "500gL00001WYXJZQA5"
+    },
+    "queueOwner": "Sport Compass Support",
+    "caseStatus": "New",
+    "consentFlag": true,
+    "demoFlag": true,
+    "waitingListCount": 1,
+    "reportGroup": "Accessibility information needs verification",
+    "reportCount": 1,
+    "duplicateConversation": "Same Case identifiers returned; no new Case. Actual repeat service invocation covered by Apex test.",
+    "previewEnded": true
+  },
+  "access": {
+    "genericCRMObjectsDenied": 5,
+    "demoRecordChecksUnchanged": 6,
+    "signingSettingsCRUDDenied": true,
+    "agentIsNotQueueMember": true,
+    "privilegedCaseCapability": "Two action classes and custom permission; broker performs only fixed signed demo request operations"
+  },
+  "knowledgeRegression": {
+    "tests": [
+      "KB06",
+      "KB07"
+    ],
+    "expectedSourcesAndPublicUrls": true,
+    "sessionsEnded": true
+  },
+  "remaining": [
+    "Three-run acceptance",
+    "Live refusal/revision/error sequences",
+    "Concurrent duplicate test",
+    "External caller/session isolation",
+    "No real callback service",
+    "No real population-impact claim"
+  ]
+}

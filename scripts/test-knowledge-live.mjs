@@ -1,4 +1,5 @@
-// Live, read-only draft preview. Incurs Agentforce usage. Never activates or deploys.
+// Live knowledge fixtures. Incurs Agentforce usage. Never activates or deploys.
+// Each fixture starts a fresh session; none supplies an allowlisted confirmation reply.
 // Run: node scripts/test-knowledge-live.mjs sport-compass [KB01,KB02,...]
 // Generated output is sanitized; Salesforce's raw local traces remain Git-ignored.
 import { execFileSync } from 'node:child_process';
@@ -13,8 +14,9 @@ const tests = JSON.parse(readFileSync('knowledge/retrieval-tests.json', 'utf8'))
 assert.ok(tests.length, 'No matching tests');
 const source = readFileSync('force-app/main/default/aiAuthoringBundles/SportCompass/SportCompass.agent', 'utf8');
 const externalTargets = [...source.matchAll(/^\s+target: "([^"]+)"/gm)].map(m => m[1]);
-assert.equal(externalTargets.length, 4);
-assert.deepEqual(externalTargets.sort(), ['apex://MatchSportsProgramsAction', ...Array(3).fill('standardInvocableAction://streamKnowledgeSearch')].sort(), 'Stop: new actions require test safety review');
+assert.equal(externalTargets.length, 6);
+assert.deepEqual(externalTargets.sort(), ['apex://MatchSportsProgramsAction', ...Array(3).fill('standardInvocableAction://streamKnowledgeSearch'), 'apex://PrepareSportsSupportAction', 'apex://CreateSportsSupportCaseAction'].sort(), 'Stop: new actions require test safety review');
+assert.ok(source.includes('with latestUserMessage = @system_variables.user_input'), 'Confirmation must use actual user input');
 const publicUrls = new Set();
 for (const f of readdirSync('knowledge/curated')) {
   for (const m of readFileSync('knowledge/curated/' + f, 'utf8').matchAll(/https:\/\/[^\s]+/g)) publicUrls.add(m[0]);

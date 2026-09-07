@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses><apexClass>PrepareSportsSupportAction</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>CreateSportsSupportCaseAction</apexClass><enabled>true</enabled></classAccesses>
+    <customPermissions><enabled>true</enabled><name>SportCompass_Create_Demo_Support</name></customPermissions>
+    <description>Class-only demo support capability. Creation uses a consent-gated privileged service; no generic Case CRUD or signing-key access.</description><label>Sport Compass Support Runtime</label>
+</PermissionSet>

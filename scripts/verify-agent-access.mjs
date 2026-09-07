@@ -37,7 +37,7 @@ for (const expected of baseline.afterRecords) {
 }
 const assignments = query("SELECT PermissionSet.Name FROM PermissionSetAssignment WHERE AssigneeId = '" + userId + "'").map(r => r.PermissionSet.Name);
 assert.ok(!assignments.includes('AgentforceServiceAgentSecureBase'), 'Broad base assignment returned');
-for (const name of ['AgentforceServiceAgentUserPsg', 'SportCompass_Discovery_Read', 'SportCompass_Knowledge_Runtime', 'SportCompass_Program_Matching']) {
+for (const name of ['AgentforceServiceAgentUserPsg', 'SportCompass_Discovery_Read', 'SportCompass_Knowledge_Runtime', 'SportCompass_Program_Matching', 'SportCompass_Support_Runtime']) {
   assert.ok(assignments.includes(name), 'Missing required assignment: ' + name);
 }
 const licenses = query("SELECT PermissionSetLicense.DeveloperName FROM PermissionSetLicenseAssign WHERE AssigneeId = '" + userId + "'").map(r => r.PermissionSetLicense.DeveloperName);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns><field>CASE_NUMBER</field></columns>
+    <columns><field>SUBJECT</field></columns>
+    <description>Synthetic demo Cases only. Unresolved support categories, not population-level demand or real social impact.</description>
+    <filter>
+        <criteriaItems><column>Case.SC_Is_Demo__c</column><operator>equals</operator><value>1</value></criteriaItems>
+        <criteriaItems><column>STATUS</column><operator>notEqual</operator><value>Closed</value></criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown><field>Case.SC_Support_Category__c</field><sortOrder>Asc</sortOrder></groupingsDown>
+    <name>Unresolved Demo Support by Category</name>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter><dateColumn>CREATED_DATE</dateColumn><interval>INTERVAL_CUSTOM</interval></timeFrameFilter>
+</Report>

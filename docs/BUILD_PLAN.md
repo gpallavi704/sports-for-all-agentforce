@@ -54,7 +54,7 @@ Deliverables:
 
 Exit condition: a basic test agent can be created and invoked inside Salesforce.
 
-Current checkpoint: the dedicated agent user and inactive draft are configured. The discovery schema, synthetic data, knowledge library, least-privilege controls and read-only matcher are deployed. Scoped Apex tests pass. API/ChatGPT integration and consent-enforced Case intake remain pending. See [current status](STATUS.md).
+Current checkpoint: discovery, knowledge, read-only matching and consent-controlled synthetic Case handoff are deployed. Eighteen Apex tests pass; live Case/queue/report proof is recorded. The agent remains inactive. Repeated edge-case acceptance and API/MCP/ChatGPT integration remain pending. See [current status](STATUS.md).
 
 Builder project ID: `1bYgL000000Xf2nUAC`. Draft version ID: `1bZgL000000rPgDUAU`. These identify the authoring project and version; do not treat them as the runtime Agent API agent ID.
 
@@ -67,8 +67,8 @@ Deliverables:
 - [x] `Sports_Program__c` metadata foundation
 - [ ] Optional after core journey: `Participant_Preference__c`
 - [ ] Optional after core journey: `Agent_Interaction__c`
-- [ ] Case escalation fields
-- [ ] Permission set with least-privilege object, field, class, and Flow access
+- [x] Synthetic support Case fields, record type, queue, operator list views and summary report
+- [x] Scoped discovery and support capability permissions; agent still has no generic Case CRUD
 - [ ] Package manifest
 - [x] Validate and deploy the three discovery objects into the hackathon org
 
@@ -99,10 +99,11 @@ Deliverables:
 
 - [x] `MatchSportsProgramsAction` read-only demo Apex invocable
 - [x] Deterministic listing-evidence ranking using self-selected preferences; synthetic verification explicitly distinguished from real verification
-- [ ] `CreateSportsSupportCaseAction` with explicit-consent enforcement
+- [x] `PrepareSportsSupportAction` and `CreateSportsSupportCaseAction` with signed draft, actual-reply consent enforcement and idempotent creation
 - [ ] `RecordAgentInteractionAction`
 - [x] Ten matcher Apex tests; 100% matcher line coverage (remaining classes not built)
 - [x] Matcher tests for class age bands, no matches, unknown/stale features, publication, parent visibility, object/record access and bounded batches
+- [x] Eight support tests plus ten matcher tests pass; live synthetic Case and operator destination verified
 
 Exit condition: actions pass tests and return stable, agent-friendly response contracts.
 
@@ -120,7 +121,8 @@ Deliverables:
 - [x] Attach Answer Questions with Knowledge to fencing, accommodation and registration subagents
 - [x] Remove unrelated template routing/actions; registration, accommodation and scope routes trace-verified (remaining routes need tests)
 - [x] Add read-only demo search/matching action; verify real action invocation, no-match and refusal paths
-- [ ] Add consent-enforced Case action and test the complete next-step journey
+- [x] Add consent-enforced Case action; live match → draft → hesitation → explicit/native confirmation → Case → queue/report tested
+- [ ] Repeat refusal/revision/error journeys and combine cited guidance into the uninterrupted primary demo
 - [ ] Optional after core journey: persisted checklists and interaction actions
 - [ ] Configure low-confidence and sensitive-topic escalation
 - [x] Run ten live-actions draft-preview knowledge tests plus targeted safety retests; see current checkpoint for remaining review gates

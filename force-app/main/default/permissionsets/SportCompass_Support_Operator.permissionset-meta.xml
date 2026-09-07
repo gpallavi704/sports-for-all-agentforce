@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Human operator access to demo support fields and Case record type. Record sharing still applies; no View All or Delete.</description>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Request_Key__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Consent_Confirmed__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Is_Demo__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Program__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Support_Category__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Accessibility_Status__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Reply_Channel__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Consent_Draft__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Runtime_User__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>false</editable><field>Case.SC_Request_Hash__c</field><readable>true</readable></fieldPermissions>
+    <label>Sport Compass Support Operator</label>
+    <objectPermissions><allowCreate>false</allowCreate><allowDelete>false</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Case</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+    <recordTypeVisibilities><recordType>Case.SportCompass_Support</recordType><visible>true</visible></recordTypeVisibilities>
+</PermissionSet>

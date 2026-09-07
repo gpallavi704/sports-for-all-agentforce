@@ -10,22 +10,25 @@ The [architecture-aligned findings](ARCHITECTURE_ALIGNED_FINDINGS.md) preserve t
 - Dedicated agent user, three discovery objects with 39 fields, private sharing and six synthetic records (one sport, one organization, three published programs, one unpublished negative fixture).
 - Discovery read permissions and publication-based sharing. Effective Account, Contact, Case and messaging CRUD denied. No general read-all API user.
 - Ten indexed public-source knowledge summaries with source metadata. These are project-prepared, not USA Fencing-approved.
-- Five custom routing paths, AI/prototype disclosure, source-grounded knowledge actions, classification/process boundaries and historical-source caveats.
+- Six custom routing paths including demo support, AI/prototype disclosure, source-grounded knowledge actions, classification/process boundaries and historical-source caveats.
 - Four exact Trusted URL hosts with image-only CSP; no new wildcard or connection/frame/media/camera/microphone grants.
 - Ten knowledge fixtures returned expected source documents and readable public URLs; targeted classification/privacy/navigation checks passed in observed tests. Broader acceptance remains open.
 - Read-only MatchSportsProgramsAction and its class-access-only permission set deployed. Ten Apex tests passed with 100% matcher line coverage, including object denial, record sharing and hidden parent records. Line coverage is not proof of every security property.
 - Matcher wired into Find My Sport in the inactive draft. Live demo matching, no-match and private-data/write-request refusal checks passed; unknown accessibility remains visible.
+- Consent-controlled demo Case service, signed draft preparation, actual-user-message binding, native confirmation and idempotent retries deployed; 18 combined Apex tests passed.
+- Sport Compass Support queue, Case record type/fields, builder operator access, two list views and an unresolved-category summary report deployed.
+- Live matching → displayed draft → hesitant consent/zero Cases → explicit/native confirmation → actual Case 00001003 → queue/list/report verified. One synthetic Case retained for the demo; no real participant data or external callback channel.
 
-See [program matching](agentforce/PROGRAM_MATCHING.md) for evidence and limits. The older dated checkpoints are historical evidence, not the current build state.
+See [program matching](agentforce/PROGRAM_MATCHING.md) and [support handoff](agentforce/SUPPORT_HANDOFF.md) for evidence and limits. The older dated checkpoints are historical evidence, not the current build state.
 
 ## Pending — critical path
 
 | Work | Completion condition |
 | --- | --- |
-| Human-support intake | Minimal Case fields, explicit consent enforced in code, limited write authority, safe retry/idempotency, no sensitive medical/incident intake, ownership/queue rules and negative tests. |
+| Support acceptance/hardening | Repeat live refusal/revision/error paths; validate cancellation and expiry across turns, concurrency and caller/session isolation. Keep intake synthetic and structured; no callback channel is implemented. |
 | Agent API | Confirm external-client-app capability and minimum OAuth scopes; scoped runtime identity; commit/activation only after approval; start/send/end session, error and isolation tests. |
 | MCP and ChatGPT | Tool contracts, protected server deployment, secret management, caller-to-session binding, input/rate limits, no arbitrary SOQL, live end-to-end test. Confirm integration ownership/hosting with Jon. |
-| End-to-end demo | One coherent discovery → source-backed guidance → consent → confirmed support request journey; no verbal stand-ins for missing functionality. |
+| End-to-end demo | Combine tested knowledge guidance and matching/support components into one recorded journey, then repeat through the chosen client. Current proof uses direct draft preview, not ChatGPT. |
 
 ## Pending — evidence and team decisions
 
@@ -34,7 +37,7 @@ See [program matching](agentforce/PROGRAM_MATCHING.md) for evidence and limits. 
 - Confirm submission deadline, demo duration, actual Builder Track deliverable rules and required skill access.
 - Run the hackathon's Accessibility Expert Skill and RAI Self Check Skill; record findings and fixes. Neither skill is available in this Codex session's installed skill list; obtain the organizer-provided tools/environment.
 - Keyboard/screen-reader review of the actual client, plain-language review, prompt-injection and multi-turn regressions, stale/conflicting-source handling, failure/rate-limit tests.
-- Repeat key agent scenarios at least three times, including hesitant consent creating zero Cases and retries creating exactly one Case. These Case checks cannot pass until the support action and state are implemented.
+- Repeat key agent scenarios at least three times, including hesitant consent creating zero Cases and retries creating exactly one Case. One live positive/hesitation journey and unit-level retry checks currently pass; broader repeated acceptance remains pending.
 - Complete Data Cloud dataspace policy review before private ingestion. CRM permissions alone do not govern Data Cloud.
 - Privacy/retention design for public interaction telemetry and support intake; authenticated own-member-record access is not implemented or required for anonymous discovery.
 - Demo recording, architecture update, setup guide, reproducible test evidence and honest impact/scalability claims.
@@ -42,7 +45,7 @@ See [program matching](agentforce/PROGRAM_MATCHING.md) for evidence and limits. 
 ## Optional after the core journey works
 
 - Consent-based saved preferences and interaction records; do not create them just to add objects.
-- Aggregate reporting on unresolved access needs and successful next steps. Data Cloud ingestion/segments/calculated insights if time and licensing allow; no real participant identity resolution for the prototype.
+- Broader interaction reporting on unresolved access needs and successful next steps. A minimal synthetic Case category report already works; do not equate it with real population demand. Data Cloud calculated insights are optional; no real participant identity resolution for the prototype.
 - More reviewed content, real provider integrations, advanced multilingual coverage, voice or native mobile experiences.
 - Predictive ML is not required: current ranking is deterministic evidence matching, not disability/ability or eligibility prediction.
 

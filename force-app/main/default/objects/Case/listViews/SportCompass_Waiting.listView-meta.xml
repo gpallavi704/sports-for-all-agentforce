@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SportCompass_Waiting</fullName><columns>CASES.CASE_NUMBER</columns><columns>CASES.SUBJECT</columns><columns>CASES.STATUS</columns><filterScope>Everything</filterScope><filters><field>Case.SC_Is_Demo__c</field><operation>equals</operation><value>1</value></filters><filters><field>CASES.STATUS</field><operation>notEqual</operation><value>Closed</value></filters><label>Sport Compass - Waiting for assistance</label>
+</ListView>

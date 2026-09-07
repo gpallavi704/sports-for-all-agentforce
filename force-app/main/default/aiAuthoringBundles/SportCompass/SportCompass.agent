@@ -46,6 +46,18 @@ language:
     default_locale: "en_US"
     all_additional_locales: False
 
+variables:
+    support_token: mutable string = ""
+        description: "Internal signed support draft token. Set only from Prepare action output; never slot fill or reveal."
+    support_draft: mutable string = ""
+        description: "Complete data and destination displayed before consent."
+    support_status: mutable string = ""
+        description: "Last server-confirmed support state."
+    support_case_id: mutable string = ""
+        description: "Actual created Case ID returned by the action."
+    support_case_number: mutable string = ""
+        description: "Human-readable Case number returned by the action."
+
 knowledge:
     rag_feature_config_id: "ARFPC_1JDgL000009Fm7BWAS"
     citations_url: ""
@@ -58,8 +70,11 @@ start_agent agent_router:
         model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
     reasoning:
         instructions: ->
-            | First route requests for personal classification or eligibility decisions and safety-reporting to Accommodation_Support. Otherwise route requests to find, compare or recommend local programs to Find_My_Sport, including requests with self-selected access preferences or an age for class discovery. An access preference in a search is not a request for medical classification. Route general accessibility, wheelchair fencing and accommodation questions to Accommodation_Support; fencing basics and general club-finder instructions to Fencing_Program_Guide; administrative registration and document-upload guidance to Registration_Support; and greetings or unrelated requests to Scope_Helper. Disability questions are welcome and in scope. These are the only custom paths.
+            if @variables.support_token != "" and @variables.support_case_id == "":
+                transition to @subagent.Support_Request
+            | Route preparing, confirming, revising or retrying a human support request to Support_Request. First route requests for personal classification or eligibility decisions and safety-reporting to Accommodation_Support. Otherwise route requests to find, compare or recommend local programs to Find_My_Sport, including requests with self-selected access preferences or an age for class discovery. An access preference in a search is not a request for medical classification. Route general accessibility, wheelchair fencing and accommodation questions to Accommodation_Support; fencing basics and general club-finder instructions to Fencing_Program_Guide; administrative registration and document-upload guidance to Registration_Support; and greetings or unrelated requests to Scope_Helper. Disability questions are welcome and in scope. These are the only custom paths.
         actions:
+            go_to_Support_Request: @utils.transition to @subagent.Support_Request
             go_to_Find_My_Sport: @utils.transition to @subagent.Find_My_Sport
             go_to_Fencing_Program_Guide: @utils.transition to @subagent.Fencing_Program_Guide
             go_to_Accommodation_Support: @utils.transition to @subagent.Accommodation_Support
@@ -305,3 +320,86 @@ subagent Registration_Support:
                     is_displayable: False
                     filter_from_agent: False
                     complex_data_type_name: "@apexClassType/AiCopilot__GenAiCitationInput"
+
+subagent Support_Request:
+    label: "Demo Human Support"
+    description: "Prepare, revise, confirm or retry a synthetic human-support Case for a selected demo program. No medical intake, actual callback, enrollment or booking."
+    reasoning:
+        instructions: ->
+            | Help with a synthetic support request for a program returned by matching. Use its returned internal ID, never invent one. Ask the user which program if unclear. The four allowed reasons are Accessibility information needs verification, Equipment question, Getting started, Registration guidance. Do not ask for medical narratives, contact details, age or identity documents. No email, SMS, phone or real staff response is available. Preparation saves nothing. Display the complete returned draft verbatim and ask whether to create this demo Case. Only a later clear yes confirms; maybe, probably, I guess so, silence or qualified yes creates nothing. Never reveal the signed token. Never invent a Case ID or claim success without CREATED or EXISTING from the action.
+            if @variables.support_token != "":
+                | The pending complete draft is: {!@variables.support_draft}
+                | Evaluate this reply with Confirm_Support; its input is bound to the actual user message, not a paraphrase. Respect AWAITING_CONSENT, DECLINED, REVISE, STALE_DRAFT and UNAVAILABLE. If declined or changed, discard the old draft before preparing a new one. Do not reinterpret the answer into consent. If CREATED or EXISTING, give the returned Case number and ID and say it is in the demo support queue; this is not an official USA Fencing staff handoff.
+            if @variables.support_case_id != "":
+                | This request has already created Case {!@variables.support_case_number} with ID {!@variables.support_case_id}. Do not prepare a replacement to satisfy a duplicate retry; use Confirm_Support with the existing token if the user explicitly confirms again.
+        actions:
+            Prepare_Support: @actions.Prepare_Support
+                available when @variables.support_token == ""
+                with programId = ...
+                with category = ...
+                set @variables.support_token = @outputs.token
+                set @variables.support_draft = @outputs.draft
+                set @variables.support_status = @outputs.status
+            Confirm_Support: @actions.Confirm_Support
+                available when @variables.support_token != ""
+                with token = @variables.support_token
+                with latestUserMessage = @system_variables.user_input
+                set @variables.support_status = @outputs.status
+                set @variables.support_case_id = @outputs.caseId
+                set @variables.support_case_number = @outputs.caseNumber
+    after_reasoning:
+        if @variables.support_status == "DECLINED" or @variables.support_status == "REVISE" or @variables.support_status == "STALE_DRAFT":
+            set @variables.support_token = ""
+            set @variables.support_draft = ""
+            set @variables.support_case_id = ""
+            set @variables.support_case_number = ""
+    actions:
+        Prepare_Support:
+            label: "Prepare Demo Support Draft"
+            description: "Create a signed draft without saving a record. Show the entire draft to the user before asking for consent."
+            target: "apex://PrepareSportsSupportAction"
+            require_user_confirmation: False
+            inputs:
+                programId: string
+                    description: "Internal ID of the selected program returned by demo matching."
+                    is_required: True
+                    is_user_input: False
+                category: string
+                    description: "Exactly Accessibility information needs verification, Equipment question, Getting started, or Registration guidance."
+                    is_required: True
+                    is_user_input: True
+            outputs:
+                status: string
+                    is_displayable: False
+                message: string
+                    is_displayable: True
+                draft: string
+                    description: "Display verbatim in full before requesting consent."
+                    is_displayable: True
+                token: string
+                    description: "Opaque server-signed capability; bind internally, never display or modify."
+                    is_displayable: False
+                    filter_from_agent: True
+        Confirm_Support:
+            label: "Confirm Demo Support Request"
+            description: "Checks actual latest user reply and signed pending draft. Hesitation creates nothing; clear confirmation creates one synthetic Case, retries return the existing Case."
+            target: "apex://CreateSportsSupportCaseAction"
+            require_user_confirmation: True
+            inputs:
+                token: string
+                    description: "Bound internal signed draft."
+                    is_required: True
+                    is_user_input: False
+                latestUserMessage: string
+                    description: "Bound to read-only system user_input; never model-generated."
+                    is_required: True
+                    is_user_input: False
+            outputs:
+                status: string
+                    is_displayable: True
+                message: string
+                    is_displayable: True
+                caseId: string
+                    is_displayable: True
+                caseNumber: string
+                    is_displayable: True

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <folderShares><accessLevel>Manage</accessLevel><sharedTo>gpallavi421afg@gmail.com</sharedTo><sharedToType>User</sharedToType></folderShares>
+    <name>Sport Compass Demo Support</name>
+</ReportFolder>

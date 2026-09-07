@@ -2,6 +2,8 @@
 
 Current update: the direct Secure Base assignment has been removed from this agent and replaced with SportCompass_Knowledge_Runtime. Effective Account/Contact/Case and Messaging object checks deny read/create/edit/delete. Runtime licenses and published program read access remain. Generic template actions have been removed; live knowledge retrieval and demo matching have been tested. Data Cloud policy review and external API identity/session isolation remain release gates. See [current status](../STATUS.md).
 
+Support update: SportCompass_Support_Runtime now grants two action classes and SportCompass_Create_Demo_Support, not generic Case CRUD. A private, explicitly privileged broker creates only signed, consent-confirmed synthetic Cases in a fixed queue and returns only that request's identifiers. Therefore denied Case object CRUD does NOT mean no Case-writing capability: this narrow Apex capability is intentional and separately tested. The signing-setting object remains inaccessible to the agent. Existing builder alone receives Support Operator permissions and queue membership. See [support handoff](SUPPORT_HANDOFF.md).
+
 ## MVP identities
 
 | Identity | Current implementation | Boundary |

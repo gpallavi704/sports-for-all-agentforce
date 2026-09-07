@@ -14,6 +14,8 @@ The differentiator is a visible completed handoff, not a broader chatbot feature
 
 ## Reconciliation with what is built
 
+This section records the state when the findings arrived. Subsequent support implementation is tracked in [current status](STATUS.md) and [support handoff](agentforce/SUPPORT_HANDOFF.md); do not treat the following historical pending list as today's status.
+
 - Matcher: core read-only deterministic demo matching is deployed and live-tested. Current inputs are city/state, optional age, experience and feature preferences. Postal/radius lookup, interests, competitive/recreational goals, costs/scholarships and source/verification output fields remain gaps against the broader proposal.
 - Knowledge: source-grounded guidance is tested separately. Do not claim the combined end-to-end journey is already complete.
 - Support: Case action, confirmation state, record type, queue, consent fields, list views and report are not built.
