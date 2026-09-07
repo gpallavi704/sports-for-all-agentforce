@@ -7,6 +7,7 @@ public with sharing class FindPublicFencingClubsAction {
 
     public class Request {
         @InvocableVariable public String city;
+        @InvocableVariable public String previousResultsJson;
         @InvocableVariable(description='Two-letter US state code.') public String state;
         @InvocableVariable(description='Actual latest message, bound by Agent Script. When present, overrides city/state; never stored.') public String latestUserMessage;
     }
@@ -27,6 +28,21 @@ public with sharing class FindPublicFencingClubsAction {
         for (Request supplied : requests) {
             Request request = supplied != null && supplied.latestUserMessage != null
                 ? locationFromMessage(supplied.latestUserMessage) : supplied;
+            // Reuse only one previous public selection for a bounded email-this-club request.
+            // Refresh its facts from metadata below; never trust a previous email or URL.
+            if(request==null && supplied!=null && supplied.latestUserMessage!=null
+                && Pattern.matches('(?i)\\s*(?:help me |can you |please )?(?:email|contact) (?:this|that|the) club(?: about trying wheelchair fencing)?[?.!]?\\s*',supplied.latestUserMessage)
+                && supplied.previousResultsJson!=null && supplied.previousResultsJson.length()<20000) {
+                try {
+                    List<Object> prior=(List<Object>)JSON.deserializeUntyped(supplied.previousResultsJson);
+                    if(prior.size()==1) {
+                        Map<String,Object> row=(Map<String,Object>)prior[0];
+                        if(row.get('recordType')=='public_club_listing'&&row.get('isDemo')==false) {
+                            request=new Request();request.city=(String)row.get('city');request.state=(String)row.get('state');
+                        }
+                    }
+                } catch(Exception ignored) { request=null; }
+            }
             Response response = new Response();
             response.resultsJson = '[]';
             responses.add(response);
@@ -53,6 +69,7 @@ public with sharing class FindPublicFencingClubsAction {
                     'recordType' => 'public_club_listing', 'isDemo' => false,
                     'name' => listing.Club_Name__c, 'city' => listing.City__c, 'state' => listing.State__c,
                     'website' => listing.Website__c,
+                    'emailHandoff' => emailHandoff(listing.Website__c),
                     'sourceTitle' => 'USA Fencing Utah/Southern Idaho Division club directory',
                     'sourceUrl' => listing.Source_URL__c,
                     'sourceCheckedOn' => String.valueOf(listing.Source_Checked_On__c),
@@ -91,6 +108,7 @@ public with sharing class FindPublicFencingClubsAction {
             // guess a city or silently expand the user's geography.
             List<String> parts = found.city.split('(?i)\\s+(?:in|near|for|search)\\s+');
             found.city = parts[parts.size()-1];
+            found.city = found.city.replaceFirst('(?i)^(?:what about|how about|and|try|instead try)\\s+', '').trim();
             found.state = matcher.group(2).equalsIgnoreCase('Utah') ? 'UT' : matcher.group(2).toUpperCase();
         }
         return found;
@@ -102,5 +120,22 @@ public with sharing class FindPublicFencingClubsAction {
             && listing.Source_URL__c == DIRECTORY && WEBSITES.contains(listing.Website__c)
             && listing.Source_Checked_On__c != null && listing.Source_Checked_On__c <= Date.today()
             && listing.Source_Checked_On__c >= Date.today().addDays(-90);
+    }
+
+    // Reviewed public contact routes only. This constructs a draft URL; it never sends mail.
+    @TestVisible private static Map<String,Object> emailHandoff(String website) {
+        Date checked=Date.newInstance(2026,9,7);
+        if(Date.today()<checked || Date.today()>checked.addDays(90)) return null;
+        if(!WEBSITES.contains(website))return null;
+        String recipient=System.Label.SportCompass_Demo_Email.trim();
+        if(!Pattern.matches('[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}',recipient))return null;
+        String subject='DEMO ONLY - Beginner fencing inquiry';
+        String body='Hello, I am interested in an introductory fencing visit. Do you offer wheelchair fencing, step-free access and loaner frames or equipment? Please let me know the available beginner options. Thank you.';
+        return new Map<String,Object>{'recipient'=>recipient,'subject'=>subject,'body'=>body,
+            'sourceUrl'=>website,'checkedOn'=>String.valueOf(checked),
+            'mailtoUrl'=>'mailto:'+recipient+'?subject='+EncodingUtil.urlEncode(subject,'UTF-8').replace('+','%20')
+                +'&body='+EncodingUtil.urlEncode(body,'UTF-8').replace('+','%20'),
+            'isDemo'=>true,
+            'delivery'=>'DEMO ONLY: user-approved test recipient, not the club email. Opens a draft only. Review and press Send yourself. Nothing is sent by Sport Compass.'};
     }
 }

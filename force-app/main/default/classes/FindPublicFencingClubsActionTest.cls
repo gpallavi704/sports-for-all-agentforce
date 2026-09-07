@@ -91,6 +91,9 @@ private class FindPublicFencingClubsActionTest {
         System.assertEquals('INVALID_INPUT',FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0].status);
     }
     @IsTest static void parsesExplicitLocationsAndRejectsAmbiguity() {
+        for(String message:new List<String>{'What about Kaysville, Utah?','How about Kaysville, UT?','And Kaysville, Utah?'}) {
+            System.assertEquals('Kaysville',FindPublicFencingClubsAction.locationFromMessage(message).city);
+        }
         for(String message:new List<String>{
             'Find beginner wheelchair fencing programs in Salt Lake City, Utah. I need mobility access.',
             'Switch back to REAL clubs in Salt Lake City, UT, not fictional programs.',
@@ -105,5 +108,40 @@ private class FindPublicFencingClubsActionTest {
         System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('Kaysville'));
         System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage(''));
         System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('x'.repeat(4501)));
+    }
+    @IsTest static void shortFollowupFindsListingWithoutReusingOldCity() {
+        FindPublicFencingClubsAction.testListings=new List<Public_Fencing_Club__mdt>{listing('Wasatch','Kaysville')};
+        FindPublicFencingClubsAction.Request r=request('Salt Lake City','UT');
+        r.latestUserMessage='What about Kaysville, Utah?';
+        System.assertEquals('LISTINGS',FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0].status);
+        r.latestUserMessage='What about Atlantis, ZZ?';
+        System.assertEquals('NO_LISTINGS',FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0].status);
+        System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('What about Kaysville?'));
+    }
+    @IsTest static void emailHandoffIsFixedAndNeverSends() {
+        Integer writes=Limits.getDmlStatements(),calls=Limits.getCallouts();
+        Map<String,Object> contact=FindPublicFencingClubsAction.emailHandoff('https://www.saltcityswords.com/');
+        if(Date.today()>=Date.newInstance(2026,9,7)&&Date.today()<=Date.newInstance(2026,12,6)) {
+            System.assertEquals(System.Label.SportCompass_Demo_Email.trim(),contact.get('recipient'));
+            String url=(String)contact.get('mailtoUrl');
+            System.assert(url.startsWith('mailto:'+System.Label.SportCompass_Demo_Email.trim()+'?subject='));
+            System.assertEquals(true,contact.get('isDemo'));
+            System.assert(url.contains('&body=Hello%2C%20'));
+            System.assert(!url.contains('&cc=')&&!url.contains('&bcc='));
+        } else System.assertEquals(null,contact);
+        System.assertEquals(null,FindPublicFencingClubsAction.emailHandoff('https://evil.example/'));
+        System.assertEquals(writes,Limits.getDmlStatements());System.assertEquals(calls,Limits.getCallouts());
+    }
+    @IsTest static void emailReferenceRefreshesOnlyOnePublicSelection() {
+        FindPublicFencingClubsAction.testListings=new List<Public_Fencing_Club__mdt>{listing('Wasatch','Kaysville')};
+        FindPublicFencingClubsAction.Request r=request('Salt Lake City','UT');
+        r.previousResultsJson='[{"recordType":"public_club_listing","isDemo":false,"city":"Kaysville","state":"UT","recipient":"evil@example.invalid"}]';
+        r.latestUserMessage='Help me email this club about trying wheelchair fencing.';
+        FindPublicFencingClubsAction.Response result=FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0];
+        System.assertEquals('LISTINGS',result.status);System.assert(!result.resultsJson.contains('evil@'));
+        r.latestUserMessage='What about Atlantis, ZZ?';
+        System.assertEquals('NO_LISTINGS',FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0].status);
+        r.latestUserMessage='email this club';r.previousResultsJson='[]';
+        System.assertEquals('INVALID_INPUT',FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0].status);
     }
 }
