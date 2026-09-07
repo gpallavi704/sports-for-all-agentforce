@@ -1,5 +1,7 @@
 # Draft routing and live-knowledge checkpoint
 
+Later checkpoint: the full ten-question suite and citation investigation are documented in [knowledge acceptance](KNOWLEDGE_ACCEPTANCE.md). The early smoke tests below do not supersede later failures.
+
 Verified September 6 Pacific / September 7 UTC, 2026. Sport Compass remains an uncommitted, inactive Agentforce draft. Git commits are source-control checkpoints, not Agentforce version commits.
 
 ## Saved changes

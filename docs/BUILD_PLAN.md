@@ -2,7 +2,7 @@
 
 ## Mission
 
-Latest checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Generic template routes are removed and two live knowledge lookups succeeded under this baseline. Original-source URLs render URL_Redacted, so citation usability remains unresolved. See [routing and live tests](agentforce/DRAFT_ROUTING_AND_LIVE_TESTS.md) and [security cleanup](agentforce/SECURITY_CLEANUP.md). Older checkpoint paragraphs below describe earlier states; Data Cloud policy review and full acceptance testing remain open.
+Latest checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Generic template routes are removed. All ten knowledge fixtures retrieved expected sources, but all redacted original-source URLs; the initial classification test also failed its decision boundary. See [knowledge acceptance findings](agentforce/KNOWLEDGE_ACCEPTANCE.md), [routing and live tests](agentforce/DRAFT_ROUTING_AND_LIVE_TESTS.md) and [security cleanup](agentforce/SECURITY_CLEANUP.md). Older paragraphs below describe earlier states. The suite is not an acceptance pass; org-wide URL configuration requires approval and Data Cloud policy review remains open.
 
 Deliver one credible, accessible journey from ChatGPT through MCP to Salesforce Agentforce:
 
@@ -90,7 +90,7 @@ Deliverables:
 - [x] Upload and index first 10 source summaries (not yet approved by USA Fencing)
 - [x] Remove all six superseded synthetic files from the shared knowledge library (local copies retained)
 - [x] Create 10 retrieval tests with expected citations
-- [ ] Execute tests against actual retrieval, not simulated actions
+- [x] Execute all ten fixtures against actual retrieval in isolated draft-preview sessions; defects recorded, acceptance not passed
 
 Exit condition: at least 8 of 10 knowledge questions return the correct source without unsupported claims.
 

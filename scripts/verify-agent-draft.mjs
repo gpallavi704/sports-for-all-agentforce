@@ -1,5 +1,5 @@
 // Local structural regression only; not a replacement for Salesforce compilation or live tests.
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 
 const root = new URL('../force-app/main/default/aiAuthoringBundles/SportCompass/', import.meta.url);
@@ -22,4 +22,9 @@ for (const name of expected.slice(2)) {
 assert.match(source, /welcome: \|\s+Hi, I'm Sport Compass, an AI fencing guide/);
 assert.match(source, /live program matching is not connected/);
 assert.doesNotMatch(metadata, /<target\b/, 'Draft-only deployment must not declare a commit target');
-console.log(JSON.stringify({ passed: true, subagents: names.length, externalActionTargets: targets.length, draftOnly: true }, null, 2));
+const curated = new URL('../knowledge/curated/', import.meta.url);
+const sourceUrls = new Set(readdirSync(curated).flatMap(f => [...readFileSync(new URL(f, curated), 'utf8').matchAll(/https:\/\/[^\s]+/g)].map(m => m[0])));
+const instructionUrls = new Set([...source.matchAll(/https:\/\/[^\s]+/g)].map(m => m[0]));
+assert.deepEqual([...instructionUrls].sort(), [...sourceUrls].sort(), 'Permitted links must exactly match the curated-source URL inventory');
+assert.ok([...instructionUrls].every(url => !/[?*#]/.test(url)), 'No wildcard, query or fragment destinations');
+console.log(JSON.stringify({ passed: true, subagents: names.length, externalActionTargets: targets.length, permittedPublicUrls: instructionUrls.size, draftOnly: true }, null, 2));

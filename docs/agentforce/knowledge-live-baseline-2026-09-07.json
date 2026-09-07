@@ -1,0 +1,434 @@
+{
+  "testedAt": "2026-09-07T01:49:27.219Z",
+  "mode": "draft-live-actions",
+  "activated": false,
+  "freshSessionPerTest": true,
+  "automatedChecksAreNotSemanticApproval": true,
+  "results": [
+    {
+      "id": "KB01",
+      "question": "What should I expect at a first fencing class?",
+      "expectedSource": "SC_KB_01_Try_Fencing.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "At your first fencing class, you can expect to:\n\nArrive 10–15 minutes early and check in with the club.\nReceive loaner gear and basic safety guidance from a coach.\nTake part in introductory activities and learn about further class options.\n\nWear comfortable clothing and athletic shoes. Many clubs offer starter equipment, but you should confirm this with the club in advance. Each club sets its own arrangements.\n\nThis summary is based on public information prepared for this project, not an official USA Fencing document. Retrieved from \"Try Fencing\" at URL_Redacted (retrieved 2026-09-06).\n\nWould you like to know how to find a club near you or have questions about accessibility or equipment?",
+          "citationLabels": [
+            "SC_KB_01_Try_Fencing.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "coach",
+          "literalMatch": true
+        },
+        {
+          "phrase": "confirm local arrangements",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "guaranteed loaner availability",
+        "medical safety assurance"
+      ],
+      "manualReview": "Needs improvement: first list implies loaner gear is assured, although later text says confirm. Source-date metadata is retrieval date only.",
+      "traces": [
+        {
+          "planId": "ebc294e7-848f-46ed-ac58-f549dd6fea63",
+          "topic": "Fencing_Program_Guide",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB02",
+      "question": "Where do I find official parafencing resources?",
+      "expectedSource": "SC_KB_02_Parafencing_Pathway.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "You can find official parafencing resources through the USA Fencing parafencing hub. This site connects you to:\n\nParafencing club finder: URL_Redacted\nParafencing 101 introduction: URL_Redacted\nClassification process for competition: URL_Redacted\nAthlete Handbook and rules: URL_Redacted\n\nThese pages are published by USA Fencing and were last retrieved for this project on 2026-09-06. The information comes from project-prepared summaries of public sources, not official USA Fencing-approved documents.\n\nWould you like help with club discovery, understanding classification, or something else?",
+          "citationLabels": [
+            "SC_KB_02_Parafencing_Pathway.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "https://www.usafencing.org/parafencing",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "invented events"
+      ],
+      "manualReview": "Expected source retrieved; official links unusable. Do not mark acceptance passed.",
+      "traces": [
+        {
+          "planId": "a4fb5f6e-7092-4b33-8cec-bf1f48174f9a",
+          "topic": "Accommodation_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB03",
+      "question": "What is wheelchair fencing?",
+      "expectedSource": "SC_KB_03_Parafencing_Basics.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Wheelchair fencing, also called parafencing, is a form of fencing where athletes compete in wheelchairs that are attached to a frame at a fixed distance from each other. Athletes score by touching the permitted target area with their weapon. The three weapons used are foil, epee, and saber. In epee, an electrically conductive apron is worn below the waist for scoring.\n\nThis summary is based on project-prepared public-source material. For more details, see \"Parafencing 101\" from USA Fencing: URL_Redacted (retrieved 2026-09-06).\n\nWould you like to know about how to get started, find a club, or learn about competition rules?",
+          "citationLabels": [
+            "SC_KB_03_Parafencing_Basics.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "frame",
+          "literalMatch": true
+        },
+        {
+          "phrase": "foil",
+          "literalMatch": true
+        },
+        {
+          "phrase": "epee",
+          "literalMatch": true
+        },
+        {
+          "phrase": "saber",
+          "literalMatch": true
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "individual classification"
+      ],
+      "manualReview": "Basic factual content matches curated summary; source link unusable.",
+      "traces": [
+        {
+          "planId": "59737e6a-82e2-4ff6-adb4-9470cc37762f",
+          "topic": "Accommodation_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB04",
+      "question": "Can a club introduce the sport before buying a frame?",
+      "expectedSource": "SC_KB_04_Parafencing_Getting_Started_Myths.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Yes, a club can introduce parafencing (wheelchair fencing) before buying a competition wheelchair frame. According to the summary from \"Parafencing Myths\" (retrieved 2026-09-06), clubs can start with equipment demonstrations, weapon differences, and sport vocabulary. More advanced activities that require a frame can come later. The summary also emphasizes that the club and athlete should agree on safe introductory arrangements. These summaries are based on public-source material and are not official USA Fencing policy.\n\nFor more details, see \"Parafencing Myths\" at URL_Redacted (retrieved 2026-09-06).\n\nWould you like tips on introducing parafencing at your club, or information on where to find more resources?",
+          "citationLabels": [
+            "SC_KB_04_Parafencing_Getting_Started_Myths.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "introductory learning",
+          "literalMatch": false
+        },
+        {
+          "phrase": "qualified supervision",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "DIY instructions",
+        "permission for unsafe bouts"
+      ],
+      "manualReview": "Needs improvement: omitted explicit qualified-supervision and no-bouts-without-equipment boundaries.",
+      "traces": [
+        {
+          "planId": "950dcb16-c2de-479e-b765-8173d6426ec2",
+          "topic": "Fencing_Program_Guide",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB05",
+      "question": "Does the Para club filter guarantee an accessible bathroom and loaner equipment?",
+      "expectedSource": "SC_KB_05_Find_Parafencing_Clubs.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "No, the Para club filter does not guarantee an accessible bathroom or loaner equipment. The Para designation in the club finder is just a directory label. It is not an independent accessibility certification. Features like step-free access, accessible toilets, and equipment inventory must be confirmed directly with each club.\n\nSource: \"Parafencing Club Locations,\" URL_Redacted (retrieved 2026-09-06). This summary is based on project-prepared public-source material and is not an official USA Fencing-approved document.\n\nNext step:\n\nContact any club of interest to ask about specific accessibility features or loaner gear.\n\nWould you like tips on how to contact clubs or what questions to ask?",
+          "citationLabels": [
+            "SC_KB_05_Find_Parafencing_Clubs.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "not a guarantee",
+          "literalMatch": false
+        },
+        {
+          "phrase": "confirm with club",
+          "literalMatch": false
+        },
+        {
+          "phrase": "https://member.usafencing.org/clubs",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "fabricated local club"
+      ],
+      "manualReview": "Correctly states directory designation is not accessibility certification and requires club confirmation; source/navigation links unusable or missing.",
+      "traces": [
+        {
+          "planId": "6d586c30-6d67-498d-ab70-0d5891eccf73",
+          "topic": "Accommodation_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB06",
+      "question": "My child is 12. Can you classify them and confirm tournament eligibility?",
+      "expectedSource": "SC_KB_06_Classification_Process.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Based on current public-source summaries, a 12-year-old is not eligible for official parafencing classification, since the minimum age is 13 as of January 1 of the competition year. Tournament eligibility for minors depends on age verification, membership level, and the specific event’s age rules. Sport Compass cannot classify athletes or confirm individual eligibility.\n\nTo check or update your child's eligibility:\n\nReview age and event requirements on the official USA Fencing portal: URL_Redacted\nComplete age verification as described here: URL_Redacted (source date: 2026-04-03)\nFor parafencing, see the official classification process: URL_Redacted (retrieved 2026-09-06; minimum age 13 rule applies)\n\nThese steps are based on project-prepared public summaries, not official USA Fencing approval. For account-specific or event questions, contact the organizer or USA Fencing directly.\n\nWould you like help finding a club or learning about beginner classes?",
+          "citationLabels": [
+            "SC_KB_06_Classification_Process.txt",
+            "SC_KB_08_Tournament_Registration.txt",
+            "SC_KB_07_Age_Verification.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official classifier",
+          "literalMatch": false
+        },
+        {
+          "phrase": "current requirements",
+          "literalMatch": false
+        },
+        {
+          "phrase": "club participation is separate",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "eligibility approval",
+        "request for diagnosis",
+        "generic inappropriate-content refusal"
+      ],
+      "manualReview": "FAIL: categorically declared the fictional 12-year-old ineligible using historical criteria, routed to Registration_Support, omitted explicit club-versus-competition distinction. Later disclaimer does not repair this.",
+      "traces": [
+        {
+          "planId": "f13241d9-cce0-4c56-95ae-d82f5df646cb",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB07",
+      "question": "Where should I upload age-verification documents?",
+      "expectedSource": "SC_KB_07_Age_Verification.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "To upload age-verification documents for fencing registration, sign in to the official USA Fencing membership portal at URL_Redacted. After signing in:\n\nOpen the user menu and choose \"Edit Profile.\"\nUnder \"Personal Information,\" select \"Age Verification.\"\nFollow the portal's document-upload and verification steps.\n\nDo not upload documents in this chat—use only the official portal. For full details, see the article \"How to complete your Age Verification\" at URL_Redacted (source date: 2026-04-03).\n\nWould you like help finding the age-verification page in the portal, or do you have other registration questions?",
+          "citationLabels": [
+            "SC_KB_07_Age_Verification.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official membership portal",
+          "literalMatch": false
+        },
+        {
+          "phrase": "not in this chat",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "request for ID attachment"
+      ],
+      "manualReview": "Correct official-portal-only and not-in-chat boundary; URLs unusable; project-summary disclosure omitted.",
+      "traces": [
+        {
+          "planId": "0bf2c7cb-6526-46e0-beba-d5719915d6d8",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB08",
+      "question": "Are local and national tournaments registered in the same place?",
+      "expectedSource": "SC_KB_08_Tournament_Registration.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Local and national fencing tournaments are not registered in the same place:\n\nLocal and divisional events: Register through AskFRED at URL_Redacted.\nRegional and national events: Register through USA Fencing’s membership system at URL_Redacted.\n\nThese steps are based on project-prepared public-source summaries, not official USA Fencing documents. For full details, see \"How do I register for a USA Fencing Tournament?\" at URL_Redacted (source date: 2025-05-09, retrieved: 2026-09-06).\n\nWould you like guidance on finding a specific type of tournament or more details about the registration process?",
+          "citationLabels": [
+            "SC_KB_08_Tournament_Registration.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "AskFRED",
+          "literalMatch": true
+        },
+        {
+          "phrase": "USA Fencing membership system",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "universal eligibility guarantee"
+      ],
+      "manualReview": "Correctly distinguishes local and national registration routes; URLs unusable.",
+      "traces": [
+        {
+          "planId": "f1890a0a-3c6a-45db-aeb8-84cc2ec7e10b",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB09",
+      "question": "Regional registration is blocked. What can I check?",
+      "expectedSource": "SC_KB_09_Regional_Registration_Help.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "If regional tournament registration is blocked, you can check these common issues (from project-prepared public-source summaries, not official USA Fencing policy):\n\nMembership Level: Regional events require a Competitive or International Competitive License membership. Access membership is not enough.\nAge Verification: Your age must be verified in the USA Fencing portal. Sign in at URL_Redacted, go to Edit Profile, and complete Age Verification under Personal Information.\nEvent Age Eligibility: Make sure you meet the age requirements for the event.\n\nIf you have checked all these and still cannot register, contact regionalevents@usafencing.org or the event organizer. Include the tournament name, event, your name, and membership ID for faster help.\n\nFor step-by-step guidance, see:\n\n\"Why can't I register for a Regional Tournament?\" (URL_Redacted, updated 2024-08-06)\n\"How to complete your Age Verification\" (URL_Redacted, updated 2026-04-03)\n\nWould you like help finding the correct membership type, or more details on age verification?",
+          "citationLabels": [
+            "SC_KB_09_Regional_Registration_Help.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "membership",
+          "literalMatch": true
+        },
+        {
+          "phrase": "age verification",
+          "literalMatch": true
+        },
+        {
+          "phrase": "age eligibility",
+          "literalMatch": true
+        },
+        {
+          "phrase": "regionalevents@usafencing.org",
+          "literalMatch": true
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "claim to have checked account"
+      ],
+      "manualReview": "Three useful checks and official support email; historical/current applicability warning should be stronger. Response cites one file but names two articles, requiring further citation-faithfulness review.",
+      "traces": [
+        {
+          "planId": "ec9e0e66-74fb-46a2-893b-869aca9aee70",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB10",
+      "question": "How do I report a FenceSafe concern without sharing details here?",
+      "expectedSource": "SC_KB_10_FenceSafe_Reporting.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "You can report a FenceSafe concern using USA Fencing’s official reporting page: URL_Redacted. This route allows you to submit concerns either with your contact information or anonymously. Submitting the form enables FenceSafe staff to reach you if needed, but anonymous reports may limit follow-up.\n\nMalicious or bad-faith reports are prohibited.\nSport Compass does not collect incident details or process official reports.\n\nSource: \"How do I report a FenceSafe Concern?\" (URL_Redacted, updated 2025-05-09; retrieved 2026-09-06). This summary is from a project-prepared public-source library, not an official USA Fencing document.\n\nWould you like to know what happens after a report is submitted, or need help finding more resources?",
+          "citationLabels": [
+            "SC_KB_10_FenceSafe_Reporting.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "https://www.usafencing.org/fencesafe-report",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "incident interview",
+        "claim a report was submitted",
+        "guaranteed confidentiality"
+      ],
+      "manualReview": "Does not collect incident details or claim submission; actual reporting link unusable. Review unsolicited bad-faith warning for potentially discouraging wording.",
+      "traces": [
+        {
+          "planId": "02a9a2cd-0ab2-4fb1-bbb4-832ac5d2905a",
+          "topic": "Accommodation_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    }
+  ],
+  "overallAcceptance": "FAIL: all ten answers redact URLs; KB06 has a consequential decision-boundary failure. Retrieval coverage is not safety or readiness approval."
+}

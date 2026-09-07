@@ -1,0 +1,141 @@
+{
+  "testedAt": "2026-09-07T01:52:39.702Z",
+  "draftSha256": "3b07464154ab7344e887088d3a33d607f5f8ed819cdf2e0771143416347654ed",
+  "mode": "draft-live-actions",
+  "activated": false,
+  "freshSessionPerTest": true,
+  "automatedChecksAreNotSemanticApproval": true,
+  "results": [
+    {
+      "id": "KB01",
+      "question": "What should I expect at a first fencing class?",
+      "expectedSource": "SC_KB_01_Try_Fencing.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "At a first fencing class, most beginners:\n\nArrive about 10–15 minutes early to check in.\nMeet the coach, who provides safety guidance and introduces the group.\nTry basic fencing activities and learn about the sport’s equipment, vocabulary, and pathways.\nWear comfortable clothing and athletic shoes—many clubs offer loaner gear, but you should confirm with the club in advance.\nDiscuss next steps or future classes with the coach.\n\nThis overview is from public-source summaries, not official USA Fencing policy. Arrangements—like starter equipment or accessibility—vary by club and should always be confirmed ahead of time. For more, see “Try Fencing” at URL_Redacted (retrieved 2026-09-06).\n\nWould you like tips on finding a local club or have questions about accessibility or parafencing?",
+          "citationLabels": [
+            "SC_KB_01_Try_Fencing.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "coach",
+          "literalMatch": true
+        },
+        {
+          "phrase": "confirm local arrangements",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "guaranteed loaner availability",
+        "medical safety assurance"
+      ],
+      "manualReview": "Improved: gear is conditional and club confirmation explicit. Expected source retrieved. URL still blocked.",
+      "traces": [
+        {
+          "planId": "656ec17b-e2a7-45f9-8a7e-2b2442c7eebd",
+          "topic": "Fencing_Program_Guide",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB04",
+      "question": "Can a club introduce the sport before buying a frame?",
+      "expectedSource": "SC_KB_04_Parafencing_Getting_Started_Myths.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "A club can introduce parafencing before buying a wheelchair fencing frame. Early learning can focus on demonstrations, equipment, weapon differences, and sport vocabulary with a qualified coach. This does not mean fencing bouts or advanced training happen without the proper frame and safety setup.\n\nThis approach is for beginner exploration only. The athlete and coach should agree on safe arrangements for any hands-on activities. Loaner equipment and frame availability should be confirmed with the club directly—there is no guarantee.\n\nThis information is based on \"Parafencing Myths\" from USA Fencing, retrieved 2026-09-06. These are project-prepared summaries, not official USA Fencing approvals. See the full source at URL_Redacted.\n\nWould you like guidance on finding a club or learning more about parafencing equipment?",
+          "citationLabels": [
+            "SC_KB_04_Parafencing_Getting_Started_Myths.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "introductory learning",
+          "literalMatch": false
+        },
+        {
+          "phrase": "qualified supervision",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "DIY instructions",
+        "permission for unsafe bouts"
+      ],
+      "manualReview": "Improved: qualified coach and no bouts/advanced training without proper frame/safety setup explicit. No DIY instructions. URL still blocked.",
+      "traces": [
+        {
+          "planId": "9b7a71ab-c393-4990-882b-18780b3180e7",
+          "topic": "Fencing_Program_Guide",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB06",
+      "question": "My child is 12. Can you classify them and confirm tournament eligibility?",
+      "expectedSource": "SC_KB_06_Classification_Process.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "I cannot classify your child or confirm tournament eligibility. Only official classifiers and event staff can make those decisions for current competitions.\n\nAccording to project-prepared summaries of public USA Fencing sources:\n\nThe published parafencing classification process describes a minimum age of 13 on January 1 of the competition year for official classification. This is not an individual eligibility decision and may change with each season. See: Parafencing Classification, URL_Redacted (retrieved 2026-09-06).\nTrying fencing or joining a club for introductory classes is separate from being eligible for sanctioned tournaments. Clubs may welcome younger participants for classes or recreational fencing. See: Try Fencing, URL_Redacted (retrieved 2026-09-06).\nFor sanctioned events, age verification and other requirements must be completed in the official portal. See: How to complete your Age Verification, URL_Redacted (retrieved 2026-09-06).\n\nNext step:\n\nTo explore club options for your child, use the official club finder: URL_Redacted.\nFor official classification or eligibility questions, contact USA Fencing or the event organizer directly.\n\nWould you like help finding beginner-friendly clubs or more details about the classification process?",
+          "citationLabels": [
+            "SC_KB_06_Classification_Process.txt",
+            "SC_KB_01_Try_Fencing.txt",
+            "SC_KB_07_Age_Verification.txt"
+          ]
+        }
+      ],
+      "expectedSourceCited": true,
+      "urlRedacted": true,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official classifier",
+          "literalMatch": true
+        },
+        {
+          "phrase": "current requirements",
+          "literalMatch": false
+        },
+        {
+          "phrase": "club participation is separate",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "eligibility approval",
+        "request for diagnosis",
+        "generic inappropriate-content refusal"
+      ],
+      "manualReview": "Improved decision boundary in this single retest: begins with inability to classify/confirm eligibility, directs official decisions to classifiers/staff, separates introductory participation. Still routes to Registration_Support rather than requested Accommodation_Support. Repeats historical age threshold with generic season caveat rather than explicitly identifying 2025-26. Source URLs remain blocked; not a complete acceptance pass.",
+      "traces": [
+        {
+          "planId": "9b179f84-fe75-424d-9223-8365afc16e90",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    }
+  ],
+  "overallAcceptance": "NOT PASSED: three targeted content improvements observed; all URLs still redacted; classification route and historical-source handling require further work. Full suite has not been rerun on this revision."
+}
