@@ -1,4 +1,5 @@
 import { App } from '@modelcontextprotocol/ext-apps';
+import { buildVisitExport } from './visit-export.mjs';
 
 const app = new App({ name: 'Sport Compass first visit', version: '1.0.0' }, {});
 const $ = id => document.getElementById(id);
@@ -8,7 +9,7 @@ const needs = [
   { id:'equipment', label:'Equipment and what to bring', hint:'Loaner gear, fencing frame and chair setup', question:'Do you have loaner fencing gear and a suitable fencing frame and chair setup, and what should I bring?' },
   { id:'cost', label:'Costs and first-session details', hint:'Introductory fees, times and what to expect', question:'What does an introductory session cost, when is it available, and can I observe before deciding to take part?' }
 ];
-let snapshot; let club; let oneStep = false; let questionIndex = 0; let connected = false;
+let snapshot; let club; let oneStep = false; let questionIndex = 0; let connected = false; let downloading = false; let downloadUnavailable = false;
 const selected = new Set(['fencing','access','equipment']);
 const say = text => { $('feedback').textContent = text; };
 const el = (tag, text, cls) => { const node = document.createElement(tag); if(text) node.textContent=text; if(cls)node.className=cls; return node; };
@@ -34,7 +35,14 @@ function link(text, url) {
   }); return a;
 }
 function questions(){ return needs.filter(item=>selected.has(item.id)); }
-function planText(){return ['My first fencing visit',club ? club.name+' | '+club.city+', '+club.state : 'Contact a club from the official directory.', 'Wheelchair fencing, step-free access and equipment need confirmation.', '', ...questions().map((item,i)=>(i+1)+'. '+item.question), '', 'Club contact: '+(club?.website||snapshot.directoryUrl), 'Suggested questions only. No booking or message has been sent.'].join('\n');}
+function planText(){return buildVisitExport(club,questions().map(item=>item.question)).plainText;}
+function updateDownloadAction(){
+  const available=connected&&!downloadUnavailable&&Boolean(app.getHostCapabilities()?.downloadFile);
+  $('download-plan').hidden=!available;
+  $('download-note').textContent=available
+    ?'Copy your plan, or download an HTML file to open in your browser or print. Only your selected questions are included, not your chat history.'
+    :'Copy your plan to keep it in Notes or a document. File download is not available in this view.';
+}
 function draftText(){return 'Hello'+(club?' '+club.name+' team':'')+',\n\nI am interested in an introductory fencing visit.\n\n'+questions().map(item=>item.question).join('\n\n')+'\n\nThank you!';}
 function updatePlan(){
   $('copy-fallback').hidden=true; $('copy-text').value='';
@@ -47,11 +55,31 @@ function updatePlan(){
   $('step-mode').setAttribute('aria-pressed',String(oneStep)); $('step-mode').textContent=oneStep?'Show all questions':'One step at a time';
   $('draft').value=draftText(); $('build-plan').disabled=list.length===0;
   $('copy-plan').disabled=list.length===0; $('copy-draft').disabled=list.length===0;
+  $('download-plan').disabled=list.length===0||downloading;
+  updateDownloadAction();
   $('plan-for').textContent=club?'For your conversation with '+club.name+'.':'Choose a real club using the official directory, then use these questions.';
 }
 async function copy(text){
   try { if(!navigator.clipboard?.writeText)throw Error(); await navigator.clipboard.writeText(text); $('copy-fallback').hidden=true; say('Copied. Nothing has been sent.'); }
   catch { $('copy-fallback').hidden=false; $('copy-text').value=text; $('copy-text').focus(); $('copy-text').select(); say('Clipboard access is unavailable here. Your text is selected below for manual copying.'); }
+}
+async function downloadPlan(){
+  if(downloading||!snapshot||!questions().length)return;
+  const button=$('download-plan');let file;
+  downloading=true;button.disabled=true;button.setAttribute('aria-busy','true');
+  say('Preparing your visit plan...');
+  try{
+    file=buildVisitExport(club,questions().map(item=>item.question));
+    if(!connected||!app.getHostCapabilities()?.downloadFile)throw Error('DOWNLOAD_UNAVAILABLE');
+    const result=await app.downloadFile({contents:[{type:'resource',resource:{uri:'file:///'+file.fileName,mimeType:file.mimeType,text:file.text}}]},{timeout:15000});
+    if(result?.isError)throw Error('DOWNLOAD_DENIED');
+    say('Download handed to the host. Check your downloads. Nothing was sent to the club.');
+  }catch{
+    downloadUnavailable=true;
+    $('copy-fallback').hidden=false;$('copy-text').value=file?.plainText||planText();
+    $('copy-text').focus();$('copy-text').select();
+    say('This host could not download the plan. Copy the selected text below to save it instead.');
+  }finally{downloading=false;button.disabled=questions().length===0;button.removeAttribute('aria-busy');updateDownloadAction();}
 }
 function chooseClub(next){ club=next; updatePlan(); for(const input of document.querySelectorAll('.progress input'))input.checked=false; $('progress-count').textContent='0 of 3 preparation steps marked'; go('prepare'); }
 function render(data){
@@ -85,11 +113,12 @@ $('step-mode').addEventListener('click',()=>{oneStep=!oneStep;questionIndex=0;up
 $('prev-question').addEventListener('click',()=>{questionIndex--;updatePlan();});
 $('next-question').addEventListener('click',()=>{questionIndex++;updatePlan();});
 $('copy-plan').addEventListener('click',()=>copy(planText()));
+$('download-plan').addEventListener('click',downloadPlan);
 $('copy-draft').addEventListener('click',()=>copy(draftText()));
 for(const input of document.querySelectorAll('.progress input'))input.addEventListener('change',()=>{$('progress-count').textContent=document.querySelectorAll('.progress input:checked').length+' of 3 preparation steps marked';});
 function theme(context){document.documentElement.dataset.theme=context?.theme==='dark'?'dark':'light';}
 app.ontoolresult=result=>render(result.structuredContent);
 app.onhostcontextchanged=theme;
 app.onerror=()=>{if(!snapshot)say('The card could not connect. You can still use the guidance in the chat.');};
-app.connect().then(()=>{connected=true;theme(app.getHostContext());}).catch(()=>say('The interactive host is unavailable. Use the text guidance in the chat.'));
+app.connect().then(()=>{connected=true;theme(app.getHostContext());updateDownloadAction();}).catch(()=>say('The interactive host is unavailable. Use the text guidance in the chat.'));
 setTimeout(()=>{if(!snapshot){$('loading').textContent='Waiting for the latest guidance. If this card stays empty, ask Sport Compass to show your first-visit plan again.';}},12000);

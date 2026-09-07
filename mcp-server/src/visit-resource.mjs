@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-export const VISIT_URI = 'ui://sport-compass/first-visit-v2.html';
+export const VISIT_URI = 'ui://sport-compass/first-visit-v4.html';
 export function registerVisitResource(server) {
   // Fail at startup when the reproducible UI bundle has not been built.
   const html = readFileSync(new URL('../dist/first-visit.html', import.meta.url), 'utf8');

@@ -101,5 +101,5 @@ test('compact card keeps planner opt-in, removes three-tab navigation and retain
   assert.match(js,/Not an accessibility audit/);
   assert.match(js,/'plan-visit'\).addEventListener\('click',\(\)=>go\('prepare'\)\)/);
   assert.match(js,/'back-to-club'\).addEventListener\('click',\(\)=>go\('club'\)\)/);
-  assert.equal(VISIT_URI,'ui://sport-compass/first-visit-v2.html');
+  assert.equal(VISIT_URI,'ui://sport-compass/first-visit-v4.html');
 });

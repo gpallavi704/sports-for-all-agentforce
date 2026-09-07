@@ -5,6 +5,16 @@ resource and a separate, read-only rendering tool. Salesforce remains the agent
 backend. This update does not change either Salesforce agent or enable business
 writes.
 
+Latest source revision: v4 makes the source-linked copy action primary and only
+offers HTML download when the host advertises it. The tested ChatGPT v3 download
+fell back to manual copying, so download is not part of the accepted ChatGPT
+demo. All 69 local tests pass. The v4 phone-width dark-theme layout and copy action
+were checked in the local fixture. See [search/export evidence](SEARCH_AND_EXPORT.md).
+
+The private tunnel is currently stopped after its Keychain read failed during
+restart. Refreshing the existing ChatGPT app failed; the cached manifest is v3.
+The v4 live refresh and fresh-chat retest remain pending credential access.
+
 ## Experience
 
 1. Ask a club-search question or explicitly request an interactive visit plan with Sport Compass selected. General guidance should remain conversational.
@@ -129,7 +139,7 @@ not presented as the updated plan.
 
 The existing private tunnel must run the public entrypoint, with the resource
 built. Refresh the existing Sport Compass app's tools in ChatGPT settings after
-changing the manifest. The compact revision uses `ui://sport-compass/first-visit-v2.html`
+changing the manifest. The current source uses `ui://sport-compass/first-visit-v4.html`
 so an old cached card does not mask the change. A fresh chat avoids stale tool catalogs and expired
 conversation handles. Keep the Mac awake and the tunnel process running.
 

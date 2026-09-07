@@ -22,3 +22,4 @@
 .back{margin:0 0 16px}.feedback:empty{display:none}
 #app[data-view=club] #plan-visit{width:100%}
 @media(max-width:420px){.brand{flex-wrap:wrap}.powered{max-width:100px;text-align:right}.club{padding:0}.club h3{font-size:20px}}
+@media(max-width:420px){.row>#copy-plan{flex:1 0 100%}}

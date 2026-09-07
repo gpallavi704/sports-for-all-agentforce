@@ -98,18 +98,24 @@ public with sharing class FindPublicFencingClubsAction {
         if (String.isBlank(message) || message.length() > 4500) return null;
         // Bounded explicit format, not medical or semantic inference. We intentionally
         // ask again for missing/ambiguous locations instead of reusing stale state.
-        Matcher matcher = Pattern.compile('(?i)(?:\\bin\\s+|\\bnear\\s+|\\bfor\\s+|\\bsearch\\s+|:\\s*|^\\s*)([\\p{L}][\\p{L} .\'-]{0,79}),\\s*(Utah|[A-Za-z]{2})\\b').matcher(message);
+        // Utah is the current directory's state. Accept natural "City Utah"
+        // and "City UT" too, without interpreting ordinary words such as "in"
+        // or "or" as state codes. Other states retain explicit comma syntax.
+        Matcher matcher = Pattern.compile('(?i)(?:\\bin\\s+|\\bnear\\s+|\\bfor\\s+|\\bsearch\\s+|:\\s*|^\\s*)([\\p{L}][\\p{L} .\'-]{0,79})(?:,\\s*(Utah|[A-Za-z]{2})|\\s+(Utah|UT))\\b').matcher(message);
         Request found;
         while (matcher.find()) {
             if (found != null) return null;
             found = new Request();
             found.city = matcher.group(1).trim();
+            // A greedy city capture must not swallow an earlier Utah location.
+            if(Pattern.compile('(?i)\\b(?:Utah|UT)\\b').matcher(found.city).find()) return null;
             // Strip conversational lead-ins only at explicit separators; never
             // guess a city or silently expand the user's geography.
             List<String> parts = found.city.split('(?i)\\s+(?:in|near|for|search)\\s+');
             found.city = parts[parts.size()-1];
             found.city = found.city.replaceFirst('(?i)^(?:what about|how about|and|try|instead try)\\s+', '').trim();
-            found.state = matcher.group(2).equalsIgnoreCase('Utah') ? 'UT' : matcher.group(2).toUpperCase();
+            String state = matcher.group(2) != null ? matcher.group(2) : matcher.group(3);
+            found.state = state.equalsIgnoreCase('Utah') ? 'UT' : state.toUpperCase();
         }
         return found;
     }

@@ -1,14 +1,26 @@
 # Sport Compass current status
 
+Connection blocker at the latest checkpoint: the private tunnel is stopped after
+Keychain access failed during restart. The v4 UI is built and locally tested;
+ChatGPT refresh failed and its cached manifest remains v3. Restore access to the
+existing tunnel credential, restart the local public-guidance tunnel, refresh
+the existing app, and test a fresh conversation. No secret values or access
+controls were changed. The Salesforce agent itself was not deactivated.
+
 Latest interactive update, September 7: the live ChatGPT app now renders public
 club cards and a first-visit planner backed by the existing Salesforce guide.
 The latest compact layout puts the optional checklist behind **Plan my visit**
 and source details behind **Listing source**, with no three-tab dashboard.
-There are four MCP tools and 64 passing local tests. Topic choices, one-step
+There are four MCP tools and 69 passing local tests. Topic choices, one-step
 questions and copying run locally without more AI calls. A live Wasatch card,
 choice changes, keyboard navigation and manual-copy fallback passed, including
-after approved CSP enforcement was enabled. Combined search-and-planning wording
-can still miss a known club; a focused Kaysville lookup passed. See
+after approved CSP enforcement was enabled. A fresh combined Kaysville request
+now returned Wasatch. A separate comma-free Utah lookup bug was reproduced and
+fixed, with 12 Apex tests and three live public MCP search checks passing.
+The v4 plan makes copying primary and gates HTML download by host capability.
+ChatGPT did not complete the tested download; manual copying remains the demo
+path. No additional upload, private-data access or contact integration was added.
+Broader query reliability is still pending. See [search/export evidence](agentforce/SEARCH_AND_EXPORT.md) and
 [interactive evidence and limits](agentforce/INTERACTIVE_FIRST_VISIT.md).
 Everything below records earlier checkpoints, not the current tool count.
 

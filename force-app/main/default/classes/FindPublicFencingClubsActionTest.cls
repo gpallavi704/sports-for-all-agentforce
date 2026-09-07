@@ -118,6 +118,24 @@ private class FindPublicFencingClubsActionTest {
         System.assertEquals('NO_LISTINGS',FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0].status);
         System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('What about Kaysville?'));
     }
+    @IsTest static void naturalSearchAndPlanningPreserveExactCity() {
+        FindPublicFencingClubsAction.testListings=new List<Public_Fencing_Club__mdt>{listing('Wasatch','Kaysville'),listing('Salt City','Salt Lake City')};
+        for(String message:new List<String>{
+            'Find a fencing club in Kaysville, Utah, and help me plan my first wheelchair fencing visit.',
+            'Find a club in Kaysville Utah and help me prepare.',
+            'What about Kaysville UT?', 'Kaysville ut'}) {
+            FindPublicFencingClubsAction.Request r=request('Salt Lake City','UT');r.latestUserMessage=message;
+            FindPublicFencingClubsAction.Response result=FindPublicFencingClubsAction.findClubs(new List<FindPublicFencingClubsAction.Request>{r})[0];
+            System.assertEquals('LISTINGS',result.status,message);
+            System.assert(result.resultsJson.contains('Wasatch'),message);
+            System.assert(!result.resultsJson.contains('Salt City'),message);
+        }
+        System.assertEquals('Salt Lake City',FindPublicFencingClubsAction.locationFromMessage('Find a club near Salt Lake City Utah and help me prepare for a first visit.').city);
+        System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('Compare Kaysville Utah and Salt Lake City, UT.'));
+        System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('Find a club near me or help me prepare.'));
+        System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('Find a club in Kaysville and help me prepare.'));
+        System.assertEquals(null,FindPublicFencingClubsAction.locationFromMessage('Find a club in Kaysville Utahville.'));
+    }
     @IsTest static void emailHandoffIsFixedAndNeverSends() {
         Integer writes=Limits.getDmlStatements(),calls=Limits.getCallouts();
         Map<String,Object> contact=FindPublicFencingClubsAction.emailHandoff('https://www.saltcityswords.com/');

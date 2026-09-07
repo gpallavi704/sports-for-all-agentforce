@@ -42,7 +42,7 @@ export function createGuidanceServer({ client, publicUrls, authorize, now = Date
   for (const tool of tools) {
     server.registerTool(tool.name, {
       title: tool.name === 'start_sport_compass' ? 'Start Sport Compass' : tool.name === 'ask_sport_compass' ? 'Ask Sport Compass' : 'End Sport Compass',
-      description: tool.name === 'start_sport_compass' ? 'Start a fencing guidance conversation.' : tool.name === 'ask_sport_compass' ? 'Ask for fencing guidance or follow up in this conversation. Cannot confirm consent or execute a support handoff.' : 'End this caller\'s fencing conversation.',
+      description: tool.name === 'start_sport_compass' ? 'Start a fencing guidance conversation.' : tool.name === 'ask_sport_compass' ? 'Ask Salesforce for fencing guidance or follow up. Preserve the user\'s explicit city and state, including when they also request visit planning. Do not add nearby cities, expand geography or replace the question with only a club name. Remove private medical or identity details. Unknown accessibility does not mean no club listing. Cannot confirm consent or execute a support handoff.' : 'End this caller\'s fencing conversation.',
       inputSchema: inputs[tool.name], outputSchema: outputs[tool.name],
       annotations: tool.annotations,
       _meta: { securitySchemes: publicOnly ? [{ type: 'noauth' }] : tool.securitySchemes }

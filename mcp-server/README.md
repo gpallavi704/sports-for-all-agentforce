@@ -1,13 +1,21 @@
 # Sport Compass MCP
 
 Latest: the public Salesforce-backed connection now includes interactive club
-cards and an optional first-visit planner. All 64 local tests pass. The private tunnel runs
-the live public profile with four tools, including `show_visit_planner`. The card
+cards and an optional first-visit planner. All 69 local tests pass. The private tunnel uses
+the live public profile with four tools, including `show_visit_planner`. Its latest
+restart failed on Keychain access, so it is currently stopped and the ChatGPT
+manifest is still v3. Restore credential access and refresh the app after restart.
+The card
 reuses the latest guidance snapshot; checklist controls make no further AI calls.
-The `first-visit-v2.html` resource starts with a compact club result and a
+The `first-visit-v4.html` resource starts with a compact club result and a
 **Plan my visit** button. Source details and preparation controls expand on demand.
+The source-linked plan can be copied without another model call. HTML download
+is capability-gated and is not a verified ChatGPT feature; the tested ChatGPT
+view fell back to manual copying. No files are silently uploaded.
+The shared Apex lookup now accepts comma-free Utah wording. Three live public
+search checks passed after deployment, separate from the local mock tests.
 See [interactive UI evidence and limits](../docs/agentforce/INTERACTIVE_FIRST_VISIT.md)
-and the [live connection checkpoint](../docs/agentforce/LIVE_PUBLIC_CHATGPT.md).
+and [search/export evidence](../docs/agentforce/SEARCH_AND_EXPORT.md).
 
 Run `npm ci --ignore-scripts` and `npm run build:ui` before starting the public
 entrypoint. The generated UI is not committed. `npm test` also builds it.
