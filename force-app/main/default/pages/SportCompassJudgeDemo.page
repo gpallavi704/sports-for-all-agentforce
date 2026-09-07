@@ -1,0 +1,100 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false">
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/png" href="{!$Resource.SportCompassTeamAvatar}" />
+    <title>Judge chat self-test | Sport Compass</title>
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: #121c30; background: #edf4fc; font: 1rem/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+        header { background: white; border-bottom: 1px solid #d1d9e4; padding: .75rem max(1rem, calc((100% - 52rem)/2)); }
+        header img { width: 140px; height: 70px; object-fit: contain; }
+        main { max-width: 52rem; margin: auto; padding: 2rem 1rem 6rem; }
+        section { background: white; padding: clamp(1.25rem, 4vw, 2.25rem); border: 1px solid #d1d9e4; border-radius: 1.5rem; }
+        .identity { display: flex; gap: .85rem; align-items: center; color: #101832; }
+        .identity img { width: 52px; height: 52px; border-radius: 50%; }
+        .eyebrow { color: #4a596c; margin: 0; font-weight: 650; }
+        h1 { font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.25; margin: .25rem 0; }
+        h2 { font-size: 1.1rem; margin: 1.75rem 0 .5rem; }
+        li { margin-bottom: .65rem; }
+        a { color: #0756cf; text-underline-offset: .2em; }
+        button { min-height: 48px; border: 0; border-radius: 2rem; padding: .8rem 1.4rem; font: inherit; font-weight: 700; background: #0756cf; color: white; cursor: pointer; }
+        button:disabled { background: #dce5f0; color: #43536b; cursor: wait; }
+        :focus-visible { outline: 3px solid #0756cf; outline-offset: 4px; }
+        .note { color: #4a596c; font-size: .92rem; }
+        .sample { padding: .75rem 1rem; background: #edf4fc; border-left: 4px solid #eebf5d; }
+        .skip { position: absolute; top: -5rem; left: 1rem; background: white; padding: .5rem; }
+        .skip:focus { top: .5rem; }
+        #chat-status { min-height: 3rem; }
+    </style>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <header><img src="{!$Resource.Sports4AllLogo}" alt="Sports 4 All" /></header>
+    <main id="main">
+        <section aria-labelledby="title">
+            <div class="identity">
+                <img src="{!$Resource.SportCompassTeamAvatar}" alt="" />
+                <div><p class="eyebrow">Sport Compass</p><h1 id="title">Try both sides of human chat</h1></div>
+            </div>
+            <p>A self-guided judge test. You play the visitor here and the support representative in a separate Salesforce window. This channel does not contact USA Fencing or the public support team.</p>
+            <h2>1. Open the support console</h2>
+            <ol>
+                <li>In another browser window, sign in with the judge credentials supplied privately. Open <a href="https://orgfarm-4d89d5ac56.lightning.force.com/lightning/app/02ugL00000HaCqTQAV" target="_blank" rel="noopener noreferrer">Sport Compass Support</a>.</li>
+                <li>Open <strong>Omni-Channel</strong> in the bottom utility bar. Select <strong>Available - Judge Demo Chat</strong>. Keep that window open.</li>
+                <li>Return here and reload this page if the chat button is unavailable.</li>
+            </ol>
+            <h2>2. Send a test message here</h2>
+            <p class="sample">This is a judge self-test. What equipment should a beginner ask a fencing club about?</p>
+            <button id="start-chat" type="button" disabled="disabled" onclick="openJudgeChat()">Loading test chat</button>
+            <p id="chat-status" class="note" role="status" aria-live="polite">Checking chat availability. The judge must be Available in Omni-Channel first.</p>
+            <h2>3. Accept and reply in Salesforce</h2>
+            <p>Accept the incoming chat in Omni-Channel. Reply: <strong>Test reply received. Please confirm loaner equipment with the club.</strong> Verify the reply appears here. No project-team operator is needed.</p>
+            <h2>4. Finish the test</h2>
+            <p>End the conversation from this visitor chat menu. In the Salesforce console, close the work tab and return Omni-Channel to <strong>Offline</strong>.</p>
+            <p class="note">Use fictional information only. Messages are stored as a Salesforce test conversation and may be reviewed by the project team and other users of the shared judge account. This visitor link is not authenticated; isolation is by its dedicated judge queue, not by secrecy of the URL. Temporary judge operator access expires at the end of September 22, 2026 Pacific.</p>
+            <p><a href="/sportcompass">Return to the public AI guide</a></p>
+        </section>
+    </main>
+    <script>
+        var judgeChatReady = false;
+        function judgeChatUnavailable() {
+            if (judgeChatReady) return;
+            document.getElementById('chat-status').textContent = 'Test chat is not available yet. Select Available - Judge Demo Chat in the judge console, then reload this page. No request has been submitted.';
+        }
+        function initJudgeMessaging() {
+            try {
+                embeddedservice_bootstrap.settings.language = 'en_US';
+                embeddedservice_bootstrap.settings.restrictSessionOnMessagingChannel = true;
+                embeddedservice_bootstrap.init('00DgL00000c7pj3', 'SportCompass_JudgeDemo', 'https://orgfarm-4d89d5ac56.my.site.com/ESWSportCompassJudgeDemo1788819864571', {scrt2URL: 'https://orgfarm-4d89d5ac56.my.salesforce-scrt.com'});
+            } catch (err) { judgeChatUnavailable(); }
+        }
+        function openJudgeChat() {
+            if (!judgeChatReady) return;
+            embeddedservice_bootstrap.utilAPI.launchChat().then(function () {
+                document.getElementById('chat-status').textContent = 'Send the test message in the chat window, then accept it in the judge console. Opening chat does not mean a representative has accepted.';
+            }).catch(function () {
+                document.getElementById('chat-status').textContent = 'The chat window could not open. Please reload this page and try again.';
+            });
+        }
+        window.addEventListener('onEmbeddedMessagingButtonCreated', function () {
+            judgeChatReady = true;
+            document.getElementById('start-chat').disabled = false;
+            document.getElementById('start-chat').textContent = 'Open judge test chat';
+            document.getElementById('chat-status').textContent = 'Chat is ready. Start with the fictional test message above.';
+        });
+        var bootstrapScript = document.createElement('script');
+        bootstrapScript.src = 'https://orgfarm-4d89d5ac56.my.site.com/ESWSportCompassJudgeDemo1788819864571/assets/js/bootstrap.min.js';
+        bootstrapScript.async = true;
+        bootstrapScript.onload = initJudgeMessaging;
+        bootstrapScript.onerror = judgeChatUnavailable;
+        document.body.appendChild(bootstrapScript);
+        window.setTimeout(judgeChatUnavailable, 25000);
+    </script>
+</body>
+</html>
+</apex:page>

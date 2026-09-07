@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PresenceUserConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments><users><user>sportcompass.judge.2026@00dgl00000c7pj3uaa.example.invalid</user></users></assignments>
+    <capacity>2</capacity>
+    <enableAutoAccept>false</enableAutoAccept>
+    <enableDecline>true</enableDecline>
+    <enableDeclineReason>false</enableDeclineReason>
+    <enableDisconnectSound>false</enableDisconnectSound>
+    <enableRequestSound>false</enableRequestSound>
+    <label>Sport Compass Judge Operator</label>
+</PresenceUserConfig>

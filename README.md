@@ -18,9 +18,13 @@ without an AI agent. The human window opens successfully; a fresh two-way exchan
 from this landing page still needs a staffed check. See the
 [public page verification](docs/agentforce/PUBLIC_SALESFORCE_PAGE.md).
 
-The judge account now has time-limited, read-only Enhanced Chat inspection access
-through **Sport Compass Support > Messaging Sessions**. It is not a support
-operator. See [judge chat access and verification](docs/agentforce/JUDGE_CHAT_ACCESS.md).
+The judge account has time-limited Enhanced Chat inspection access through
+**Sport Compass Support > Messaging Sessions**, plus a separate temporary
+self-test operator configuration through September 22. Its dedicated demo queue
+does not receive normal public support chats. Judge presence and live acceptance
+are confirmed, and the user reported the test worked. Visitor-side reply text
+and final closure were not independently captured.
+See [judge chat access and self-test steps](docs/agentforce/JUDGE_CHAT_ACCESS.md).
 
 Current connection note: the team-managed public site is
 [Ask Sport Compass](https://sports-4-all.org/ask). Its UI was inspected on
@@ -69,6 +73,12 @@ The latest public-search deployment passed 12 selected Apex tests; the earlier b
 4. To try direct human support, finish the current chat and choose **Chat with a person**. A project operator must be Available in Sport Compass Support and accept the request. Opening the chat is not confirmation that a person has joined.
 
 Judges reviewing Salesforce records should use **Sport Compass Support > Messaging Sessions**, not Command Center for Service. See [judge access](docs/agentforce/JUDGE_CHAT_ACCESS.md). Credentials are shared privately and are not stored in this repository.
+
+For an unstaffed evaluation, judges can play both roles using the
+[judge self-test page](https://orgfarm-4d89d5ac56.my.salesforce-sites.com/sportcompass/SportCompassJudgeDemo)
+and their separately signed-in support console. Select **Available - Judge Demo Chat**
+first, then send a fictional visitor message and accept the request within 60 seconds.
+This routes only to the dedicated judge queue, not the public support team.
 
 ### Earlier ChatGPT interactive demo
 
@@ -127,6 +137,9 @@ flowchart TD
     Queue --> Operator["Available operator accepts in Sport Compass Support"]
     Operator --> Records["MessagingSession + Enhanced Conversation history"]
     Judge["Time-limited judge viewer"] -->|"Read only"| Records
+    JudgeVisitor["Judge visitor self-test page"] --> JudgeChannel["JudgeDemo Web channel"]
+    JudgeChannel --> JudgeQueue["Isolated judge queue"]
+    JudgeQueue --> JudgeOperator["Temporary judge operator accepts within 60 seconds"]
 ```
 
 The Agent API is the headless **AI** interface. Enhanced Chat is the **human
@@ -146,7 +159,7 @@ Salesforce public page's mode switch.
 | Club discovery | Deterministic Apex `FindPublicFencingClubsAction`, reviewed public-club Custom Metadata |
 | Human support | Enhanced Chat Web and Custom Client API deployments, Messaging channel, Omni-Channel queue and presence configuration |
 | Operator console | Lightning Console app, Omni-Channel utility and `scrt:conversationBody` Enhanced Conversation component |
-| Access control | Salesforce permission sets and record sharing; separate operator and time-limited judge viewer roles |
+| Access control | Salesforce permission sets and record sharing; public operator, judge viewer, and temporary judge-only test operator roles |
 | Preserved development integration | Node.js MCP server, MCP Apps SDK and interactive first-visit planner; earlier private tunnel retired |
 | Source and verification | Salesforce CLI/API 67, GitHub, Apex tests, Node.js contract and mock tests |
 

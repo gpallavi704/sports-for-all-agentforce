@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Sport Compass Judge Demo</name>
+    <queueMembers><users><user>sportcompass.judge.2026@00dgl00000c7pj3uaa.example.invalid</user></users></queueMembers>
+    <queueRoutingConfig>SportCompass_Judge_Routing</queueRoutingConfig>
+    <queueSobject><sobjectType>MessagingSession</sobjectType></queueSobject>
+</Queue>

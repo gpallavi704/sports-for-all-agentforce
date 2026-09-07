@@ -16,6 +16,10 @@ Both images were visually checked for labels and routing. Earlier concepts are
 preserved in [archive/](archive/README.md), outside the current design set. They
 contain proposals that do not describe the current deployment.
 
+The v2 images predate the isolated judge self-test addition below. The main README's
+Mermaid diagram and judge-access runbook include that addition. The public routes
+shown in these images are unchanged.
+
 ## System architecture text description
 
 The public team website and the team's ready private ChatGPT app, **Sports 4 ALL**,
@@ -35,7 +39,10 @@ Human support is a separate journey. The visitor chooses human help, then the
 team UI uses the HumanClient API deployment or the Salesforce public page uses
 the HumanSupport Web deployment. Both reach the direct-human Messaging channel
 and Omni-Channel queue. An available project operator must accept the work.
-The judge role has read-only access to the Messaging Session and conversation.
+The base judge role has read-only access to the Messaging Session and conversation.
+An additional time-limited operator permission allows a separate judge self-test
+through `SportCompass_JudgeDemo` and `SportCompass_Judge_Queue`. It does not add
+the judge to the public support queue or grant general Messaging Session Edit.
 Opening a chat does not mean a human has accepted it, and switching modes on the
 Salesforce public page does not copy the earlier AI conversation.
 
@@ -65,8 +72,11 @@ multilingual support remain future work.
    component `scrt:conversationBody`. The native AI-first alternate route is
    `SportCompass_Web_Handoff`, subject to its Messaging/session and consent checks.
 5. **Records and roles:** Messaging Session and conversation history are visible
-   to a time-limited judge viewer. That viewer cannot send messages or end
-   sessions. Operator queue membership and presence are separate permissions.
+   to a time-limited judge viewer. The base viewer permission cannot send messages
+   or end sessions. A separate temporary judge operator role, presence status and
+   isolated queue support self-guided testing until the end of September 22 Pacific.
+   Live acceptance succeeded and the user reported that the test worked; the final
+   reply text and closure were not independently captured.
 
 The public Site guest profile has no CRM object-permission grants. Messaging
 still creates and retains platform conversation records. Credentials remain
