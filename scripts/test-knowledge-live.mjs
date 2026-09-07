@@ -54,6 +54,10 @@ for (const test of tests) {
     const result = sf(['agent', 'preview', 'send', '--authoring-bundle', 'SportCompass', '--session-id', sessionId, '--utterance', utterance]);
     row.messages = (result.messages || []).map(m => ({ type: m.type, text: sanitize(m.message || ''), citationLabels: (m.citedReferences || []).map(c => sanitize(c.label || '')) }));
     const answer = row.messages.map(m => m.text).join('\n');
+    const originalSourceUrl = readFileSync('knowledge/curated/' + test.source, 'utf8').match(/^SOURCE URL: (.+)$/m)?.[1];
+    row.originalSourceUrl = originalSourceUrl;
+    row.originalSourceUrlPresent = Boolean(originalSourceUrl && answer.includes(originalSourceUrl));
+    row.requiredNavigationUrls = test.must_include.filter(p => p.startsWith('https://')).map(url => ({ url, present: answer.includes(url) }));
     row.expectedSourceCited = row.messages.some(m => m.citationLabels.some(l => l.includes(test.source)));
     row.urlRedacted = /URL[_ -]Redacted/i.test(answer);
     row.requiredPhraseHints = test.must_include.map(phrase => ({ phrase, literalMatch: answer.toLowerCase().includes(phrase.toLowerCase()) }));
@@ -71,12 +75,13 @@ for (const test of tests) {
           return { planId: t.planId, topic: t.topic, functions: (t.plan || []).filter(s => s.type === 'FunctionStep').map(s => s.function?.name) };
         });
         row.sessionEnded = true;
+        if (test.expected_topics) row.expectedTopicMatched = row.traces.some(t => test.expected_topics.includes(t.topic));
       } catch { row.sessionEnded = false; row.sessionNeedingCleanup = sessionId; }
     }
     report.results.push(row);
     writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
-    console.log(JSON.stringify({ id: row.id, sourceCited: row.expectedSourceCited, urlRedacted: row.urlRedacted, sessionEnded: row.sessionEnded, error: row.error, topics: row.traces?.map(t => t.topic) }));
+    console.log(JSON.stringify({ id: row.id, sourceCited: row.expectedSourceCited, originalSourceUrlPresent: row.originalSourceUrlPresent, urlRedacted: row.urlRedacted, expectedTopicMatched: row.expectedTopicMatched, sessionEnded: row.sessionEnded, error: row.error, topics: row.traces?.map(t => t.topic) }));
   }
   if (row.sessionEnded === false) { process.exitCode = 1; break; }
 }
-if (report.results.some(r => r.error || r.urlRedacted || !r.expectedSourceCited)) process.exitCode = 1;
+if (report.results.some(r => r.error || r.urlRedacted || !r.expectedSourceCited || !r.originalSourceUrlPresent || r.expectedTopicMatched === false || r.requiredNavigationUrls?.some(u => !u.present))) process.exitCode = 1;

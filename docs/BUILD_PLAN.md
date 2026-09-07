@@ -2,6 +2,8 @@
 
 ## Mission
 
+Latest knowledge checkpoint: classification routed correctly with process-only, historical-season-aware guidance. All ten fixtures returned expected sources and original public URLs; three registration wording improvements were then retested separately. See [classification and knowledge regression](agentforce/CLASSIFICATION_REFINEMENT.md). This is not production or domain-team acceptance; program matching is the next implementation increment.
+
 Trusted URL update: four user-approved exact hosts are deployed with image-only CSP. Three targeted live tests now return readable links across all four hosts; existing settings and CRM access were preserved. See [verification](agentforce/TRUSTED_URLS.md). Full acceptance and classification-routing/historical-source issues remain open. The prior checkpoint below records the pre-allowlist failures.
 
 Latest checkpoint: the agent's direct Secure Base assignment was removed and a Knowledge-only set assigned. Effective CRM/messaging access is denied; published demo access and runtime licenses remain. Generic template routes are removed. All ten knowledge fixtures retrieved expected sources, but all redacted original-source URLs; the initial classification test also failed its decision boundary. See [knowledge acceptance findings](agentforce/KNOWLEDGE_ACCEPTANCE.md), [routing and live tests](agentforce/DRAFT_ROUTING_AND_LIVE_TESTS.md) and [security cleanup](agentforce/SECURITY_CLEANUP.md). Older paragraphs below describe earlier states. The suite is not an acceptance pass; org-wide URL configuration requires approval and Data Cloud policy review remains open.
@@ -124,7 +126,7 @@ Deliverables:
 - [x] Remove unrelated template routing/actions; registration, accommodation and scope routes trace-verified (remaining routes need tests)
 - [ ] Add search, match, checklist, Case, and interaction actions
 - [ ] Configure low-confidence and sensitive-topic escalation
-- [ ] Run at least 10 Agent Builder tests
+- [x] Run ten live-actions draft-preview knowledge tests plus targeted safety retests; see current checkpoint for remaining review gates
 
 Exit condition: the primary journey works completely inside Agentforce before any MCP integration.
 

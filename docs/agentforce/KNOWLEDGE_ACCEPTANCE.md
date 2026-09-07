@@ -2,6 +2,8 @@
 
 September 6 Pacific / September 7 UTC, 2026. Inactive draft only.
 
+Newest update: [classification refinement and full-suite results](CLASSIFICATION_REFINEMENT.md) supersede the historical routing/link failures below for the tested scenarios. Current-season content approval and broader acceptance remain open.
+
 Later update: the user approved the four Trusted URL hosts. They are deployed with image-only CSP; three targeted tests now return readable links from all four hosts. See [Trusted URL verification](TRUSTED_URLS.md). The failures below remain historical evidence; full acceptance and classification issues are not closed.
 
 ## Results are not an acceptance pass

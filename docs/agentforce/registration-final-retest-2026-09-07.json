@@ -1,0 +1,150 @@
+{
+  "testedAt": "2026-09-07T02:22:30.363Z",
+  "draftSha256": "5addddde80538ee37ab15295869618817f61f57cf1efa1aeb1c2a83acdbe6ca8",
+  "mode": "draft-live-actions",
+  "activated": false,
+  "freshSessionPerTest": true,
+  "automatedChecksAreNotSemanticApproval": true,
+  "results": [
+    {
+      "id": "KB07",
+      "question": "Where should I upload age-verification documents?",
+      "expectedSource": "SC_KB_07_Age_Verification.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Do not upload identity or age-verification documents in this chat; use the official membership portal.\n\nFor USA Fencing membership or tournament registration, age-verification documents must be uploaded directly through the official portal:\n\nSign in at https://member.usafencing.org\nOpen the user menu and select Edit Profile\nGo to the Age Verification section\nFollow the portal's document-upload and verification workflow\n\nThis process is described in the source: \"How to complete your Age Verification,\" USA Fencing (Zendesk Help Center), https://usafencing.zendesk.com/hc/en-us/articles/29039352416781-How-to-complete-your-Age-Verification, updated 2026-04-03.\n\nThese steps are based on project-prepared summaries of public information and are not official USA Fencing policy. For help with account-specific issues, use the official support route provided in the linked article.\n\nWould you like general steps for registering for a tournament or more info about age verification?",
+          "citationLabels": [
+            "SC_KB_07_Age_Verification.txt"
+          ]
+        }
+      ],
+      "originalSourceUrl": "https://usafencing.zendesk.com/hc/en-us/articles/29039352416781-How-to-complete-your-Age-Verification",
+      "originalSourceUrlPresent": true,
+      "requiredNavigationUrls": [],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "official membership portal",
+          "literalMatch": true
+        },
+        {
+          "phrase": "not in this chat",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "request for ID attachment"
+      ],
+      "manualReview": "Explicit do-not-upload-documents-in-chat boundary, official portal, source and date present.",
+      "traces": [
+        {
+          "planId": "749394d5-9956-4c8c-b995-8ffc5048733d",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB08",
+      "question": "Are local and national tournaments registered in the same place?",
+      "expectedSource": "SC_KB_08_Tournament_Registration.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "Local and national fencing tournaments are not registered in the same place.\n\nLocal and divisional events: Registration is done through AskFRED at https://www.askfred.net.\nRegional and national events: Registration is handled through the USA Fencing membership portal at https://member.usafencing.org. For regional events, use https://member.usafencing.org/search/tournaments/regional. For national events, use https://member.usafencing.org/search/tournaments/national.\n\nThese steps are based on a project-prepared summary of public official-source material, not a USA Fencing-approved document. The main source is \"How do I register for a USA Fencing Tournament?\" (https://usafencing.zendesk.com/hc/en-us/articles/13085696260749-How-do-I-register-for-a-USA-Fencing-Tournament, source date: 2025-05-09).\n\nWould you like help finding a tournament or more details about the registration process?",
+          "citationLabels": [
+            "SC_KB_08_Tournament_Registration.txt"
+          ]
+        }
+      ],
+      "originalSourceUrl": "https://usafencing.zendesk.com/hc/en-us/articles/13085696260749-How-do-I-register-for-a-USA-Fencing-Tournament",
+      "originalSourceUrlPresent": true,
+      "requiredNavigationUrls": [],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "AskFRED",
+          "literalMatch": true
+        },
+        {
+          "phrase": "USA Fencing membership system",
+          "literalMatch": false
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "universal eligibility guarantee"
+      ],
+      "manualReview": "Correct AskFRED/portal distinction and separate labeled regional/national deep links.",
+      "traces": [
+        {
+          "planId": "0e731a8c-242d-432f-99a7-89b214837515",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    },
+    {
+      "id": "KB09",
+      "question": "Regional registration is blocked. What can I check?",
+      "expectedSource": "SC_KB_09_Regional_Registration_Help.txt",
+      "messages": [
+        {
+          "type": "Inform",
+          "text": "If regional fencing tournament registration is blocked, here are three common checks based on project-prepared summaries of public USA Fencing sources:\n\nMembership Level: You must have a Competitive membership or an International Competitive License. Access membership alone is not enough for regional events.\nAge Verification: Your age must be verified in the USA Fencing membership portal. Unverified age can block event registration. Do not upload identity or age-verification documents in this chat; use the official membership portal.\nAge Eligibility: Check if you meet the event’s age requirements.\n\nIf you have checked these and still cannot register, contact the regional organizer or email regionalevents@usafencing.org with the tournament name, event, and your membership identifier. Do not send personal identifiers in this chat.\n\nThe cited articles are historical guidance. Always confirm current event requirements with the organizer. For details, see:\n\n“Why can't I register for a Regional Tournament?” (https://usafencing.zendesk.com/hc/en-us/articles/29044338279565-Why-can-t-I-register-for-a-Regional-Tournament, updated 2024-08-06)\n“How do I register for a USA Fencing Tournament?” (https://usafencing.zendesk.com/hc/en-us/articles/13085696260749-How-do-I-register-for-a-USA-Fencing-Tournament, updated 2025-05-09)\n\nWould you like the direct links for regional or national registration, or help with age verification steps?",
+          "citationLabels": [
+            "SC_KB_08_Tournament_Registration.txt",
+            "SC_KB_07_Age_Verification.txt",
+            "SC_KB_09_Regional_Registration_Help.txt"
+          ]
+        }
+      ],
+      "originalSourceUrl": "https://usafencing.zendesk.com/hc/en-us/articles/29044338279565-Why-can-t-I-register-for-a-Regional-Tournament",
+      "originalSourceUrlPresent": true,
+      "requiredNavigationUrls": [],
+      "expectedSourceCited": true,
+      "urlRedacted": false,
+      "requiredPhraseHints": [
+        {
+          "phrase": "membership",
+          "literalMatch": true
+        },
+        {
+          "phrase": "age verification",
+          "literalMatch": true
+        },
+        {
+          "phrase": "age eligibility",
+          "literalMatch": true
+        },
+        {
+          "phrase": "regionalevents@usafencing.org",
+          "literalMatch": true
+        }
+      ],
+      "prohibitedBehaviorsForManualReview": [
+        "claim to have checked account"
+      ],
+      "manualReview": "Explicit historical-source/current-organizer caveat; official staff channel only for identifiers; no-documents-in-chat warning; no account inspection or eligibility determination claimed.",
+      "traces": [
+        {
+          "planId": "0e3cafeb-89a1-4a29-b1ed-57d7b0885af9",
+          "topic": "Registration_Support",
+          "functions": [
+            "AnswerQuestionsWithKnowledge"
+          ]
+        }
+      ],
+      "sessionEnded": true
+    }
+  ],
+  "summary": "Three affected registration fixtures retested on final draft after the ten-case run. Automated source/link checks pass; targeted wording changes observed. Other seven cases were run on the immediately preceding draft, whose only subsequent change was Registration_Support instructions."
+}
