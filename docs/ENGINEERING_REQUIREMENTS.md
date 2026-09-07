@@ -1,6 +1,6 @@
-# Architecture-aligned findings from the team's other chat
+# Sport Compass engineering requirements
 
-User supplied September 6, 2026, following discussion of another hackathon submission. This records the supplied direction and our implementation reconciliation; the original competitor submission and judging results have not been independently reviewed here. Treat proposals as requirements to evaluate, not evidence of completed features.
+Planning baseline dated September 6, 2026. This document defines the project's scope, engineering requirements and acceptance criteria. Requirements describe intended behavior, not proof of completed features; see [current status](STATUS.md) for verified implementation progress.
 
 ## Preserve the architecture
 
@@ -10,11 +10,11 @@ Sports for All / Sport Compass; fencing and wheelchair fencing as the reference 
 
 A fictional parent near Salt Lake City seeks a sport for a 12-year-old with self-selected mobility preferences. Show cited guidance, structured demo matches, reasons and unknowns, classification boundaries, a support draft, clear confirmation, the real created Case identifier and its appearance in a Salesforce support queue. Measure unresolved information without retaining transcripts or diagnoses.
 
-The differentiator is a visible completed handoff, not a broader chatbot feature list. This is product judgment, not a prediction of winning or a verified judging score.
+The demonstration should make the completed support handoff visible, including the user's consent, the created Case and its destination queue.
 
 ## Reconciliation with what is built
 
-This section records the state when the findings arrived. Subsequent support implementation is tracked in [current status](STATUS.md) and [support handoff](agentforce/SUPPORT_HANDOFF.md); do not treat the following historical pending list as today's status.
+This section preserves the initial planning snapshot. Subsequent support implementation is tracked in [current status](STATUS.md) and [support handoff](agentforce/SUPPORT_HANDOFF.md); do not treat the following historical pending list as today's status.
 
 - Matcher: core read-only deterministic demo matching is deployed and live-tested. Current inputs are city/state, optional age, experience and feature preferences. Postal/radius lookup, interests, competitive/recreational goals, costs/scholarships and source/verification output fields remain gaps against the broader proposal.
 - Knowledge: source-grounded guidance is tested separately. Do not claim the combined end-to-end journey is already complete.

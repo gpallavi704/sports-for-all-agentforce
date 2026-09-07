@@ -14,8 +14,8 @@ const tests = JSON.parse(readFileSync('knowledge/retrieval-tests.json', 'utf8'))
 assert.ok(tests.length, 'No matching tests');
 const source = readFileSync('force-app/main/default/aiAuthoringBundles/SportCompass/SportCompass.agent', 'utf8');
 const externalTargets = [...source.matchAll(/^\s+target: "([^"]+)"/gm)].map(m => m[1]);
-assert.equal(externalTargets.length, 7);
-assert.deepEqual(externalTargets.sort(), ['apex://MatchSportsProgramsAction', ...Array(3).fill('standardInvocableAction://streamKnowledgeSearch'), 'apex://ReviewSportsSupportReplyAction', 'apex://PrepareSportsSupportAction', 'apex://CreateSportsSupportCaseAction'].sort(), 'Stop: new actions require test safety review');
+assert.equal(externalTargets.length, 8);
+assert.deepEqual(externalTargets.sort(), ['apex://MatchSportsProgramsAction', 'apex://FindPublicFencingClubsAction', ...Array(3).fill('standardInvocableAction://streamKnowledgeSearch'), 'apex://ReviewSportsSupportReplyAction', 'apex://PrepareSportsSupportAction', 'apex://CreateSportsSupportCaseAction'].sort(), 'Stop: new actions require test safety review');
 assert.ok(source.includes('with latestUserMessage = @system_variables.user_input'), 'Confirmation must use actual user input');
 const publicUrls = new Set();
 for (const f of readdirSync('knowledge/curated')) {

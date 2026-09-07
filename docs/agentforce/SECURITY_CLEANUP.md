@@ -1,4 +1,4 @@
-# Step 1 — Sport Compass permission cleanup
+# Step 1 - Sport Compass permission cleanup
 
 Verified September 6 Pacific / September 7 UTC, 2026. Agent remains inactive. This checkpoint concerns the discovery-only permission configuration, not runtime readiness.
 

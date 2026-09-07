@@ -40,7 +40,7 @@ Salesforce UserRecordAccess was queried by the administrator for the dedicated a
 
 These record-access results are supplemented by user-mode Apex tests and live draft action traces in [program matching](PROGRAM_MATCHING.md). Agent activation and external API integration remain pending; draft tests do not prove API caller isolation.
 
-## Historical CRM access finding — assignment now removed
+## Historical CRM access finding - assignment now removed
 
 The existing Salesforce AgentforceServiceAgentSecureBase permission set grants:
 

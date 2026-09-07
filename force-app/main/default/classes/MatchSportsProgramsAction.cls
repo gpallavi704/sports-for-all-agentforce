@@ -1,8 +1,9 @@
 public with sharing class MatchSportsProgramsAction {
     private static final Set<String> FEATURES = new Set<String>{'mobility','hearing','visual','cognitive','equipment'};
     public class Request {
-        @InvocableVariable(required=true label='City') public String city;
-        @InvocableVariable(required=true label='State' description='Two-letter US state code.') public String state;
+        @InvocableVariable(label='City') public String city;
+        @InvocableVariable(label='State' description='Two-letter US state code.') public String state;
+        @InvocableVariable(description='Actual latest message bound by Agent Script. Overrides other inputs when present; never stored.') public String latestUserMessage;
         @InvocableVariable(label='Age' description='Optional volunteered age for demo class age bands, never official eligibility.') public Integer age;
         @InvocableVariable(label='Experience' description='Optional Beginner, Intermediate or Advanced.') public String experienceLevel;
         @InvocableVariable(label='Requested features' description='Optional comma-separated self-selected mobility, hearing, visual, cognitive, equipment; never infer from a diagnosis.') public String requestedFeatures;
@@ -26,6 +27,10 @@ public with sharing class MatchSportsProgramsAction {
     public static List<Response> matchPrograms(List<Request> requests) {
         List<Response> responses = new List<Response>();
         if (requests == null) return responses;
+        List<Request> currentRequests = new List<Request>();
+        for (Request supplied : requests) currentRequests.add(supplied != null && supplied.latestUserMessage != null
+            ? fromCurrentMessage(supplied.latestUserMessage) : supplied);
+        requests = currentRequests;
         Set<String> cities = new Set<String>();
         Set<String> states = new Set<String>();
         for (Request request : requests) {
@@ -130,6 +135,23 @@ public with sharing class MatchSportsProgramsAction {
     private static Response result(String status, String message) {
         Response r = new Response(); r.status = status; r.message = message; r.resultsJson = '[]'; return r;
     }
+    private static Request fromCurrentMessage(String message) {
+        FindPublicFencingClubsAction.Request location = FindPublicFencingClubsAction.locationFromMessage(message);
+        if (location == null) return null;
+        Request request = new Request();
+        request.city=location.city; request.state=location.state;
+        Matcher age = Pattern.compile('(?i)(?:\\bage(?:d)?\\s+(\\d{1,3})\\b|\\b(\\d{1,3})[ -]year[ -]old\\b)').matcher(message);
+        if (age.find()) request.age=Integer.valueOf(age.group(1) != null ? age.group(1) : age.group(2));
+        // Only explicit current-message values; never infer from disability or old turns.
+        for(String level:new List<String>{'Beginner','Intermediate','Advanced'})
+            if(Pattern.compile('(?i)\\b'+level+'\\b').matcher(message).find()) request.experienceLevel=level;
+        List<String> features=new List<String>();
+        for(String feature:new List<String>{'mobility','hearing','visual','cognitive','equipment'})
+            if(Pattern.compile('(?i)\\b'+feature+'\\b').matcher(message).find()) features.add(feature);
+        request.requestedFeatures=String.join(features,',');
+        return request;
+    }
+
     private static Set<String> parseFeatures(String value) {
         Set<String> parsed = new Set<String>();
         if (!String.isBlank(value)) for (String feature : value.toLowerCase().split(',')) parsed.add(feature.trim());

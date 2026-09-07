@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses><apexClass>MatchSportsProgramsAction</apexClass><enabled>true</enabled></classAccesses>
-    <description>Invoke read-only demo matching. Requires existing Discovery Read; no object, field or record-write grants.</description>
+    <classAccesses><apexClass>FindPublicFencingClubsAction</apexClass><enabled>true</enabled></classAccesses>
+    <description>Invoke public club lookup and separate demo matching. No new CRM object, field or record-write grants. Demo matching requires Discovery Read.</description>
     <label>Sport Compass Program Matching</label>
 </PermissionSet>

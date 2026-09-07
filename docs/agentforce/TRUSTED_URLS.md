@@ -11,7 +11,7 @@ Verified September 6 Pacific / September 7 UTC, 2026. User approved adding the f
 
 No wildcard or misspelled aaskfred host was added. Existing Slack, Voice and Salesforce media entries were not edited. CORS, remote sites, connected apps, CRM permissions and Data Cloud policies were not changed.
 
-## Effective flags — important correction
+## Effective flags - important correction
 
 The initial four-entry deployment explicitly submitted all resource/browser flags as false. Direct Tooling API readback showed that Salesforce stored img-src=true on all four entries. All other resource flags and camera/microphone remain false. The local metadata was corrected to describe the actual image-only configuration, and the descriptions were aligned without expanding the effective permissions.
 

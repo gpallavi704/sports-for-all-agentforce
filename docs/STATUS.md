@@ -1,56 +1,51 @@
-# Sport Compass build status
+# Sport Compass current status
 
-Updated September 6 Pacific / September 7 UTC, 2026. Current product: fencing reference MVP, extensible to other sports. Primary planned client: ChatGPT through MCP and Agentforce API. The Agentforce agent is still an inactive draft.
+Checkpoint: September 6 Pacific / September 7 UTC, 2026. This page supersedes active-version and pending-work statements in earlier checkpoints.
 
-The [architecture-aligned findings](ARCHITECTURE_ALIGNED_FINDINGS.md) preserve this architecture and prioritize a provable consent → Case → human-queue handoff. They also identify proposed matcher fields not yet implemented; no scope expansion is silently marked complete.
+## Implemented
 
-## Implemented and verified
+- Salesforce DX project, dedicated agent runtime identity and scoped permissions.
+- Three discovery objects with 39 fields, private sharing and six synthetic records: one sport, one organization, three published programs and one unpublished negative fixture.
+- Ten indexed public-source summaries, prepared by the project and not approved by USA Fencing.
+- Version 9 active, with seven routes, eight external action definitions and twenty exact public URLs.
+- Two source-checked public club identities: Salt City Swords in Salt Lake City and Wasatch Fencing in Kaysville. Accessibility, equipment and class availability remain unverified.
+- Separate real-club and fictional-program actions bound to the actual current message before reasoning.
+- Signed support drafts, deterministic reply review and confirmation, expiry and server-side validation, idempotent synthetic Case creation and a fixed queue. Cancellation and revision invalidate pending drafts.
+- Support fields, record type, operator list views and a category summary report. No real callback, email or official staff-response integration.
+- Local Agent API client, caller-bound session broker, three MCP contracts, mock-only stdio server, outbound credential provider and macOS Keychain helper source.
+- Dedicated API-only identity and scoped External Client App configured. The app is disabled; secrets stay local.
 
-- Private GitHub repository, Salesforce DX project, authenticated CLI and source-control checkpoints.
-- Dedicated agent user, three discovery objects with 39 fields, private sharing and six synthetic records (one sport, one organization, three published programs, one unpublished negative fixture).
-- Discovery read permissions and publication-based sharing. Effective Account, Contact, Case and messaging CRUD denied. No general read-all API user.
-- Ten indexed public-source knowledge summaries with source metadata. These are project-prepared, not USA Fencing-approved.
-- Six custom routing paths including demo support, AI/prototype disclosure, source-grounded knowledge actions, classification/process boundaries and historical-source caveats.
-- Four exact Trusted URL hosts with image-only CSP; no new wildcard or connection/frame/media/camera/microphone grants.
-- Ten knowledge fixtures returned expected source documents and readable public URLs; targeted classification/privacy/navigation checks passed in observed tests. Broader acceptance remains open.
-- Read-only MatchSportsProgramsAction and its class-access-only permission set deployed. Ten Apex tests passed with 100% matcher line coverage, including object denial, record sharing and hidden parent records. Line coverage is not proof of every security property.
-- Matcher wired into Find My Sport in the inactive draft. Live demo matching, no-match and private-data/write-request refusal checks passed; unknown accessibility remains visible.
-- Consent-controlled demo Case service, signed draft preparation, actual-user-message binding, native confirmation and idempotent retries deployed; 20 combined Apex tests passed.
-- Deterministic pre-reasoning reply review clears cancelled/superseded drafts. Bare confirmations cannot prepare replacement drafts. Final three-run live suite passed cancellation → yes → yes, revision, hesitation, creation and duplicate-retry checks.
-- Sport Compass Support queue, Case record type/fields, builder operator access, two list views and an unresolved-category summary report deployed.
-- Live matching → displayed draft → hesitant consent/zero Cases → explicit/native confirmation → actual Case 00001003 → queue/list/report verified. Six later acceptance-test Cases (00001004–00001009) are retained alongside it; no real participant data or external callback channel.
-- Local Agent API client, caller-bound session broker and three proposed MCP tool contracts; 15 mocked Node tests pass. No listener, OAuth middleware, credential provider, hosting or ChatGPT connection exists yet. Outbound access is disabled by default. See [integration core](../mcp-server/README.md).
+## Verified evidence and limits
 
-See [program matching](agentforce/PROGRAM_MATCHING.md) and [support handoff](agentforce/SUPPORT_HANDOFF.md) for evidence and limits. The older dated checkpoints are historical evidence, not the current build state.
+| Check | Observed result | Limit |
+| --- | --- | --- |
+| Selected Apex suite | 30 tests passed on deployment `0AfgL00000WtgtpSAB` | Not all org tests or security certification |
+| Local integration suite | 42 tests passed | Mocks do not prove live ChatGPT behavior |
+| Discovery | Two v6 five-turn CLI sessions passed 10 targeted checks and lookup traces | Not a full browser journey or reliability estimate |
+| Support | v8 preparation, hesitation, cancellation, revision, confirmation and retries passed | Published-agent CLI preview |
+| Actual support record | Synthetic Case 00001011 verified in the support queue; retries produced no duplicate for the request | No real participant or provider contact |
+| Knowledge links | v9 browser answer rendered four exact source/navigation destinations without citation suffixes | One answer; destination sites were not opened |
+| Least privilege | Five denied CRM objects and six demo records checked | Data Cloud and external caller isolation need separate review |
+| Agent API | Historical v2 lifecycle and targeted matching checks passed | Current-version API regression remains pending |
 
-## Pending — critical path
+Nine synthetic Cases, 00001003 through 00001011, remain as test evidence. No Cases were removed during repository cleanup.
 
-| Work | Completion condition |
-| --- | --- |
-| Support acceptance/hardening | Final cancellation/revision/retry suite passed three times. Live expiry/error/concurrency and external caller/session isolation remain unverified. Keep intake synthetic and structured; no callback channel is implemented. |
-| Agent API | Confirm external-client-app capability and minimum OAuth scopes; scoped runtime identity; commit/activation only after approval; start/send/end session, error and isolation tests. |
-| MCP and ChatGPT | Local contracts/session binding/input limits are mocked-tested. Still need OAuth-protected transport, hosting, credential lifecycle and live tests. External model text cannot count as human consent: current adapter is non-confirming guidance only. Confirm integration ownership/hosting and trusted confirmation UX with Jon. |
-| End-to-end demo | Combine tested knowledge guidance and matching/support components into one recorded journey, then repeat through the chosen client. Current proof uses direct draft preview, not ChatGPT. |
+The native confirmation setting remains enabled, but v8 deterministic execution created the Case after the first exact accepted confirmation without a second native prompt. Only the observed actual-message and signed-draft gates should be claimed. See [support evidence](agentforce/SUPPORT_FIX_V8.md).
 
-## Pending — evidence and team decisions
+Earlier v6 browser and v7 support failures remain documented. Their passing successors do not establish a complete end-to-end acceptance pass.
 
-- Domain team: review current-season classification, registration, clubs and accessibility content; identify verified real program data and official support routes. Until then, matching stays synthetic.
-- Jon/team: translation API contract, test credentials and data-handling terms; select one additional language and arrange native-language review. No translation integration is currently implemented.
-- Confirm submission deadline, demo duration, actual Builder Track deliverable rules and required skill access.
-- Run the hackathon's Accessibility Expert Skill and RAI Self Check Skill; record findings and fixes. Neither skill is available in this Codex session's installed skill list; obtain the organizer-provided tools/environment.
-- Keyboard/screen-reader review of the actual client, plain-language review, prompt-injection and multi-turn regressions, stale/conflicting-source handling, failure/rate-limit tests.
-- Three repeated support journeys now pass, including hesitation/cancellation creating zero new Cases and retries leaving one Case per confirmed request. Repeat other knowledge, accessibility and failure scenarios before release; three runs are not a production reliability estimate.
-- Complete Data Cloud dataspace policy review before private ingestion. CRM permissions alone do not govern Data Cloud.
-- Privacy/retention design for public interaction telemetry and support intake; authenticated own-member-record access is not implemented or required for anonymous discovery.
-- Demo recording, architecture update, setup guide, reproducible test evidence and honest impact/scalability claims.
+## Pending, in order
 
-## Optional after the core journey works
+1. Record one uninterrupted v9 Salesforce journey: cited guidance, discovery, support draft, cancellation/revision, explicit confirmation, returned Case and queue verification.
+2. Expand failure, expiry, concurrency, grounding and multi-turn tests.
+3. Revalidate the current agent through the API in a controlled enable/test/disable window. Verify external non-confirmation and caller/session isolation.
+4. Implement authenticated MCP transport and a connection method, then connect ChatGPT. The executable currently supports mocks only. External writes require a trusted confirmation interface.
+5. Obtain domain review, verified provider data, official support routes and an agreed translation contract/language if multilingual output is included.
+6. Run the organizer-provided Accessibility Expert Skill and RAI Self Check Skill. They are not installed in this session. Complete keyboard/screen-reader, plain-language and adversarial testing on the chosen client.
+7. Confirm submission limits, distinguish built from planned architecture, and prepare captions, recording and evidence-backed impact claims.
 
-- Consent-based saved preferences and interaction records; do not create them just to add objects.
-- Broader interaction reporting on unresolved access needs and successful next steps. A minimal synthetic Case category report already works; do not equate it with real population demand. Data Cloud calculated insights are optional; no real participant identity resolution for the prototype.
-- More reviewed content, real provider integrations, advanced multilingual coverage, voice or native mobile experiences.
-- Predictive ML is not required: current ranking is deterministic evidence matching, not disability/ability or eligibility prediction.
+## Out of the current MVP
 
-## What matching does not yet promise
+Voice, native mobile, additional sports, enrollment, payments, distance search, live capacity/fees, production participant data and disability/eligibility prediction. Data Cloud analytics are optional; CRM permissions alone do not govern Data Cloud. The synthetic Case report does not demonstrate real population demand.
 
-No real club recommendation, distance/radius search, live capacity/fees, booking, enrollment or eligibility decision. Exact city/state lookup only; the current city validator supports Latin unaccented letters, spaces, periods, apostrophes and hyphens. Unknown accessibility is retained. Real-data release and broader geography require separate review, not simply clearing a demo flag.
+Conversation context is not a source of truth for changing club results or consent. Matching is deterministic and the credential provider caches short-lived tokens; there is no shared cache of personalized answers or consent capabilities.

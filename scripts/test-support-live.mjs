@@ -29,16 +29,18 @@ async function session(row,scenario,fn){
   const s={scenario,turns:[]};row.sessions.push(s);let id;
   try{
     assert.equal(readFileSync(sourcePath,'utf8'),source,'Do not edit source during evaluation');
-    id=sf(['agent','preview','start','--authoring-bundle','SportCompass','--use-live-actions']).sessionId;
+    id=sf(['agent','preview','start','--api-name','SportCompass']).sessionId;
+    // Preparation now requires the selected program to come from this session's matcher output.
+    sf(['agent','preview','send','--api-name','SportCompass','--session-id',id,'--utterance','Find fictional demo programs in Salt Lake City, UT, beginner, mobility preferences.']);
     await fn((utterance)=>{
-      const r=sf(['agent','preview','send','--authoring-bundle','SportCompass','--session-id',id,'--utterance',utterance]);
+      const r=sf(['agent','preview','send','--api-name','SportCompass','--session-id',id,'--utterance',utterance]);
       const text=(r.messages||[]).map(m=>clean(m.message)).join('\n');
       s.turns.push({utterance,answer:text});save();return text;
     });
   } finally {
     if(id){
       try{
-        const ended=sf(['agent','preview','end','--authoring-bundle','SportCompass','--session-id',id]);
+        const ended=sf(['agent','preview','end','--api-name','SportCompass','--session-id',id]);
         s.traces=readdirSync(ended.tracesPath+'/traces').filter(f=>f.endsWith('.json')).map(f=>{
           const t=JSON.parse(readFileSync(ended.tracesPath+'/traces/'+f,'utf8'));
           return {topic:t.topic,functions:(t.plan||[]).filter(p=>p.type==='FunctionStep').map(p=>({name:p.function?.name,state:p.function?.output?.state,status:p.function?.output?.status,caseId:p.function?.output?.caseId,caseNumber:p.function?.output?.caseNumber,actualUserReply:clean(p.function?.input?.latestUserMessage)}))};
@@ -67,9 +69,9 @@ for(let i=1;i<=runs;i++){
     assert.ok(!cancellation.some(f=>f.name==='Confirm_Support'),'Cancelled draft reached write action');
     assert.equal(cancellation.filter(f=>f.name==='Prepare_Support').length,1,'Cancellation or isolated yes prepared a replacement draft');
     await session(row,'revision_and_confirmation',async send=>{
-      send('Synthetic test only. Prepare, do not create, a demo support request for fixture program '+program+', category Equipment question. Show the complete draft.');assertNoNew();
+      send('Synthetic test only. Prepare, do not create, a demo support request for DEMO - Youth Program Needs Confirmation, category Equipment question. Show the complete draft.');assertNoNew();
       send('change it');assertNoNew();
-      const revision=send('Use Accessibility information needs verification as the reason, for the same demo program. Prepare and show the revised draft; do not create a Case yet.');
+      const revision=send('Use Accessibility information needs verification as the reason for DEMO - Youth Program Needs Confirmation. Prepare and show the revised draft; do not create a Case yet.');
       assert.match(revision,/Accessibility information needs verification/);assert.match(revision,/SYNTHETIC DEMO SUPPORT REQUEST/i);assertNoNew();
       send('probably');assertNoNew();
       send('yes');

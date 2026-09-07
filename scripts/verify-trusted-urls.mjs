@@ -13,7 +13,13 @@ function query(soql, tooling = false) {
   return j.result.records;
 }
 assert.equal(query('SELECT Id FROM Organization')[0].Id, '00DgL00000c7pj3UAA', 'Wrong org');
-const expected = evidence.trustedUrlReadback;
+const expected = [...evidence.trustedUrlReadback];
+const template = expected.find(r => r.DeveloperName === 'SportCompass_USAFencing');
+for (const [DeveloperName, EndpointUrl] of [
+  ['SportCompass_UtahDivision', 'https://www.usafencingutah.com'],
+  ['SportCompass_SaltCitySwords', 'https://www.saltcityswords.com'],
+  ['SportCompass_WasatchFencing', 'https://www.wasatchfencing.com']
+]) expected.push({ ...template, DeveloperName, EndpointUrl });
 const fields = Object.keys(expected[0]);
 const rows = query('SELECT ' + fields.join(', ') + ' FROM CspTrustedSite', true);
 for (const reference of expected) {
@@ -22,11 +28,11 @@ for (const reference of expected) {
   for (const field of fields) assert.equal(actual[field], reference[field], reference.DeveloperName + '.' + field + ' changed');
 }
 const project = rows.filter(r => r.DeveloperName.startsWith('SportCompass_'));
-assert.equal(project.length, 4, 'Unexpected project Trusted URL entry');
+assert.equal(project.length, 7, 'Unexpected project Trusted URL entry');
 for (const row of project) {
   assert.match(row.EndpointUrl, /^https:\/\/[a-z.]+$/);
   assert.ok(!row.EndpointUrl.includes('*'));
   assert.equal(row.IsApplicableToImgSrc, true, 'Image-only supported configuration');
   for (const field of fields.filter(f => /^(IsApplicable|CanAccess)/.test(f) && f !== 'IsApplicableToImgSrc')) assert.equal(row[field], false);
 }
-console.log(JSON.stringify({ passed: true, approvedHosts: 4, existingEntriesPreserved: 4, imageOnlyCsp: true, scope: 'Verified recorded URL fields; not a complete CSP or security audit.' }, null, 2));
+console.log(JSON.stringify({ passed: true, approvedHosts: 7, existingEntriesPreserved: 4, imageOnlyCsp: true, scope: 'Verified recorded URL fields; not a complete CSP or security audit.' }, null, 2));

@@ -11,6 +11,17 @@
 *.pem
 *.p12
 *.jks
+# Salesforce global OAuth metadata can contain generated consumer credentials.
+*.ecaGlblOauth-meta.xml
+
+# Generated published agents and org-bound app exports are local snapshots.
+# Maintain the editable aiAuthoringBundles source, then compile/publish in the org.
+force-app/main/default/bots/
+force-app/main/default/genAiPlannerBundles/
+force-app/main/default/externalClientApps/
+force-app/main/default/extlClntAppOauthPolicies/
+force-app/main/default/extlClntAppOauthSettings/
+force-app/main/default/extlClntAppPolicies/
 
 # Node
 node_modules/
@@ -37,4 +48,3 @@ temp/
 # Salesforce data exports that may contain sensitive information
 exports/
 data/private/
-

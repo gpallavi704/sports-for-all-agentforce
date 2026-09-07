@@ -1,4 +1,4 @@
-# Sport Compass — backup and schema validation
+# Sport Compass - backup and schema validation
 
 Verified September 6, 2026 Pacific time (September 7 UTC).
 

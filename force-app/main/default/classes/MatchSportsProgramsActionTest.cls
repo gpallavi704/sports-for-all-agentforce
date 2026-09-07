@@ -32,6 +32,18 @@ private class MatchSportsProgramsActionTest {
     private static List<Object> matches(MatchSportsProgramsAction.Response r) {
         return (List<Object>)JSON.deserializeUntyped(r.resultsJson);
     }
+    @IsTest static void usesActualCurrentMessageForMandatoryDemoLookup() {
+        MatchSportsProgramsAction.Request r=request(12);
+        r.latestUserMessage='Now explicitly switch to fictional demo programs only: Salt Lake City, UT, age 25, beginner, mobility and equipment preferences.';
+        MatchSportsProgramsAction.Response response=callOne(r);
+        System.assertEquals('MATCHES',response.status);
+        System.assert(response.resultsJson.contains('Adult unknown'));
+        System.assert(!response.resultsJson.contains('Youth'));
+        r.latestUserMessage='Find demo programs in Salt Lake City, UT for a 25-year-old beginner.';
+        System.assertEquals(1,matches(callOne(r)).size());
+        r.latestUserMessage='What about somewhere else?';
+        System.assertEquals('INVALID_INPUT',callOne(r).status);
+    }
     @IsTest static void ranksEvidenceWithoutExcludingUnknown() {
         Test.startTest();
         Integer queries=Limits.getQueries(); Integer dml=Limits.getDmlStatements();

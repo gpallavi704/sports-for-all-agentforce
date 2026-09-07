@@ -1,7 +1,7 @@
-# Sports for All — Current Project Baseline
+# Sports for All - Current Project Baseline
 
 **Status:** Working baseline received from Jon  
-**Track:** Agentforce for Good — Builder Track  
+**Track:** Agentforce for Good - Builder Track
 **Delivery constraint:** 24-hour technical MVP  
 **Ownership:** Workstreams are intentionally unassigned. Do not assume Ajay or Pallavi owns any item.
 
@@ -31,10 +31,10 @@ Build an accessible Agentforce agent named **Sport Compass** that helps athletes
 
 ## Agent topics
 
-1. **Find My Sport** — Collect only necessary information such as age range, location, interests, experience, accessibility needs, and goals; recommend suitable programs.
-2. **Fencing Program Guide** — Explain fencing disciplines, beginner programs, wheelchair fencing, equipment, membership, and competition pathways.
-3. **Accommodation Support** — Explain documented accessibility features and collect requests without unnecessary medical information.
-4. **Registration Support** — Explain eligibility, fees, scholarships, waivers, and next steps; generate a personalized checklist.
+1. **Find My Sport** - Collect only necessary information such as age range, location, interests, experience, accessibility needs, and goals; recommend suitable programs.
+2. **Fencing Program Guide** - Explain fencing disciplines, beginner programs, wheelchair fencing, equipment, membership, and competition pathways.
+3. **Accommodation Support** - Explain documented accessibility features and collect requests without unnecessary medical information.
+4. **Registration Support** - Explain eligibility, fees, scholarships, waivers, and next steps; generate a personalized checklist.
 
 ## Agent actions
 
@@ -164,7 +164,7 @@ A parent asks the Sports for All ChatGPT app which competitive sport could suit 
 
 ## Governing delivery principle
 
-> The strongest submission is one complete, credible, accessible journey—not a broad platform with several unfinished flows.
+> The strongest submission is one complete, credible, accessible journey - not a broad platform with several unfinished flows.
 
 ## Decisions still requiring confirmation
 

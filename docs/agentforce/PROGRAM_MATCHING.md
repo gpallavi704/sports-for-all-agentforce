@@ -1,6 +1,6 @@
 # Read-only demo program matching
 
-Verified September 6 Pacific / September 7 UTC, 2026. Sport Compass remains an inactive, uncommitted Agentforce authoring draft. Salesforce deployment is not agent activation.
+Historical initial deployment checkpoint, September 6 Pacific / September 7 UTC, 2026. Sport Compass was then an inactive, uncommitted authoring draft. It has since been published; see [current status](../STATUS.md) for the active version and latest acceptance evidence. Salesforce deployment alone is not agent activation.
 
 ## Delivered
 
@@ -38,4 +38,4 @@ All preview sessions opened for this checkpoint were ended. Raw traces stay Git-
 - Matching and cited guidance work separately. The uninterrupted knowledge → match → consent → Case → support queue journey is not complete.
 - Next: stateful support preparation and consent bound to the displayed draft, idempotent Case creation, narrowly scoped permissions and a real operator queue. A model-provided boolean alone is insufficient consent proof.
 
-See [current status](../STATUS.md) and [architecture-aligned findings](../ARCHITECTURE_ALIGNED_FINDINGS.md).
+See [current status](../STATUS.md) and [engineering requirements](../ENGINEERING_REQUIREMENTS.md).

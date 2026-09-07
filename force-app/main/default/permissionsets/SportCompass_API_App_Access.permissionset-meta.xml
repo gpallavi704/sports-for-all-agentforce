@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>App-preauthorization marker for the dedicated Sport Compass API integration identity. Grants no object, field, Apex, agent, or administrator permissions.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sport Compass API App Access</label>
+</PermissionSet>

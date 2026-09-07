@@ -37,7 +37,7 @@ This instruction-only approach did not resolve redaction in either a local live-
 
 Native file citations remain temporary signed URLs. Raw traces are Git-ignored. Only sanitized answers and citation labels are included in committed evidence; no signed URL is published.
 
-## Original proposal — subsequently approved and deployed
+## Original proposal - subsequently approved and deployed
 
 Salesforce's [allowlist notice](https://help.salesforce.com/s/articleView?id=005135034&language=en_US&type=1) states that Trusted URL additions apply across the org, not just this agent. The user subsequently approved these four explicit HTTPS hosts (no wildcards):
 

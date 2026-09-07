@@ -270,7 +270,7 @@
       "messages": [
         {
           "type": "Inform",
-          "text": "To upload age-verification documents for fencing registration, sign in to the official USA Fencing membership portal at URL_Redacted. After signing in:\n\nOpen the user menu and choose \"Edit Profile.\"\nUnder \"Personal Information,\" select \"Age Verification.\"\nFollow the portal's document-upload and verification steps.\n\nDo not upload documents in this chat—use only the official portal. For full details, see the article \"How to complete your Age Verification\" at URL_Redacted (source date: 2026-04-03).\n\nWould you like help finding the age-verification page in the portal, or do you have other registration questions?",
+          "text": "To upload age-verification documents for fencing registration, sign in to the official USA Fencing membership portal at URL_Redacted. After signing in:\n\nOpen the user menu and choose \"Edit Profile.\"\nUnder \"Personal Information,\" select \"Age Verification.\"\nFollow the portal's document-upload and verification steps.\n\nDo not upload documents in this chat\u2014use only the official portal. For full details, see the article \"How to complete your Age Verification\" at URL_Redacted (source date: 2026-04-03).\n\nWould you like help finding the age-verification page in the portal, or do you have other registration questions?",
           "citationLabels": [
             "SC_KB_07_Age_Verification.txt"
           ]

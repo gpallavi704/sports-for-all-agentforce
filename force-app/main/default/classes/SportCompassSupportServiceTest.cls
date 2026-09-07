@@ -50,6 +50,31 @@ private class SportCompassSupportServiceTest {
         System.assertEquals(0,[SELECT COUNT() FROM Case]);
         }
     }
+    @IsTest static void currentMessagePreparationRequiresReturnedSelection() {
+        System.runAs(testActor()) {
+            PrepareSportsSupportAction.Request r=new PrepareSportsSupportAction.Request();
+            r.programId='invalid';r.category='untrusted legacy fields';
+            r.matchedProgramsJson=JSON.serialize(new List<Object>{new Map<String,Object>{'name'=>'DEMO Youth','programId'=>programId(),'isDemo'=>true}});
+            r.latestUserMessage='For DEMO Youth, prepare Equipment question. Show the full draft.';
+            Integer writes=Limits.getDmlStatements();
+            PrepareSportsSupportAction.Response result=PrepareSportsSupportAction.prepare(new List<PrepareSportsSupportAction.Request>{r})[0];
+            System.assertEquals('PREPARED',result.status);
+            System.assert(result.draft.startsWith('SYNTHETIC DEMO SUPPORT REQUEST'));
+            System.assert(result.draft.contains('Destination: Sport Compass Support demo queue'));
+            System.assert(result.draft.contains('No name, age, diagnosis, contact details or transcript'));
+            System.assertEquals(writes,Limits.getDmlStatements());
+            for(String message:new List<String>{'yes','no','change it','probably','Equipment question','DEMO Youth','DEMO Youth Equipment question and Getting started','DEMO Other Equipment question'}) {
+                r.latestUserMessage=message;
+                System.assertEquals('INVALID_INPUT',PrepareSportsSupportAction.prepare(new List<PrepareSportsSupportAction.Request>{r})[0].status,message);
+            }
+            r.latestUserMessage='DEMO Youth Equipment question';
+            for(String data:new List<String>{null,'invalid','[]','[{}]'}) {
+                r.matchedProgramsJson=data;
+                System.assertEquals('INVALID_INPUT',PrepareSportsSupportAction.prepare(new List<PrepareSportsSupportAction.Request>{r})[0].status);
+            }
+            System.assertEquals(0,[SELECT COUNT() FROM Case]);
+        }
+    }
     @IsTest static void hesitationAndRefusalCreateNothing() {
         System.runAs(testActor()) {
         String token=prepare().token;

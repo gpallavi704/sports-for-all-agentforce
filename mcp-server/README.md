@@ -1,16 +1,45 @@
-# Sport Compass integration core — local, not deployed
+# Sport Compass MCP - local mock server, not deployed
 
 Implemented: a bounded Agent API client, caller-bound in-memory session broker,
-three tool contracts and dependency-free mocked tests. **This is not yet an MCP
-HTTP server, OAuth implementation, connected ChatGPT app or live API proof.** No
-credentials are stored here and outbound calls are disabled by default.
+three tool contracts and a working SDK-based local MCP stdio server. A separate
+Salesforce outbound token provider and macOS Keychain helper are now implemented;
+see [private credential setup](../docs/agentforce/LOCAL_CREDENTIAL_SETUP.md).
+**This is not an MCP HTTP server, inbound OAuth implementation, connected ChatGPT app or
+live Agent API session proof.** A controlled Salesforce token/identity/read-denial
+check passed; see [evidence](../docs/agentforce/LIVE_AUTH_CHECKPOINT.md). The app was
+restored to disabled. No credentials are stored here. The executable is
+mock-only; the separate outbound API client remains disabled by default.
 
 Run tests with Node 22 or later:
 
 ```sh
 cd mcp-server
+npm ci --ignore-scripts
 npm test
+npm run smoke:mock
 ```
+
+`smoke:mock` launches a child process, performs MCP initialization, discovers the
+three tools, runs start → ask → end and closes the process. It requires no account
+credentials, Salesforce org connection or running ChatGPT session.
+
+For a local stdio-compatible MCP test client, use the Node executable with the
+absolute path to `src/stdio.mjs` and the argument `--mock`. `npm run start:mock`
+also starts the server interactively; it waits for MCP JSON messages on stdin and
+is not a conversational terminal. Normal logs go to stderr, never protocol stdout.
+No network port is opened, and unsupported flags such as `--live` fail closed.
+No global MCP configuration, ChatGPT connection or tunnel was created.
+
+The local server returns a fixed protocol acknowledgment, not fabricated fencing
+facts or simulated Salesforce query results. Every successful response contains
+`mock: true`, `mode: local-mock` and a limitation notice. It does not echo submitted
+text. Strict input/output schemas, a 64 KiB stdio buffer limit and session limits
+are tested. EOF/signals close the server and its mock sessions.
+
+Dependencies are pinned (`@modelcontextprotocol/sdk` 1.30.0, `zod` 4.5.4), with
+resolved transitive versions in package-lock.json. Installation lifecycle scripts
+were disabled. npm audit reported zero known advisories at this checkpoint;
+that is not a full supply-chain or security certification.
 
 ## Design
 
@@ -47,19 +76,24 @@ assumption. Future writes require a trusted human confirmation UI, draft digest,
 caller/session binding and replay-safe server verification; tool annotations or
 an LLM boolean cannot substitute for that.
 
-## Release gates — still open
+## Release gates - still open
 
 1. Obtain explicit approval to commit/activate Sport Compass; verify its runtime
    `0Xx…` agent ID. The existing `1bY…`/`1bZ…` authoring IDs are not usable here.
-2. Configure a scoped Salesforce External Client App and run-as identity. Verify
-   minimum scopes/entitlements, credential storage, expiry/refresh and revocation.
-3. Choose hosting and OAuth provider with Jon. Implement Streamable HTTP MCP,
+2. The disabled Salesforce External Client App and scoped run-as identity are
+   configured. The outbound credential provider is mock-tested and Keychain helper
+   compiled. Privately store credentials, then verify live scopes/entitlements,
+   token acquisition, expiry and revocation after app-enablement approval.
+3. Choose an approved connection method and OAuth provider; Jon's infrastructure
+   is optional. Implement the protected transport and any necessary
    protected-resource metadata, issuer/audience/signature/expiry/scope checking,
    authorization-code/PKCE support and the actual registered ChatGPT redirect.
+   The local mock's `noauth` metadata applies only to its isolated test process;
+   it is not an authorization design for a remote or Salesforce-backed server.
 4. Wire verified principals into dispatch. Do not expose dispatch directly to
    JSON callers. Add request-level limits, body/time limits and safe error mapping.
 5. Replace in-memory state for multiple processes; implement cleanup retries,
-   bounded credential acquisition, shutdown cleanup and transcript/telemetry
+   shutdown cleanup and transcript/telemetry
    retention. Current expiry cleanup runs on new starts or explicit `expire()`;
    it is not a background job. Failed upstream cleanup is currently best-effort.
 6. Live-test start/send/end, caller separation, limits, prompt injection, citations
@@ -76,4 +110,5 @@ an LLM boolean cannot substitute for that.
 - [OpenAI authentication guidance](https://developers.openai.com/plugins/build/auth)
 
 The OpenAI Docs review shaped the separate OAuth boundary and tool contracts;
-it does not establish that this org or ChatGPT account is integration-ready.
+it also guided explicit tool schemas and structured results in the local server.
+It does not establish that this org or ChatGPT account is integration-ready.
