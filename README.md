@@ -90,9 +90,25 @@ This is an account-connected private development app, not a publicly published C
 
 ## System architecture
 
+### Hand-drawn architecture views
+
+Current September 2026 views include the public team website, the ready private
+**Sports 4 ALL** ChatGPT app, Salesforce-hosted chat, and separate human support.
+The ChatGPT app is private, not a public directory listing. Its availability is
+team-reported; the earlier local development app and tunnel remain retired.
+
+![Sport Compass system architecture: public and private clients use Salesforce AI guidance, while separate human chat routes through Enhanced Chat and Omni-Channel.](docs/architecture/system-design-v2.png)
+
+![Sport Compass technical design: Agent API, native Web deployments, knowledge and Apex tools, human routing, and scoped operator and judge access.](docs/architecture/technical-solution-design-v2.png)
+
+Open the [system overview](docs/architecture/system-design-v2.png) or
+[technical design](docs/architecture/technical-solution-design-v2.png) at full size.
+See [text descriptions and diagram notes](docs/architecture/README.md).
+
 ```mermaid
 flowchart TD
     Web["Team-hosted website / headless interface"] --> Backend["Server-side adapter"]
+    PrivateApp["Sports 4 ALL: private ChatGPT app"] --> Backend
     Backend --> API["Salesforce Agent API"]
     API --> Guide["SportCompassGuide: public Agentforce agent"]
     Public["Salesforce Site + Visualforce page"] --> Choice{"Visitor choice"}
