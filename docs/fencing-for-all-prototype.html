@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Fencing for All — Sport Compass prototype</title>
+<style>
+:root{--bg:#212121;--bg2:#171717;--panel:#2f2f2f;--panel2:#3a3a3a;--line:#444;--text:#ececec;--muted:#b4b4b4;--muted2:#8e8e8e;--accent:#8fd3a5;--accent2:#7fb3ff;--warn:#ffd08a;--user:#2f2f2f;--focus:#ffd400;--radius:18px}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font:16px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;flex-direction:column;min-height:100vh}
+a{color:var(--accent2)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--focus);color:#000;padding:8px 12px;border-radius:8px;z-index:50}
+.skip:focus{left:8px}
+header.top{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--bg2);flex-wrap:wrap}
+header.top h1{font-size:17px;margin:0;font-weight:600}
+header.top .sub{color:var(--muted);font-size:14px}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--muted);margin-left:auto}
+.wrap{display:grid;grid-template-columns:260px minmax(0,1fr) 380px;flex:1;min-height:0}
+@media (max-width:1180px){.wrap{grid-template-columns:minmax(0,1fr) 320px}.side{display:none}}
+@media (max-width:760px){.wrap{grid-template-columns:minmax(0,1fr)}.aside{display:none}.wrap.show-aside .aside{display:block}}
+.side{background:var(--bg2);border-right:1px solid var(--line);padding:16px;font-size:14px}
+.side h2,.aside h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin:18px 0 8px}
+.side h2:first-child{margin-top:0}
+.app{display:flex;gap:10px;align-items:center;background:var(--panel);border-radius:12px;padding:10px}
+.app .ic{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#7fb3ff,#8fd3a5);display:flex;align-items:center;justify-content:center;font-size:18px}
+.app b{display:block;font-weight:600}
+.app span{color:var(--muted);font-size:12px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{padding:6px 8px;border-radius:8px;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+.steps li.done{color:var(--text)}
+.steps li.cur{background:var(--panel);color:var(--text)}
+.steps .n{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);font-size:11px;display:inline-flex;align-items:center;justify-content:center;flex:none;margin-top:3px}
+.steps li.done .n{background:var(--accent);color:#000;border-color:var(--accent)}
+main{display:flex;flex-direction:column;min-height:0}
+.thread{flex:1;overflow:auto;padding:24px 20px 8px;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){.thread{scroll-behavior:auto}}
+.inner{max-width:820px;margin:0 auto}
+.msg{margin:0 0 22px}
+.msg.user{display:flex;justify-content:flex-end}
+.msg.user .bubble{background:var(--user);border-radius:var(--radius);padding:12px 18px;max-width:78%;white-space:pre-wrap}
+.msg.agent .bubble{white-space:pre-wrap;line-height:1.55}
+.tool{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border-radius:10px;padding:6px 12px;font-size:13px;color:var(--muted);margin:0 0 10px}
+.tool .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tool b{color:var(--text);font-weight:600}
+.src{color:var(--muted);font-size:13px;border-left:2px solid var(--line);padding-left:10px;margin-top:10px}
+.case{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:12px;background:#fff;color:#181818;font-size:14px}
+.case .bar{background:#0176d3;color:#fff;padding:8px 14px;font-weight:600;display:flex;gap:10px;align-items:center}
+.case .bar span{font-weight:400;opacity:.9}
+.case .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;padding:12px 14px}
+.case .grid div{border-bottom:1px solid #e5e5e5;padding:4px 0}
+.case .grid small{display:block;color:#5c5c5c;font-size:11px}
+.case .foot{padding:8px 14px;background:#f3f3f3;font-size:12px;color:#444}
+.case a{color:#0b5cad}
+.composer{padding:8px 20px 18px;background:linear-gradient(transparent,var(--bg) 30%)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;max-width:820px;margin:0 auto 10px}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer}
+.chip:hover{background:var(--panel2)}
+.chip.es{border-color:var(--accent2)}
+.box{max-width:820px;margin:0 auto;background:var(--panel);border-radius:26px;display:flex;align-items:flex-end;gap:8px;padding:8px 8px 8px 18px}
+.box textarea{flex:1;background:transparent;border:0;color:var(--text);font:inherit;resize:none;max-height:120px;padding:8px 0;outline:none}
+.box button{background:#fff;color:#000;border:0;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer}
+.box button:disabled{opacity:.4;cursor:default}
+.note{max-width:820px;margin:8px auto 0;color:var(--muted2);font-size:12px;text-align:center}
+.aside{background:var(--bg2);border-left:1px solid var(--line);padding:16px;font-size:14px;overflow:auto}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 10px;font-size:13px}
+.kv dt{color:var(--muted2)}
+.kv dd{margin:0}
+.ok{color:var(--accent);font-weight:600}
+.pipe{list-style:none;margin:8px 0 0;padding:0;font-size:13px}
+.pipe li{position:relative;padding:4px 0 4px 22px;color:var(--muted)}
+.pipe li:before{content:"";position:absolute;left:6px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--line)}
+.pipe li.on{color:var(--text)}
+.pipe li.on:before{background:var(--accent2)}
+.btn{display:inline-block;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;text-decoration:none}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sr{position:absolute;left:-9999px}
+.typing{color:var(--muted2);font-size:13px}
+.aside p{color:var(--muted);margin:6px 0}
+</style>
+</head>
+<body>
+<a class="skip" href="#input">Skip to the message box</a>
+<header class="top">
+  <h1>Fencing for All &#183; Sport Compass</h1>
+  <span class="sub">Recorded conversations with the live Agentforce agent, replayed in a ChatGPT-style app. Sports for All &#8594; USA Fencing parafencing.</span>
+  <span class="badge">Prototype &#183; synthetic program data &#183; not affiliated with USA Fencing</span>
+</header>
+<div class="wrap" id="wrap">
+  <nav class="side" aria-label="Journey">
+    <h2>App</h2>
+    <div class="app"><div class="ic" aria-hidden="true">&#129338;</div><div><b>Sports for All</b><span>MCP server &#8594; Agentforce</span></div></div>
+    <h2>The journey</h2>
+    <ol class="steps" id="steps">
+      <li class="cur"><span class="n">1</span>Can she fence from a wheelchair?</li>
+      <li><span class="n">2</span>Equipment, no diagnosis asked</li>
+      <li><span class="n">3</span>A first-lesson checklist</li>
+      <li><span class="n">4</span>Who decides eligibility</li>
+      <li><span class="n">5</span>Program match (synthetic data)</li>
+      <li><span class="n">6</span>Ask for a person</li>
+      <li><span class="n">7</span>What will be saved &#183; consent</li>
+      <li><span class="n">8</span>Case 00001010 created</li>
+      <li><span class="n">9</span>The same journey in Spanish</li>
+    </ol>
+    <h2>Verify</h2>
+    <p style="font-size:13px;color:var(--muted)">Every reply on this page is verbatim from the Agentforce Builder live test (sessions 163355ce and 7267f9c9). The Case exists in the prototype org.</p>
+    <button type="button" class="btn" id="toggle">Show or hide the trace panel</button>
+  </nav>
+  <main>
+    <div class="thread" id="thread" role="log" aria-live="polite" aria-label="Conversation">
+      <div class="inner" id="inner"></div>
+    </div>
+    <div class="composer">
+      <div class="chips" id="chips" aria-label="Suggested questions"></div>
+      <form class="box" onsubmit="return false;">
+        <label for="input" class="sr">Message Sport Compass</label>
+        <textarea id="input" rows="1" placeholder="Ask about parafencing, equipment, classification, programs, or a person to talk to"></textarea>
+        <button type="button" id="send" aria-label="Send">&#8593;</button>
+      </form>
+      <p class="note">Sport Compass is an AI prototype. It cites USA Fencing&#8217;s public pages, does not make eligibility decisions and asks before saving anything.</p>
+    </div>
+    <div class="sr" id="status" role="status" aria-live="polite"></div>
+  </main>
+  <aside class="aside" id="aside" aria-label="Behind this answer"></aside>
+</div>
+
+<script>
+var TURNS = [{"id": "t1", "lang": "en", "chip": "Can she fence from a wheelchair?", "user": "My daughter is 12 and uses a wheelchair. She wants to try fencing near Salt Lake City. Is that even possible?", "agent": "Yes, your daughter can try fencing, including wheelchair (parafencing), near Salt Lake City. USA Fencing encourages athletes of all abilities to explore the sport. Here are the key points:\n\n1. Finding Clubs: Use the official club finder at https://member.usafencing.org/clubs. Enter your city or ZIP code and select the \"Para\" specialty filter to see clubs that offer or support parafencing. This filter shows clubs that have self-identified as offering parafencing, but it does not guarantee step-free access or specific accommodations—contact the club directly to discuss your daughter's needs and confirm details. (Source: Parafencing Club Locations, https://www.usafencing.org/parafencing-clubs, retrieved 2026-09-06)\n\n2. Getting Started: Clubs can introduce new athletes to fencing basics and parafencing equipment. Coaches are encouraged to communicate with families and adapt sessions based on each athlete's needs. Trying fencing at a club is separate from entering competitions. (Source: Parafencing Myths, https://www.usafencing.org/parafencing-myths, retrieved 2026-09-06)\n\n3. Competition Eligibility: Only official classifiers and event staff can make decisions about parafencing competition eligibility. The current classification process and requirements are described at https://www.usafencing.org/parafencing-classification. Please note that the linked summary describes the 2025-26 season; always confirm current requirements with USA Fencing. Club participation does not require official classification. (Source: Parafencing Classification, https://www.usafencing.org/parafencing-classification, retrieved 2026-09-06)\n\nNext step:\nVisit https://member.usafencing.org/clubs and search for clubs near Salt Lake City with the Para filter. Would you like tips on how to contact a club or prepare for a first visit?", "subagent": "Classification and Accessibility Support", "action": "Answer Questions With Knowledge", "latency": "12.12 s", "evaluation": "GROUNDED"}, {"id": "t2", "lang": "en", "chip": "Do we need a frame before the first lesson?", "user": "She doesn't have any equipment. Do we need to buy a fencing wheelchair frame before her first lesson? And who do I talk to about whether she can compete later?", "agent": "You do not need to buy a fencing wheelchair frame before your daughter's first parafencing lesson. Most clubs introduce new athletes to the basics and often provide or arrange access to starter equipment, including frames, for beginners. It is best to contact the club directly to confirm what equipment is available for new participants and discuss any specific needs. (Source: Parafencing Myths, https://www.usafencing.org/parafencing-myths, retrieved 2026-09-06; Try Fencing, https://www.usafencing.org/try, retrieved 2026-09-06)\n\nFor future competition eligibility, only official classifiers and event staff can make those decisions. The current process for parafencing classification is outlined by USA Fencing, and requirements may change from season to season. The available summary describes the 2025-26 season, so you should always confirm the latest requirements with USA Fencing. The official process and referral route are explained here: https://www.usafencing.org/parafencing-classification (Source: Parafencing Classification, https://www.usafencing.org/parafencing-classification, retrieved 2026-09-06)\n\nNext step:\nContact a local club using the official finder at https://member.usafencing.org/clubs and ask about beginner equipment and parafencing options. Would you like tips for reaching out to a club or more info on what to expect at a first lesson?", "subagent": "Classification and Accessibility Support", "action": "Answer Questions With Knowledge", "latency": "10.67 s", "evaluation": "GROUNDED"}, {"id": "t3", "lang": "en", "chip": "Turn it into a checklist", "user": "My daughter is 12 and uses a wheelchair. Can you turn what we need to do before her first fencing lesson into a short checklist?", "agent": "Here is a checklist for preparing your 12-year-old daughter, who uses a wheelchair, for her first fencing lesson:\n\n1. Find a local parafencing club using the official club finder: https://member.usafencing.org/clubs (filter for Para specialty).\n2. Contact the club to confirm:\n• Accessibility details (such as step-free entry and restrooms)\n• Age acceptance for beginner classes\n• Available starter equipment and what you may need to bring\n3. Wear comfortable clothing and athletic shoes for the first visit.\n4. Arrive 10–15 minutes early to check in and meet the coach.\n5. Talk with the coach about any support or arrangements your daughter may need.\n\nIntroductory learning may include demonstrations and basic fencing vocabulary, not full bouts or advanced training until the right equipment and supervision are in place. Always confirm with the club before the first visit.\n\nThis information is based on summaries from USA Fencing's public sources, not official USA Fencing policy. For more details, see:\n- Try Fencing: https://www.usafencing.org/try (retrieved 2026-09-06)\n- Parafencing basics: https://www.usafencing.org/parafencing-101 (retrieved 2026-09-06)\n- Parafencing clubs: https://www.usafencing.org/parafencing-clubs (retrieved 2026-09-06)\n\nWould you like help searching for clubs in your area or have other questions about getting started?", "subagent": "Fencing Program Guide", "action": "Answer Questions With Knowledge", "latency": "10.65 s", "evaluation": "GROUNDED"}, {"id": "t4", "lang": "en", "chip": "Who decides if she can compete?", "user": "Who do I talk to about whether she can compete later? Can you connect me with a person at USA Fencing?", "agent": "I cannot decide if your daughter can compete—only official classifiers and event staff at USA Fencing can confirm competition eligibility. The current published process for parafencing classification is described for the 2025-26 season, but requirements may change, so always check with USA Fencing for the latest details.\n\nTo learn more or begin the official process, visit the USA Fencing Parafencing Classification page: https://www.usafencing.org/parafencing-classification (source: Parafencing Classification, retrieved 2026-09-06).\n\nFor general questions or to connect with USA Fencing staff, you can email information@usafencing.org as listed in their official beginner guidance (Try Fencing, https://www.usafencing.org/try, retrieved 2026-09-06).\n\nWould you like to review the classification process together, or need help finding a club for introductory lessons?", "subagent": "Classification and Accessibility Support", "action": "Answer Questions With Knowledge", "latency": "9.54 s", "evaluation": "GROUNDED"}, {"id": "t5", "lang": "en", "chip": "Find a beginner program near 84101", "user": "We live near Salt Lake City, ZIP 84101. Can you find a beginner parafencing program for a 12-year-old who uses a wheelchair?", "agent": "The following are synthetic demo examples only—these are not real clubs or programs, and any accessibility or eligibility claims are fictional. For real beginner parafencing opportunities near Salt Lake City, please use the official USA Fencing club finder: https://member.usafencing.org/clubs.\n\nDemo program examples for a 12-year-old who uses a wheelchair in Salt Lake City, UT:\n\n1. DEMO - Youth Wheelchair Fencing Intro (Salt Lake Adaptive Fencing)\n- Match reasons: Fictional city and state match; age within demo class band; simulated documentation of mobility support (not real-world verification).\n- Needs confirmation: None listed, but all features are simulated.\n\n2. DEMO - Youth Program Needs Confirmation (Salt Lake Adaptive Fencing)\n- Match reasons: Fictional city and state match; age within demo class band.\n- Needs confirmation: Mobility support is unknown in this example—please confirm directly with any real provider.\n\nThese are for demonstration only and do not reflect actual availability, booking, or accessibility.\n\nNext step: Use the official club finder at https://member.usafencing.org/clubs and select the Para specialty filter to search for real parafencing clubs in your area.\n\nWould you like tips on contacting a club or questions to ask about accessibility and beginner classes?", "subagent": "Find My Sport", "action": "Match Demo Programs", "latency": "8.33 s", "evaluation": "GROUNDED"}, {"id": "t6", "lang": "en", "chip": "Ask a person at USA Fencing to follow up", "user": "Please ask a person at USA Fencing to follow up with me about the first program, the Youth Wheelchair Fencing Intro. I have questions about accessibility.", "agent": "Here is a demo draft of a support request for the program \"DEMO - Youth Wheelchair Fencing Intro\" at the fictional Salt Lake Adaptive Fencing club:\n\n—\nProgram: DEMO - Youth Wheelchair Fencing Intro (Salt Lake Adaptive Fencing)\nReason: Accessibility information needs verification\n\nMessage: The user has questions about accessibility for a 12-year-old wheelchair user interested in beginner fencing classes. Please provide details about accessible entry, restrooms, and any other relevant support arrangements.\n—\n\nThis is a synthetic example only and not a real club or support channel. If you say \"yes,\" I will create this demo Case as part of the prototype. Would you like to proceed?", "subagent": "Demo Human Support", "action": "Review Reply → Prepare Support", "latency": "6.71 s", "evaluation": "GROUNDED"}, {"id": "t7", "lang": "en", "chip": "Yes, please create it.", "user": "Yes, please create it.", "agent": "SYNTHETIC DEMO SUPPORT REQUEST\nProgram: DEMO - Youth Wheelchair Fencing Intro\nProgram location: Salt Lake City, UT (fictional)\nReason: Accessibility information needs verification\nAccessibility information: Needs confirmation; not real-world verification.\nDestination: Sport Compass Support demo queue in this Salesforce org.\nResponse channel: Demo queue only. No email, phone, SMS or real staff response promised.\nSaved on confirmation: this summary, selected program reference, category, demo and consent flags, technical request key and runtime user, plus standard Salesforce audit fields.\nNo name, age, diagnosis, contact details or transcript will be saved by this action.\nWould you like to create this demo Case now? Please reply yes or no.", "subagent": "Demo Human Support", "action": "Review Reply → Prepare Support", "latency": "", "evaluation": "GROUNDED"}, {"id": "t8", "lang": "en", "chip": "yes", "user": "yes", "agent": "Your synthetic demo support request for the DEMO - Youth Wheelchair Fencing Intro program has been created.\nCase number: 00001010\nCase ID: 500gL00001WYjvpQAD\nThis Case is in the Sport Compass Support demo queue only. No real message was sent and no official USA Fencing staff response is promised. For real-world help, please use the official club finder at https://member.usafencing.org/clubs and contact clubs directly about accessibility. Would you like guidance on what to ask clubs, or help with another step?", "subagent": "Demo Human Support", "action": "Review Reply → Confirm Support", "latency": "", "evaluation": "GROUNDED"}, {"id": "t9", "lang": "es", "chip": "Pregunta en español", "user": "Mi hija tiene 12 años y usa silla de ruedas. Quiere probar la esgrima cerca de Salt Lake City. ¿Es posible? Responde en español, por favor.", "agent": "Este es un ejemplo de búsqueda de programas solo para demostración: todos los clubes y afirmaciones sobre accesibilidad que aparecen a continuación son ficticios y no representan opciones reales. Para encontrar clubes verdaderos de esgrima adaptada, usa el buscador oficial: https://member.usafencing.org/clubs (elige la opción “Para”).\n\nResultados de demostración para una niña de 12 años que usa silla de ruedas cerca de Salt Lake City, UT:\n\n1. DEMO - Youth Wheelchair Fencing Intro (Salt Lake Adaptive Fencing)\n• Motivos de coincidencia: Coincidencia ficticia de ciudad y estado; edad dentro del rango simulado; apoyo a movilidad solo simulado, no verificado en la vida real.\n• Se necesita confirmación: Ninguna marcada, pero todas las características son simuladas.\n\n2. DEMO - Youth Program Needs Confirmation (Salt Lake Adaptive Fencing)\n• Motivos de coincidencia: Coincidencia ficticia de ciudad y estado; edad dentro del rango simulado.\n• Se necesita confirmación: El apoyo a movilidad es desconocido en este ejemplo; consulta directamente con cualquier proveedor real.\n\nEstos programas son solo ejemplos y no garantizan disponibilidad ni accesibilidad.\n\nPróximo paso: Busca clubes reales en https://member.usafencing.org/clubs y pregunta por clases de esgrima en silla de ruedas para principiantes.\n\n¿Quieres saber qué preguntar a los clubes sobre accesibilidad o necesitas ayuda con otro paso?\n(Respuesta traducida automáticamente; revisa siempre la información directamente en el sitio oficial.)", "subagent": "Find My Sport", "action": "(context from earlier match)", "latency": "7.84 s", "evaluation": "GROUNDED"}];
+var CASE_URL = 'https://orgfarm-4d89d5ac56.lightning.force.com/lightning/r/Case/500gL00001WYjvpQAD/view';
+var thread = document.getElementById('thread');
+var inner = document.getElementById('inner');
+var chips = document.getElementById('chips');
+var input = document.getElementById('input');
+var send = document.getElementById('send');
+var aside = document.getElementById('aside');
+var steps = document.getElementById('steps');
+var status = document.getElementById('status');
+var pos = 0;          // next recorded turn index
+var busy = false;
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function el(tag, cls, text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!==undefined) e.textContent=text; return e; }
+
+function linkify(text){
+  var frag=document.createDocumentFragment();
+  var re=/https?:\/\/[^\s)]+?(?=[,.;]?(\s|\)|$))/g; var last=0; var m;
+  while((m=re.exec(text))){
+    frag.appendChild(document.createTextNode(text.slice(last,m.index)));
+    var a=el('a'); a.href=m[0]; a.textContent=m[0]; a.target='_blank'; a.rel='noopener'; frag.appendChild(a);
+    last=m.index+m[0].length;
+  }
+  frag.appendChild(document.createTextNode(text.slice(last)));
+  return frag;
+}
+
+function addUser(text){
+  var m=el('div','msg user'); var b=el('div','bubble'); b.textContent=text; m.appendChild(b); inner.appendChild(m); scroll();
+}
+
+function toolChip(t){
+  var c=el('div','tool'); c.appendChild(el('span','dot')); c.appendChild(document.createTextNode('Using '));
+  var b=el('b',null,'Sport Compass'); c.appendChild(b);
+  var native = (t.id==='t6'||t.id==='t7'||t.id==='t8');
+  c.appendChild(document.createTextNode(native ? ' › native Agentforce channel (consent + Case)' : ' › ask')); return c;
+}
+
+function addAgent(t){
+  var m=el('div','msg agent'); m.setAttribute('role','group'); m.setAttribute('aria-label','Sport Compass reply');
+  m.appendChild(toolChip(t));
+  var b=el('div','bubble'); b.appendChild(linkify(t.agent)); m.appendChild(b);
+  if(t.id==='t8'){ m.appendChild(caseCard()); }
+  inner.appendChild(m); scroll();
+}
+
+function caseCard(){
+  var c=el('div','case'); c.setAttribute('role','region'); c.setAttribute('aria-label','Salesforce Case created by the agent');
+  var bar=el('div','bar'); bar.appendChild(document.createTextNode('Case 00001010 ')); bar.appendChild(el('span',null,'DEMO - Accessibility information needs verification')); c.appendChild(bar);
+  var g=el('div','grid');
+  var rows=[['Case Owner','Sport Compass Support (queue)'],['Status','New'],['Priority','Medium'],['Case Origin','Web'],['Program','DEMO - Youth Wheelchair Fencing Intro'],['Saved personal data','None (no name, age, diagnosis, contact or transcript)']];
+  rows.forEach(function(r){ var d=el('div'); d.appendChild(el('small',null,r[0])); d.appendChild(document.createTextNode(r[1])); g.appendChild(d); });
+  c.appendChild(g);
+  var f=el('div','foot'); f.appendChild(document.createTextNode('Real record in the prototype org: ')); var a=el('a'); a.href=CASE_URL; a.textContent='open Case 500gL00001WYjvpQAD'; a.target='_blank'; a.rel='noopener'; f.appendChild(a); f.appendChild(document.createTextNode(' (org login required).')); c.appendChild(f);
+  return c;
+}
+
+function scroll(){ thread.scrollTop = thread.scrollHeight; }
+
+function renderChips(){
+  chips.innerHTML='';
+  var next = TURNS[pos];
+  if(next){
+    var b=el('button','chip'+(next.lang==='es'?' es':''), next.chip); b.type='button'; b.setAttribute('aria-label','Send recorded question: '+next.user);
+    b.onclick=function(){ play(pos); }; chips.appendChild(b);
+  }
+  var es = TURNS[8];
+  if(pos<8 && pos>0){ var e=el('button','chip es', es.chip); e.type='button'; e.onclick=function(){ playTurn(es); }; chips.appendChild(e); }
+  var r=el('button','chip','Start over'); r.type='button'; r.onclick=reset; chips.appendChild(r);
+}
+
+function setAside(t){
+  aside.innerHTML='';
+  aside.appendChild(el('h2',null,'Behind this answer'));
+  var dl=el('dl','kv');
+  [['Channel', (t.id==='t6'||t.id==='t7'||t.id==='t8') ? 'Agentforce native channel (the external ChatGPT channel is guidance-only by design)' : 'ChatGPT app → Sport Compass MCP server (ask) → Agent API'],['Subagent',t.subagent],['Action',t.action],['Latency',t.latency||'—'],['Output evaluation','']].forEach(function(p){ dl.appendChild(el('dt',null,p[0])); var dd=el('dd'); if(p[0]==='Output evaluation'){ var s=el('span','ok',t.evaluation); dd.appendChild(s); dd.appendChild(document.createTextNode(' (Agentforce Builder trace)')); } else dd.textContent=p[1]; dl.appendChild(dd); });
+  aside.appendChild(dl);
+  aside.appendChild(el('h2',null,'What the agent did not do'));
+  var p=el('p'); p.textContent = (t.id==='t4') ? 'It did not decide eligibility. Only official classifiers and event staff can; it named the process and the person to email.' : (t.id==='t7'||t.id==='t8') ? 'It did not save a name, age, diagnosis, contact detail or transcript. It listed exactly what would be saved and waited for a plain yes.' : (t.id==='t5'||t.id==='t9') ? 'It did not present demo programs as real clubs. Every match is labeled synthetic and the official club finder is the next step.' : 'It did not ask for a diagnosis or a medical document, and it cited the USA Fencing page and retrieval date for each fact.';
+  aside.appendChild(p);
+  aside.appendChild(el('h2',null,'Path'));
+  var ul=el('ul','pipe');
+  ['Input received','Router: Sport Compass Router', 'Subagent: '+t.subagent, 'Action: '+t.action, 'Output evaluation: '+t.evaluation].forEach(function(s,i){ var li=el('li','on',s); ul.appendChild(li); });
+  aside.appendChild(ul);
+  var row=el('div','btnrow');
+  var a=el('a','btn','Open the live agent (org login)'); a.href='https://orgfarm-4d89d5ac56.lightning.force.com/AgentAuthoring/agentAuthoringBuilder.app#/project?projectId=1bYgL000000Xf2nUAC&projectVersionId=1bZgL000000rPgDUAU&tabUri=preview'; a.target='_blank'; a.rel='noopener'; row.appendChild(a);
+  aside.appendChild(row);
+}
+
+function markStep(i){
+  var lis=steps.querySelectorAll('li');
+  for(var k=0;k<lis.length;k++){ lis[k].className = (k<i)?'done':(k===i?'cur':''); }
+}
+
+function playTurn(t, adv){
+  if(busy) return; busy=true; send.disabled=true;
+  addUser(t.user);
+  var typing=el('div','typing','Sport Compass is answering…'); inner.appendChild(typing); scroll();
+  status.textContent='Sport Compass is answering';
+  var delay = reduce ? 200 : 900;
+  setTimeout(function(){
+    typing.remove(); addAgent(t); setAside(t);
+    status.textContent='Sport Compass replied: '+t.agent.slice(0,140);
+    if(adv){ pos++; markStep(Math.min(pos, 8)); }
+    renderChips(); busy=false; send.disabled=false; input.focus();
+  }, delay);
+}
+function play(i){ playTurn(TURNS[i], true); }
+
+function bestMatch(text){
+  var q=text.toLowerCase();
+  if(/^\s*(yes|si|sí|ok|okay|sure|please do|create it)\b/.test(q)){ if(pos===6) return 6; if(pos===7) return 7; }
+  if(/español|hija|silla/.test(q)) return 8;
+  var best=-1, score=0;
+  for(var i=0;i<TURNS.length;i++){
+    var words=TURNS[i].user.toLowerCase().replace(/[^a-z0-9áéíóúñ ]/g,' ').split(/\s+/);
+    var s=0; words.forEach(function(w){ if(w.length>3 && q.indexOf(w)>=0) s++; });
+    if(s>score){score=s;best=i;}
+  }
+  return score>=2 ? best : -1;
+}
+
+function submit(){
+  var text=input.value.trim(); if(!text||busy) return;
+  input.value='';
+  var i=bestMatch(text);
+  if(i<0){
+    addUser(text);
+    var m=el('div','msg agent'); var b=el('div','bubble');
+    b.textContent='This page replays recorded conversations with the live Sport Compass agent (Agentforce Builder, Sept 6–7, 2026), so it can only answer the questions in the journey. Pick a suggested question below, or open the live agent in the org to ask anything.';
+    m.appendChild(b); inner.appendChild(m); scroll(); status.textContent='Question not in the recorded journey.'; renderChips(); return;
+  }
+  var adv = (i===pos);
+  if(adv) play(i); else playTurn(TURNS[i], false);
+}
+
+function reset(){ inner.innerHTML=''; pos=0; markStep(0); intro(); renderChips(); aside.innerHTML='<h2>Behind this answer</h2><p>Send a question to see which subagent handled it, which action ran, the latency and the output evaluation from the Agentforce Builder trace.</p>'; }
+
+function intro(){
+  var m=el('div','msg agent'); var b=el('div','bubble');
+  b.textContent='Hi, I’m Sport Compass, an AI prototype built for the Agentforce for Good Hackathon. I answer from USA Fencing’s public pages, I never decide eligibility, and I can ask a person at USA Fencing to follow up. Try the first question below.';
+  m.appendChild(b); inner.appendChild(m);
+}
+
+send.onclick=submit;
+input.addEventListener('keydown',function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); submit(); } });
+document.getElementById('toggle').onclick=function(){ document.getElementById('wrap').classList.toggle('show-aside'); };
+reset();
+</script>
+</body>
+</html>
