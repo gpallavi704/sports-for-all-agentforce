@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardPortalPages>false</allowStandardPortalPages>
+    <allowStandardSearch>false</allowStandardSearch>
+    <browserXssProtection>true</browserXssProtection>
+    <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
+    <contentSniffingProtection>true</contentSniffingProtection>
+    <description>Public read-only Sport Compass guidance chat. No private member data or business actions.</description>
+    <enableAuraRequests>false</enableAuraRequests>
+    <indexPage>SportCompassPublic</indexPage>
+    <masterLabel>Sport Compass Public</masterLabel>
+    <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
+    <siteAdmin>gpallavi421afg@gmail.com</siteAdmin>
+    <siteType>Visualforce</siteType>
+    <urlPathPrefix>sportcompass</urlPathPrefix>
+</CustomSite>

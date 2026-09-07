@@ -1,5 +1,14 @@
 # Sport Compass plugin icon
 
+## Current public website branding
+
+The Salesforce public page uses the newer team assets from sports-4-all.org,
+not the earlier compass-ring concept below. On September 7, 2026, the project
+owner requested matching Jon's current website. The two original PNG assets were
+copied unchanged into Salesforce static resources `Sports4AllLogo` and
+`SportCompassTeamAvatar`. They are team branding, not official USA Fencing marks.
+The original plugin-icon files remain preserved.
+
 `sport-compass-plugin-icon-v1.png` is the first ChatGPT plugin icon concept,
 1254 by 1254 pixels. It is a generated raster image, not an editable vector master.
 

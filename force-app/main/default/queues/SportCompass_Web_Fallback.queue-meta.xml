@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Sport Compass Web Fallback</name>
+    <queueMembers>
+        <users>
+            <user>gpallavi421afg@gmail.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>SportCompass_Web_Routing</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>MessagingSession</sobjectType>
+    </queueSobject>
+</Queue>

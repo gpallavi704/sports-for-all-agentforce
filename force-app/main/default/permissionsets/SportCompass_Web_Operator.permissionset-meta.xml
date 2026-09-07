@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>SportCompass_Support</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>Enhanced Chat operator access for the Sport Compass project team. Presence status is granted separately.</description>
+    <label>Sport Compass Web Operator</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EmbeddedMessagingAgent</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>LMEndMessagingSessionUserPerm</name>
+    </userPermissions>
+</PermissionSet>
