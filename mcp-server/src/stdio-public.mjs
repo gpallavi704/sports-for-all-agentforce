@@ -12,7 +12,7 @@ if (process.argv.length !== 3 || process.argv[2] !== '--approved-public-guidance
 }
 const source = readFileSync(new URL('../../force-app/main/default/aiAuthoringBundles/SportCompassGuide/SportCompassGuide.agent', import.meta.url), 'utf8');
 const targets = [...source.matchAll(/target: "([^"]+)"/g)].map(match => match[1]).sort();
-if (JSON.stringify(targets) !== JSON.stringify(['apex://FindPublicFencingClubsAction', 'standardInvocableAction://streamKnowledgeSearch'])) {
+if (JSON.stringify(targets) !== JSON.stringify(['apex://FindNearbyFencingClubsAction', 'standardInvocableAction://streamKnowledgeSearch'])) {
   process.stderr.write('Public agent action allowlist changed. Deployment review required.\n');
   process.exit(2);
 }

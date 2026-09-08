@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata"><description>Resolve a visitor-supplied US ZIP to approximate public centroid coordinates. No transcript or identity is sent.</description><disableProtocolSecurity>false</disableProtocolSecurity><isActive>true</isActive><url>https://api.zippopotam.us</url></RemoteSiteSetting>

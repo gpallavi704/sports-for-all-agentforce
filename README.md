@@ -6,7 +6,16 @@ Sport Compass helps athletes, families and coaches navigate fencing and wheelcha
 
 This Agentforce for Good Builder Track MVP focuses on fencing. Salesforce Agentforce powers public guidance through a headless API and a Salesforce-hosted chat. Enhanced Chat and Omni-Channel provide a separate human-support route. The earlier private ChatGPT development app is preserved in source but retired in favor of the team's integration. Other sports, reviewed multilingual support and a standalone mobile app remain planned.
 
-Latest checkpoint: September 7, 2026.
+Latest checkpoint: September 8, 2026.
+
+The public Agentforce guide now searches a synchronized Salesforce club directory.
+The first full import contains 494 public source records, including 378 marked
+active. Daily refresh is scheduled for 03:00 Pacific, with atomic publishing and
+last-successful-data preservation. ZIP searches support 10, 25, 50 and 100 miles,
+optional weapon filters and source-linked results. Distances are approximate
+straight-line miles, not driving distances. A Para tag is not an accessibility
+or class-availability guarantee.
+See [directory architecture, setup and checks](docs/agentforce/CLUB_DIRECTORY.md).
 
 Salesforce-hosted public fallback: [Ask Sport Compass on Salesforce](https://orgfarm-4d89d5ac56.my.salesforce-sites.com/sportcompass).
 The branded Visualforce/Sites page is active, opens without a Salesforce login,
@@ -38,7 +47,8 @@ integration. Do not restart it as a prerequisite for the public website.
 Native Salesforce human handoff passed consent, operator acceptance, two-way
 messaging and session closure. The queue, routing flow, Enhanced Conversation
 record page, operator console and scoped presence access are deployed.
-SportCompassGuide version 2 is active with a Messaging-session-gated handoff.
+SportCompassGuide version 3 is active with nearby directory search and the
+existing Messaging-session-gated handoff.
 The `SportCompass_HumanClient` API deployment is published and guest authorization
 passed with HTTP 200. The team reported successful two-way website support chat
 using polling. That report is distinct from the independently verified native test;
@@ -51,10 +61,10 @@ Editing its ZIP snapshot does not deploy the live website. See the
 
 - The original Sport Compass version 17 is active in the development org. Its native support-request demo remains intact.
 - Ten indexed, project-prepared summaries ground guidance in USA Fencing and Zendesk sources. They are not USA Fencing-approved.
-- Two source-checked public club listings are separate from explicitly fictional program examples. Accessibility, equipment and parafencing availability require provider confirmation.
-- Apex performs deterministic discovery using mandatory current-message lookups. Utah searches now accept natural wording such as `Salt Lake City Utah` without requiring a comma.
+- The public guide searches synchronized USA Fencing club records in Salesforce. The original demo's two curated metadata listings and synthetic programs remain unchanged.
+- Apex performs distance filtering and weapon matching against public records. Radius search requires a visitor-supplied US ZIP; city-only requests ask for the ZIP. Accessibility, equipment and parafencing availability require provider confirmation.
 - Synthetic support requests use signed drafts, explicit confirmation, server-side validation and idempotent Case creation in a fixed support queue.
-- The separate Salesforce public guide, SportCompassGuide, uses the same public knowledge library and club lookup, with no Case, email, booking or private-record actions. Version 2 adds a native Messaging-only human-transfer path. Native acceptance and two-way replies passed. Agent API access does not by itself provide a human-chat transport.
+- The separate Salesforce public guide, SportCompassGuide, uses the public knowledge library and read-only directory search, with no Case, email, booking or private-record actions. Version 3 preserves the native Messaging-only human-transfer path introduced in version 2. Native acceptance and two-way replies passed previously. Agent API access does not by itself provide a human-chat transport.
 - A dedicated human-only Messaging channel bypasses Agentforce and routes to the project team's Omni-Channel queue. Both native Web and Custom Client API deployments are configured.
 - The archived development ChatGPT integration has a Sport Compass icon and four MCP tools: start, ask, end and show the first-visit planner. Its prior live checks are historical evidence, not a claim that the retired tunnel is running.
 - Compact club cards show the club name, location, website and one visible `Needs confirmation` note. Listing sources expand on demand; **Plan my visit** opens the optional checklist.
@@ -63,7 +73,12 @@ Editing its ZIP snapshot does not deploy the live website. See the
 
 The planner's controls run locally in the card. They do not make additional AI calls or update Salesforce. Copying produces an unsent draft, not an email integration. In ChatGPT, clipboard restrictions can trigger a selected-text fallback for manual copying.
 
-The latest public-search deployment passed 12 selected Apex tests; the earlier broader checkpoint passed 30 selected tests. An uninterrupted current-version native browser-to-Case demo remains pending. None of these results establish production readiness, full grounding accuracy or accessibility certification.
+The September 8 directory deployment passed 13 selected Apex tests, and all 69
+local integration/UI-contract tests pass. The importer and search classes exceed
+94% line coverage in this run. Earlier 12-test and 30-test checkpoints concern the
+original demo. An uninterrupted current-version native browser-to-Case demo
+remains pending. None of these results establish production readiness, full
+grounding accuracy or accessibility certification.
 
 ## Try the demo
 
@@ -126,7 +141,11 @@ flowchart TD
     AIWeb --> Guide
     Guide --> Knowledge["Agentforce Data Library / Data Cloud retrieval"]
     Knowledge --> Sources["Curated USA Fencing and Zendesk public-source summaries"]
-    Guide --> Lookup["Apex public club lookup + Custom Metadata"]
+    Guide --> Lookup["Read-only Apex nearby club search"]
+    Lookup --> ClubData["Salesforce public club records + coordinates"]
+    Directory["USA Fencing public directory"] --> Refresh["Daily staged Apex refresh"]
+    Refresh --> ClubData
+    Lookup --> ZIP["Public ZIP centroid lookup when needed"]
     Guide -->|"Native Messaging + consent"| Flow["Omni-Channel handoff Flow"]
     Flow --> Queue["Sport Compass project-team queue"]
     Choice -->|"Chat with a person"| HumanWeb["HumanSupport Web deployment"]

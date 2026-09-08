@@ -9,7 +9,7 @@ import { SessionBroker } from '../src/session-broker.mjs';
 
 test('public Salesforce agent binds only read-only public actions', () => {
   const source = readFileSync(new URL('../../force-app/main/default/aiAuthoringBundles/SportCompassGuide/SportCompassGuide.agent', import.meta.url), 'utf8');
-  assert.deepEqual([...source.matchAll(/target: "([^"]+)"/g)].map(m => m[1]).sort(), ['apex://FindPublicFencingClubsAction', 'standardInvocableAction://streamKnowledgeSearch']);
+  assert.deepEqual([...source.matchAll(/target: "([^"]+)"/g)].map(m => m[1]).sort(), ['apex://FindNearbyFencingClubsAction', 'standardInvocableAction://streamKnowledgeSearch']);
   assert.doesNotMatch(source, /CreateSportsSupport|PrepareSportsSupport|ReviewSportsSupport|MatchSportsPrograms|Support_Request|Find_My_Sport|\u2014/);
   assert.match(source, /ARFPC_1JDgL000009Fm7BWAS/);
 });
