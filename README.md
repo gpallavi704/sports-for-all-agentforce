@@ -17,6 +17,14 @@ still need confirmation directly with the club. Inquiries are drafts for the
 visitor to send. Configuration checks passed; the revised conversation has not
 been live-tested. See [club first-contact journey and test scenarios](docs/agentforce/CLUB_FIRST_CONTACT.md).
 
+The native human-handoff instructions now include a short club/question summary
+before conversation-sharing consent, clear waiting language, and a club-contact
+fallback if a transfer fails and control returns. Channels without a linked
+Messaging session can point visitors to the separate Salesforce support page.
+All 15 local public-page checks passed. Offline, capacity and routing-failure
+behavior still needs real Messaging verification; Jon's separate client messages
+were not changed. See [human handoff review](docs/agentforce/HUMAN_HANDOFF_REVIEW.md).
+
 The public Agentforce guide now searches a synchronized Salesforce club directory.
 The first full import contains 494 public source records, including 378 marked
 active. Daily refresh is scheduled for 03:00 Pacific, with atomic publishing and
@@ -56,9 +64,9 @@ integration. Do not restart it as a prerequisite for the public website.
 Native Salesforce human handoff passed consent, operator acceptance, two-way
 messaging and session closure. The queue, routing flow, Enhanced Conversation
 record page, operator console and scoped presence access are deployed.
-SportCompassGuide version 5 is active with nearby directory search, club-selection
+SportCompassGuide version 6 is active with nearby directory search, club-selection
 and first-contact instructions, and the
-existing Messaging-session-gated handoff.
+existing Messaging-session-gated handoff with the updated summary and fallback instructions.
 The `SportCompass_HumanClient` API deployment is published and guest authorization
 passed with HTTP 200. The team reported successful two-way website support chat
 using polling. That report is distinct from the independently verified native test;
@@ -74,7 +82,7 @@ Editing its ZIP snapshot does not deploy the live website. See the
 - The public guide searches synchronized USA Fencing club records in Salesforce. The original demo's two curated metadata listings and synthetic programs remain unchanged.
 - Apex performs distance filtering and weapon matching against public records. Radius search requires a visitor-supplied US ZIP; city-only requests ask for the ZIP. Accessibility, equipment and parafencing availability require provider confirmation.
 - Synthetic support requests use signed drafts, explicit confirmation, server-side validation and idempotent Case creation in a fixed support queue.
-- The separate Salesforce public guide, SportCompassGuide, uses the public knowledge library and read-only directory search, with no Case, email, booking or private-record actions. Version 5 adds club selection and first-contact guidance, preserving version 4's prominent diagnosis, classification and eligibility boundary, version 3's nearby search and the native Messaging-only human-transfer path introduced in version 2. Native acceptance and two-way replies passed previously. Agent API access does not by itself provide a human-chat transport.
+- The separate Salesforce public guide, SportCompassGuide, uses the public knowledge library and read-only directory search, with no Case, email, booking or private-record actions. Version 6 adds contextual handoff and fallback instructions, preserving version 5's club selection and first-contact guidance, version 4's prominent diagnosis, classification and eligibility boundary, version 3's nearby search and the native Messaging-only human-transfer path introduced in version 2. Native acceptance and two-way replies passed previously. Agent API access does not by itself provide a human-chat transport.
 - A dedicated human-only Messaging channel bypasses Agentforce and routes to the project team's Omni-Channel queue. Both native Web and Custom Client API deployments are configured.
 - The archived development ChatGPT integration has a Sport Compass icon and four MCP tools: start, ask, end and show the first-visit planner. Its prior live checks are historical evidence, not a claim that the retired tunnel is running.
 - Compact club cards show the club name, location, website and one visible `Needs confirmation` note. Listing sources expand on demand; **Plan my visit** opens the optional checklist.
