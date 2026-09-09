@@ -1,12 +1,14 @@
 # Sports for All - Sport Compass
 
-Sport Compass helps athletes, families and coaches navigate fencing and wheelchair-fencing resources, discover club listings and understand their next steps.
+Fencing for All, powered by Sport Compass, helps athletes and families explore fencing and find a club that can support their needs.
+
+**The agent never diagnoses a condition or makes classification or competition eligibility decisions.** Diagnosis belongs to qualified medical professionals. Official classifiers determine classification, and the relevant governing bodies and event officials determine competition eligibility.
 
 **Find your sport. Navigate your next step.**
 
 This Agentforce for Good Builder Track MVP focuses on fencing. Salesforce Agentforce powers public guidance through a headless API and a Salesforce-hosted chat. Enhanced Chat and Omni-Channel provide a separate human-support route. The earlier private ChatGPT development app is preserved in source but retired in favor of the team's integration. Other sports, reviewed multilingual support and a standalone mobile app remain planned.
 
-Latest checkpoint: September 8, 2026.
+Latest checkpoint: September 9, 2026. The public guide's introduction and welcome now prominently state that it never diagnoses or makes classification or competition eligibility decisions. Salesforce compilation, publication and activation passed; no test conversation was run for this wording update.
 
 The public Agentforce guide now searches a synchronized Salesforce club directory.
 The first full import contains 494 public source records, including 378 marked
@@ -47,7 +49,7 @@ integration. Do not restart it as a prerequisite for the public website.
 Native Salesforce human handoff passed consent, operator acceptance, two-way
 messaging and session closure. The queue, routing flow, Enhanced Conversation
 record page, operator console and scoped presence access are deployed.
-SportCompassGuide version 3 is active with nearby directory search and the
+SportCompassGuide version 4 is active with nearby directory search and the
 existing Messaging-session-gated handoff.
 The `SportCompass_HumanClient` API deployment is published and guest authorization
 passed with HTTP 200. The team reported successful two-way website support chat
@@ -64,7 +66,7 @@ Editing its ZIP snapshot does not deploy the live website. See the
 - The public guide searches synchronized USA Fencing club records in Salesforce. The original demo's two curated metadata listings and synthetic programs remain unchanged.
 - Apex performs distance filtering and weapon matching against public records. Radius search requires a visitor-supplied US ZIP; city-only requests ask for the ZIP. Accessibility, equipment and parafencing availability require provider confirmation.
 - Synthetic support requests use signed drafts, explicit confirmation, server-side validation and idempotent Case creation in a fixed support queue.
-- The separate Salesforce public guide, SportCompassGuide, uses the public knowledge library and read-only directory search, with no Case, email, booking or private-record actions. Version 3 preserves the native Messaging-only human-transfer path introduced in version 2. Native acceptance and two-way replies passed previously. Agent API access does not by itself provide a human-chat transport.
+- The separate Salesforce public guide, SportCompassGuide, uses the public knowledge library and read-only directory search, with no Case, email, booking or private-record actions. Version 4 adds the prominent diagnosis, classification and eligibility boundary while preserving version 3's nearby search and the native Messaging-only human-transfer path introduced in version 2. Native acceptance and two-way replies passed previously. Agent API access does not by itself provide a human-chat transport.
 - A dedicated human-only Messaging channel bypasses Agentforce and routes to the project team's Omni-Channel queue. Both native Web and Custom Client API deployments are configured.
 - The archived development ChatGPT integration has a Sport Compass icon and four MCP tools: start, ask, end and show the first-visit planner. Its prior live checks are historical evidence, not a claim that the retired tunnel is running.
 - Compact club cards show the club name, location, website and one visible `Needs confirmation` note. Listing sources expand on demand; **Plan my visit** opens the optional checklist.
