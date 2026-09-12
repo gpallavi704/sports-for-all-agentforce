@@ -12,7 +12,7 @@
     },
     "summary": { "type": "string" },
     "fallbackText": { "type": "string" },
-    "radiusMiles": { "type": "integer", "enum": [10, 25, 50, 100] },
+    "radiusMiles": { "type": ["integer", "null"], "enum": [10, 25, 50, 100, null] },
     "distanceBasis": { "const": "straight_line_from_zip_center" },
     "sourceRetrievedAt": { "type": ["string", "null"] },
     "hasMore": { "type": "boolean" },

@@ -2,7 +2,7 @@
 <AiSurface xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Channel-neutral structured responses for Sport Compass web, Apple Messages and other custom clients.</description>
     <instructions>
-        <instruction>Use a response format only when its stated conditions match the current turn. Otherwise return concise plain text.</instruction>
+        <instruction>Use SportCompassClubResults for club search results with club names, locations, distances or links. Use concise plain text for greetings, general fencing explanations and other responses that are not club search results. Concise prose limits apply to the accompanying text, not to the structured club fields.</instruction>
         <sortOrder>1</sortOrder>
     </instructions>
     <instructions>

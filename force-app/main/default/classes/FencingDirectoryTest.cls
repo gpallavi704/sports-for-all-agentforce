@@ -105,7 +105,9 @@ private class FencingDirectoryTest {
         System.assertEquals('NEEDS_ZIP',needsZip.status);
         System.assertEquals('NEEDS_ZIP',((Map<String,Object>)JSON.deserializeUntyped(needsZip.structuredResultJson)).get('status'));
         request.location='84060'; request.radiusMiles=26;
-        System.assertEquals('INVALID_INPUT',search(request).status);
+        FindNearbyFencingClubsAction.Response invalid=search(request);
+        System.assertEquals('INVALID_INPUT',invalid.status);
+        System.assertEquals(null,((Map<String,Object>)JSON.deserializeUntyped(invalid.structuredResultJson)).get('radiusMiles'));
         request.radiusMiles=25; request.weapons='Para OR private';
         System.assertEquals('INVALID_INPUT',search(request).status);
         request.weapons=null; request.resultLimit=11;
@@ -118,6 +120,48 @@ private class FencingDirectoryTest {
         Test.setMock(HttpCalloutMock.class,new SourceMock(503,false));
         System.assertEquals('LOCATION_UNAVAILABLE',search(input()).status);
         Test.stopTest();
+    }
+    @IsTest static void secureLinksAndFreshnessFallback() {
+        List<Fencing_Club_Directory__c> rows=[SELECT Id,Source_Id__c,Website__c,Last_Synced_At__c FROM Fencing_Club_Directory__c WITH SYSTEM_MODE];
+        for (Fencing_Club_Directory__c row: rows) {
+            row.Last_Synced_At__c=System.now().addDays(-3);
+            row.Website__c=row.Source_Id__c=='1'?'http://example.org/':'https://example.org/';
+        }
+        update as system rows;
+        Test.setMock(HttpCalloutMock.class,new SourceMock(200,false));
+        FindNearbyFencingClubsAction.Response response=search(input());
+        Map<String,Object> payload=(Map<String,Object>)JSON.deserializeUntyped(response.structuredResultJson);
+        List<Object> clubs=(List<Object>)payload.get('clubs');
+        Map<String,Object> first=(Map<String,Object>)clubs[0];
+        System.assertEquals(null,first.get('websiteUrl'),'Never upgrade HTTP by guessing');
+        System.assertEquals('https://member.usafencing.org/clubs/test-1',first.get('directoryUrl'));
+        System.assertEquals('https://example.org/',((Map<String,Object>)clubs[1]).get('websiteUrl'));
+        System.assertEquals(null,((Map<String,Object>)((List<Object>)JSON.deserializeUntyped(response.resultsJson))[0]).get('website'));
+        String fallback=(String)payload.get('fallbackText');
+        System.assert(fallback.contains('Refresh is delayed'));
+        System.assert(fallback.contains('not driving distance'));
+        System.assert(fallback.contains('USA Fencing listing: https://member.usafencing.org/clubs/test-1'));
+        System.assert(!fallback.contains('http://'));
+        Test.stopTest();
+        System.assertEquals('http://example.org/',[SELECT Website__c FROM Fencing_Club_Directory__c WHERE Source_Id__c='1' WITH SYSTEM_MODE].Website__c,'Source record preserved');
+    }
+    @IsTest static void unsafeLinksAreOmitted() {
+        for (String bad:new List<String>{'http://example.org/','javascript:alert(1)','https://user:pass@example.org/','https://example.org/?token=secret','https://example.org:444/'}) {
+            System.assertEquals(null,FindNearbyFencingClubsAction.securePublicUrl(bad,false));
+        }
+        System.assertEquals(null,FindNearbyFencingClubsAction.securePublicUrl('https://example.org/clubs/a',true));
+        System.assertEquals('https://example.org/',FindNearbyFencingClubsAction.securePublicUrl('https://example.org/',false));
+        System.assertEquals('https://member.usafencing.org/clubs/a',FindNearbyFencingClubsAction.securePublicUrl('https://member.usafencing.org/clubs/a',true));
+    }
+    @IsTest static void nullAndOversizedRequestsHaveValidErrorRadius() {
+        List<FindNearbyFencingClubsAction.Request> inputs=new List<FindNearbyFencingClubsAction.Request>{null};
+        Map<String,Object> payload=(Map<String,Object>)JSON.deserializeUntyped(FindNearbyFencingClubsAction.findClubs(inputs)[0].structuredResultJson);
+        System.assertEquals('INVALID_INPUT',payload.get('status'));
+        System.assertEquals(null,payload.get('radiusMiles'));
+        System.assertEquals(0,((List<Object>)payload.get('clubs')).size());
+        for(Integer i=0;i<5;i++) inputs.add(input());
+        System.assertEquals(6,FindNearbyFencingClubsAction.findClubs(inputs).size());
+        System.assertEquals(0,Limits.getCallouts());
     }
     @IsTest static void malformedGeocoder() {
         Test.setMock(HttpCalloutMock.class,new SourceMock(200,true));

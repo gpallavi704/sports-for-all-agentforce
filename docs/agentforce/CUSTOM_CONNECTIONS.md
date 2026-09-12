@@ -2,9 +2,11 @@
 
 Salesforce remains the source of club facts. `FindNearbyFencingClubsAction` searches synchronized `Fencing_Club_Directory__c` records and returns both the existing planner output and a versioned channel-neutral payload in `structuredResultJson`.
 
+The optional [direct action API fallback](DIRECT_CLUB_API_HANDOFF.md) is now deployed and tested separately. It can obtain card data while the Custom Connection runtime issue is investigated, but bypasses Agentforce action selection for that lookup. The target remains Agentforce-led. It preserves the same payload field names; `radiusMiles` now also permits null for invalid-radius errors, and unsafe/non-HTTPS website URLs are omitted in favor of the returned official directory link. Do not assume the Agentforce session receives the direct lookup's state automatically.
+
 The `Sport Compass Channels` custom surface offers one response format, `Sport Compass Club Results`. Web, Apple Messages and future clients must validate the payload against `contracts/club-results-v1.schema.json` before rendering it.
 
-As of September 11, 2026 (Pacific), guide version 7 is activated with this surface. The action, test class, response format and surface passed Salesforce validation with 13 selected Apex tests. No Agentforce conversation was started to test the new format. Client rendering and selection callbacks remain pending.
+As of September 12, 2026 (Pacific), guide version 8 is active with the named Custom connection compiled from Agent Script. Live website and direct API tests still returned `result: []`, including a token-gated minimal response format. Rich output is NOT verified working. See the [diagnostic evidence](CUSTOM_CONNECTIONS_DEBUG_2026-09-12.md). The previous Apex validation passed 13 selected tests; no Apex code changed in this diagnostic.
 
 ## Client flow
 
@@ -25,17 +27,25 @@ For Apple Messages, use quick replies for two to five clubs and a list picker fo
 1. Deploy `FindNearbyFencingClubsAction` and its test.
 2. Deploy `SportCompassClubResults_SCClub01`.
 3. Deploy `SportCompassChannels_SCClub01`.
-4. Publish the updated `SportCompassGuide` authoring bundle as a new version. Retrieve that inactive version's planner bundle and add the `plannerSurfaces` entry below, preserving all existing surfaces and routing settings. Deploy the updated planner and activate that version. Version 7 was used for this rollout; active planner versions cannot be edited directly.
+4. Include the named connection below in the `SportCompassGuide` Agent Script, then publish a new inactive version. Retrieve it and verify both the compiled graph and the generated `plannerSurfaces` reference. Preserve Messaging and Customer Web Client routing. Activate only after checking the generated configuration. Version 8 uses this approach; version 7 had only a post-publication planner attachment.
 5. Start a test Agent API session with the Custom surface and validate both rich and plain-text fallback behavior.
 
 ```xml
 <plannerSurfaces>
+    <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
     <callRecordingAllowed>false</callRecordingAllowed>
     <surface>SportCompassChannels_SCClub01</surface>
     <surfaceType>Custom</surfaceType>
 </plannerSurfaces>
 ```
 
-Generated planner bundles are excluded from Git by the existing repository policy. Repeat the attachment step after publishing or migrating a version and verify the generated action output schema includes `structuredResultJson`. The editable Agent Script, response format and surface are maintained in source.
+The compiler resolves the custom surface by its developer name, not the literal word `custom`:
+
+```text
+connection SportCompassChannels_SCClub01:
+    adaptive_response_allowed: True
+```
+
+Generated planner bundles are excluded from Git by the existing repository policy. Verify the generated connection and the action output `structuredResultJson` after publication or migration. The editable Agent Script, response format and surface are maintained in source. Run `node scripts/verify-custom-connection.mjs` for local consistency checks without Agentforce usage. Those checks do not prove live rich rendering.
 
 Steps 1 through 4 do not start an Agentforce conversation. Step 5 can consume Agentforce usage and requires explicit approval.

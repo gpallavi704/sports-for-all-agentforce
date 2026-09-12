@@ -1,0 +1,35 @@
+{
+  "checkedOn": "2026-09-12",
+  "target": "hackathon-org",
+  "agentforceConversations": 0,
+  "tests": [
+    "Dedicated integration identity confirmed",
+    "Case read denied",
+    "Contact read denied",
+    "Account read denied",
+    "Public directory create/update/delete not granted",
+    {
+      "name": "listings",
+      "status": "LISTINGS",
+      "schemaValid": true
+    },
+    {
+      "name": "no-listings",
+      "status": "NO_LISTINGS",
+      "schemaValid": true
+    },
+    {
+      "name": "invalid-radius",
+      "status": "INVALID_INPUT",
+      "schemaValid": true
+    },
+    {
+      "name": "needs-zip",
+      "status": "NEEDS_ZIP",
+      "schemaValid": true
+    }
+  ],
+  "passed": true,
+  "apexTestsPassed": 16,
+  "deployId": "0AfgL00000XPNcjSAH"
+}

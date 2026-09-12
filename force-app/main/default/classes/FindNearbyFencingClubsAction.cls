@@ -93,16 +93,19 @@ public with sharing class FindNearbyFencingClubsAction {
                 Double miles = Location.getDistance(center,Location.newInstance(row.Location__Latitude__s,row.Location__Longitude__s),'mi');
                 Decimal roundedMiles = Decimal.valueOf(String.valueOf(miles)).setScale(1);
                 List<String> specialties = String.isBlank(row.Weapons__c)?new List<String>():row.Weapons__c.split(';');
+                // Keep the source record unchanged. Only expose secure, validated links to clients.
+                String website = securePublicUrl(row.Website__c, false);
+                String directory = securePublicUrl(row.Source_URL__c, true);
                 clubs.add(new Map<String,Object>{
                     'clubId'=>row.Source_Id__c,
                     'name'=>row.Club_Name__c,'city'=>row.City__c,'state'=>row.State__c,
-                    'websiteUrl'=>row.Website__c,'directoryUrl'=>row.Source_URL__c,
+                    'websiteUrl'=>website,'directoryUrl'=>directory,
                     'specialties'=>specialties,'paraListed'=>row.Para_Listed__c,'distanceMiles'=>roundedMiles,
                     'accessibilityNote'=>'Contact the club to confirm access and equipment.'
                 });
                 legacyResults.add(new Map<String,Object>{
                     'name'=>row.Club_Name__c,'street'=>row.Street__c,'city'=>row.City__c,'state'=>row.State__c,
-                    'postalCode'=>row.Postal_Code__c,'website'=>row.Website__c,'sourceUrl'=>row.Source_URL__c,
+                    'postalCode'=>row.Postal_Code__c,'website'=>website,'sourceUrl'=>directory,
                     'weapons'=>specialties,'paraListed'=>row.Para_Listed__c,'distanceMiles'=>roundedMiles,
                     'distanceType'=>'Approximate straight-line from ZIP center','radiusMiles'=>radius,
                     'sourceRetrievedAt'=>row.Last_Synced_At__c,'accessibility'=>'Unknown; confirm with club',
@@ -137,6 +140,13 @@ public with sharing class FindNearbyFencingClubsAction {
         centers.put(zip,result);
         return result;
     }
+    @TestVisible private static String securePublicUrl(String raw, Boolean official) {
+        String checked = FencingDirectorySync.safeUrl(raw, official);
+        if (checked == null) return null;
+        Url parsed = new Url(checked);
+        if (parsed.getProtocol() != 'https' || (parsed.getPort() != -1 && parsed.getPort() != 443)) return null;
+        return checked;
+    }
     private static Response answer(String status,String message,Integer radius) {
         Response response=new Response();
         response.status=status; response.message=message; response.radiusMiles=radius;
@@ -156,21 +166,28 @@ public with sharing class FindNearbyFencingClubsAction {
         }
         String fallbackText = summary;
         if (response.status == 'LISTINGS') {
-            List<String> lines = new List<String>{summary};
+            List<String> lines = new List<String>{summary, response.message};
             for (Object item : clubs) {
                 Map<String,Object> club = (Map<String,Object>)item;
+                String website = (String)club.get('websiteUrl');
+                String directory = (String)club.get('directoryUrl');
+                String link = website != null ? ' Website: ' + website :
+                    (directory != null ? ' USA Fencing listing: ' + directory : '');
                 lines.add(String.valueOf(club.get('name')) + ', ' + String.valueOf(club.get('city')) + ', '
                     + String.valueOf(club.get('state')) + ', ' + String.valueOf(club.get('distanceMiles')) + ' miles. '
-                    + String.valueOf(club.get('accessibilityNote')));
+                    + String.valueOf(club.get('accessibilityNote')) + link);
             }
             fallbackText = String.join(lines,'\n');
+        } else {
+            if (response.message != summary) fallbackText += ' ' + response.message;
+            fallbackText += ' Official club finder: https://member.usafencing.org/clubs';
         }
         return JSON.serialize(new Map<String,Object>{
             'schemaVersion'=>'1.0',
             'status'=>response.status,
             'summary'=>summary,
             'fallbackText'=>fallbackText,
-            'radiusMiles'=>response.radiusMiles,
+            'radiusMiles'=>RADII.contains(response.radiusMiles) ? response.radiusMiles : null,
             'distanceBasis'=>'straight_line_from_zip_center',
             'sourceRetrievedAt'=>refreshed == null ? null : refreshed.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''),
             'hasMore'=>response.hasMore,

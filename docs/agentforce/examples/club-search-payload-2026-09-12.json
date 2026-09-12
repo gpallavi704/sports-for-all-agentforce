@@ -1,0 +1,63 @@
+{
+  "clubs": [
+    {
+      "accessibilityNote": "Contact the club to confirm access and equipment.",
+      "distanceMiles": 23.8,
+      "paraListed": true,
+      "specialties": [
+        "Epee",
+        "Foil",
+        "Para",
+        "Saber"
+      ],
+      "directoryUrl": "https://member.usafencing.org/clubs/valkyrie-fencing-clubNqeF",
+      "websiteUrl": "https://www.valkyriefencingclub.com/",
+      "state": "UT",
+      "city": "Pleasant Grove",
+      "name": "Valkyrie Fencing Club",
+      "clubId": "3178"
+    },
+    {
+      "accessibilityNote": "Contact the club to confirm access and equipment.",
+      "distanceMiles": 35.6,
+      "paraListed": true,
+      "specialties": [
+        "Epee",
+        "Foil",
+        "Para",
+        "Saber"
+      ],
+      "directoryUrl": "https://member.usafencing.org/clubs/wasatch-fencingTgy3",
+      "websiteUrl": "https://www.wasatchfencing.com",
+      "state": "UT",
+      "city": "Kaysville",
+      "name": "Wasatch Fencing",
+      "clubId": "610"
+    },
+    {
+      "accessibilityNote": "Contact the club to confirm access and equipment.",
+      "distanceMiles": 40.9,
+      "paraListed": true,
+      "specialties": [
+        "Epee",
+        "Foil",
+        "Para",
+        "Saber"
+      ],
+      "directoryUrl": "https://member.usafencing.org/clubs/schoolhouse-fencingS2ny",
+      "websiteUrl": null,
+      "state": "UT",
+      "city": "OGDEN",
+      "name": "Schoolhouse Fencing",
+      "clubId": "489"
+    }
+  ],
+  "hasMore": false,
+  "sourceRetrievedAt": "2026-09-08T23:33:12Z",
+  "distanceBasis": "straight_line_from_zip_center",
+  "radiusMiles": 50,
+  "fallbackText": "Found 3 clubs within 50 miles.\nApproximate straight-line miles from the ZIP center, not driving distance. Para listed does not verify sessions, accessibility or equipment. Directory retrieved 2026-09-08 23:33 UTC. Refresh is delayed; confirm current details directly.\nValkyrie Fencing Club, Pleasant Grove, UT, 23.8 miles. Contact the club to confirm access and equipment. Website: https://www.valkyriefencingclub.com/\nWasatch Fencing, Kaysville, UT, 35.6 miles. Contact the club to confirm access and equipment. Website: https://www.wasatchfencing.com\nSchoolhouse Fencing, OGDEN, UT, 40.9 miles. Contact the club to confirm access and equipment. USA Fencing listing: https://member.usafencing.org/clubs/schoolhouse-fencingS2ny",
+  "summary": "Found 3 clubs within 50 miles.",
+  "status": "LISTINGS",
+  "schemaVersion": "1.0"
+}

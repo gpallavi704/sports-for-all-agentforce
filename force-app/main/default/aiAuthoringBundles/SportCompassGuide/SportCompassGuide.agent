@@ -250,6 +250,9 @@ subagent Human_Support:
             go_to_Public_Guidance: @utils.transition to @subagent.Public_Guidance
             go_to_Find_Real_Clubs: @utils.transition to @subagent.Find_Real_Clubs
 
+connection SportCompassChannels_SCClub01:
+    adaptive_response_allowed: True
+
 connection messaging:
     outbound_route_name: "flow://SportCompass_Web_Handoff"
     outbound_route_type: "OmniChannelFlow"

@@ -8,12 +8,17 @@ Fencing for All, powered by Sport Compass, helps athletes and families explore f
 
 This Agentforce for Good Builder Track MVP focuses on fencing. Salesforce Agentforce powers public guidance through a headless API and a Salesforce-hosted chat. Enhanced Chat and Omni-Channel provide a separate human-support route. The earlier private ChatGPT development app is preserved in source but retired in favor of the team's integration. Other sports, reviewed multilingual support and a standalone mobile app remain planned.
 
-Latest checkpoint: September 11, 2026 (Pacific). Sport Compass Public Guide
-(`SportCompassGuide`) version 7 is activated with a Custom Connection and structured
-club response. The Apex action, test class, response format and surface passed
-Salesforce validation with all 13 selected Apex tests passing. No Agentforce test
-conversation was started for this change; end-to-end rich rendering and selection
-callbacks in the team's clients remain pending. See [Custom Connections across channels](#custom-connections-across-channels).
+Latest checkpoint: September 12, 2026 (Pacific). The **direct Salesforce club API
+fallback is deployed and verified**, with 16 Apex tests passing and real API checks
+under a scoped integration user. It returns card-ready JSON, secure website or
+official directory links, and freshness caveats without invoking Agentforce.
+See [Jon's API handoff and tested examples](docs/agentforce/DIRECT_CLUB_API_HANDOFF.md).
+The fallback is optional and has not been integrated into the website/MCP/Apple
+adapters. The target remains Agentforce-led action selection and Data Library
+grounding, with channel-specific rendering. `SportCompassGuide`
+version 8 remains active, but the separate Custom Connection path still returned
+`result: []` in its last test. That runtime issue is not fixed; see the
+[diagnostic evidence](docs/agentforce/CUSTOM_CONNECTIONS_DEBUG_2026-09-12.md).
 
 The club journey now includes instructions to reuse current results for club
 selection, answer follow-ups such as "the nearest one", and prepare a short
@@ -69,7 +74,7 @@ integration. Do not restart it as a prerequisite for the public website.
 Native Salesforce human handoff passed consent, operator acceptance, two-way
 messaging and session closure. The queue, routing flow, Enhanced Conversation
 record page, operator console and scoped presence access are deployed.
-SportCompassGuide version 7 is active with nearby directory search, club-selection
+SportCompassGuide version 8 is active with nearby directory search, club-selection
 and first-contact instructions, and the
 existing Messaging-session-gated handoff with the updated summary and fallback instructions.
 The `SportCompass_HumanClient` API deployment is published and guest authorization
@@ -166,7 +171,7 @@ Website / ChatGPT app / Apple Messages through 1440
 **Implemented in Salesforce:** `FindNearbyFencingClubsAction` now adds
 `structuredResultJson` while preserving the existing `resultsJson` fields. The
 new components are `SportCompassChannels_SCClub01` and
-`SportCompassClubResults_SCClub01`, attached to active guide version 7. No new
+`SportCompassClubResults_SCClub01`, attached to active guide version 8. No new
 club table was created. The runtime agent ID remains `0XxgL000002YosTSAS`.
 
 The [version 1 JSON schema](contracts/club-results-v1.schema.json) includes status,
@@ -199,10 +204,19 @@ latest results before continuing the conversation. This callback handling is
 still pending with Jon. A Custom Connection does not automatically add buttons,
 share conversations across channels, or provide a human-support transfer.
 
-**Next integration check:** enable the Custom surface in the Apple adapter, search
-for clubs, display the choices, select one, and verify the follow-up stays in the
-same conversation. Then test the website and ChatGPT mappings against the same
-contract. Existing Enhanced Chat and Omni-Channel support remain separate.
+**Verified fallback:** the authenticated backend can call the existing public
+club action directly and parse `outputValues.structuredResultJson`. No Agent API
+session is involved in that lookup. The dedicated integration user has scoped
+read-only club access; Cases, Contacts and Accounts remain denied. The response
+omits unsafe/non-HTTPS website links and retains the official directory URL.
+`radiusMiles` is now nullable for invalid-radius error responses. The schema and
+fallback text are updated accordingly; stored source data is unchanged.
+
+**Next integration check:** if the team adopts the temporary [direct API fallback](docs/agentforce/DIRECT_CLUB_API_HANDOFF.md),
+Jon connects it to the website, MCP and Apple presentation layers and tests
+per-conversation selection/follow-ups. Separately, resolve the empty Custom Connection response
+with Salesforce using the captured plan IDs. Existing Enhanced Chat and
+Omni-Channel support remain separate.
 See the [setup and deployment notes](docs/agentforce/CUSTOM_CONNECTIONS.md).
 
 ### Hand-drawn architecture views
@@ -369,7 +383,8 @@ The UI uses the official MCP Apps SDK with a self-contained bundle. Existing MCP
 
 ## Verified and still pending
 
-- Custom Connections: guide version 7 activated; Apex and the two new metadata components passed validation with 13 Apex tests. The Apple, website and ChatGPT structured-response journeys have not been verified end to end. These results do not establish exact model adherence to the schema.
+- Direct public club API fallback: 16 Apex tests passed; dedicated-token checks passed for listings, empty results, invalid radius and missing ZIP. Canonical JSON validated, Schoolhouse's secure directory fallback was present, private object reads were denied, and public directory create/update/delete permissions were absent. No Agentforce conversations were started for these fallback tests. Client rollout remains pending.
+- Custom Connections: guide version 8 activated with compiled Custom connection. Local configuration and prior 13 Apex tests passed, but live website and direct API replies still have empty structured results, including a minimal-format diagnostic. Apple, website and ChatGPT rich-response journeys remain blocked. See the September 12 diagnostic evidence above.
 - Verified locally: 69 tests; prior compact-card checks covered 375-pixel width, dark theme, optional checklist, one-step keyboard controls and return navigation. The export document was visually inspected and the local host received its download request.
 - Verified in ChatGPT: the combined Kaysville lookup returned a v3 Wasatch card and built its checklist. The download attempt produced a selected-text fallback, not a confirmed saved file. Earlier checks covered source links, changing topics, keyboard navigation and manual-copy fallback with developer-mode CSP enforcement enabled. ChatGPT can still add a summary beneath the card.
 - Still pending: broader query/multi-turn/adversarial tests, domain review, complete screen-reader/keyboard review and the organizer-provided Accessibility Expert and RAI Self Check skills. File download is not an accepted ChatGPT demo feature.
