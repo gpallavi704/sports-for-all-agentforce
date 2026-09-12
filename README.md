@@ -8,7 +8,12 @@ Fencing for All, powered by Sport Compass, helps athletes and families explore f
 
 This Agentforce for Good Builder Track MVP focuses on fencing. Salesforce Agentforce powers public guidance through a headless API and a Salesforce-hosted chat. Enhanced Chat and Omni-Channel provide a separate human-support route. The earlier private ChatGPT development app is preserved in source but retired in favor of the team's integration. Other sports, reviewed multilingual support and a standalone mobile app remain planned.
 
-Latest checkpoint: September 9, 2026. The public guide's introduction and welcome now prominently state that it never diagnoses or makes classification or competition eligibility decisions. Salesforce compilation, publication and activation passed; no test conversation was run for this wording update.
+Latest checkpoint: September 11, 2026 (Pacific). Sport Compass Public Guide
+(`SportCompassGuide`) version 7 is activated with a Custom Connection and structured
+club response. The Apex action, test class, response format and surface passed
+Salesforce validation with all 13 selected Apex tests passing. No Agentforce test
+conversation was started for this change; end-to-end rich rendering and selection
+callbacks in the team's clients remain pending. See [Custom Connections across channels](#custom-connections-across-channels).
 
 The club journey now includes instructions to reuse current results for club
 selection, answer follow-ups such as "the nearest one", and prepare a short
@@ -64,7 +69,7 @@ integration. Do not restart it as a prerequisite for the public website.
 Native Salesforce human handoff passed consent, operator acceptance, two-way
 messaging and session closure. The queue, routing flow, Enhanced Conversation
 record page, operator console and scoped presence access are deployed.
-SportCompassGuide version 6 is active with nearby directory search, club-selection
+SportCompassGuide version 7 is active with nearby directory search, club-selection
 and first-contact instructions, and the
 existing Messaging-session-gated handoff with the updated summary and fallback instructions.
 The `SportCompass_HumanClient` API deployment is published and guest authorization
@@ -77,7 +82,7 @@ Editing its ZIP snapshot does not deploy the live website. See the
 
 ## Implemented capabilities
 
-- The original Sport Compass version 17 is active in the development org. Its native support-request demo remains intact.
+- Sport Compass Public Guide (`SportCompassGuide`) is the agent used for ongoing public integrations. The older `SportCompass` version 17 support-request demo remains separate and was not changed by the Custom Connection work.
 - Ten indexed, project-prepared summaries ground guidance in USA Fencing and Zendesk sources. They are not USA Fencing-approved.
 - The public guide searches synchronized USA Fencing club records in Salesforce. The original demo's two curated metadata listings and synthetic programs remain unchanged.
 - Apex performs distance filtering and weapon matching against public records. Radius search requires a visitor-supplied US ZIP; city-only requests ask for the ZIP. Accessibility, equipment and parafencing availability require provider confirmation.
@@ -133,12 +138,80 @@ This is an account-connected private development app, not a publicly published C
 
 ## System architecture
 
+### Custom Connections across channels
+
+The website, private Sports 4 ALL ChatGPT app and Apple Messages test integration
+can share one Salesforce club-response contract. Jon reported that Apple text
+messaging is connected through 1440. The new structured response has been deployed
+in Salesforce; its rendering in each client still needs implementation and testing.
+
+```text
+Website / ChatGPT app / Apple Messages through 1440
+    -> channel backend and session mapping
+    -> Salesforce Agent API with Custom surface
+    -> SportCompassGuide -> Apex search -> Salesforce club directory
+    <- structured club result or plain-text response
+    <- channel-specific cards, choices or text
+```
+
+| Layer | Responsibility |
+| --- | --- |
+| Salesforce Apex action | Search the existing club records by ZIP, radius and weapon filters; return facts and source information. |
+| Custom Connection (`AiSurface`) | Configure the structured response format available to the connected client. |
+| Club response format (`AiResponseFormat`) | Describe the JSON fields Agentforce should return after a club search. |
+| Website adapter | Validate the response and render club cards and safe website links. |
+| ChatGPT app / MCP adapter | Preserve the structured result and render supported app cards or formatted text. |
+| Apple / 1440 adapter | Map the result to supported text, quick replies, list pickers and rich links. Own delivery identifiers and callbacks. |
+
+**Implemented in Salesforce:** `FindNearbyFencingClubsAction` now adds
+`structuredResultJson` while preserving the existing `resultsJson` fields. The
+new components are `SportCompassChannels_SCClub01` and
+`SportCompassClubResults_SCClub01`, attached to active guide version 7. No new
+club table was created. The runtime agent ID remains `0XxgL000002YosTSAS`.
+
+The [version 1 JSON schema](contracts/club-results-v1.schema.json) includes status,
+summary, text fallback, search radius, distance basis, retrieval timestamp,
+`hasMore`, and club records with IDs, names, city/state, distances, specialties,
+Para tags, website/directory URLs and an accessibility note. Retrieval time means
+when the directory was fetched. Para listings do not verify access, sessions or
+equipment, and missing URLs stay null.
+
+To opt in, the integration adds this field to a **new** Agent API session request:
+
+```json
+{
+  "surfaceConfig": {
+    "surfaceType": "Custom"
+  }
+}
+```
+
+For an Inform message, look for `SURFACE_ACTION__SportCompassClubResults` in
+`result[].type`, parse the matching `value` as JSON, and validate it before
+rendering. Format selection and output are not strictly enforced by Agentforce;
+retain plain-text fallback when a result is missing, unsupported or invalid.
+Render content as text and validate URLs before making them clickable. The
+integration does not need another AI call to map fields into visual components.
+
+Each adapter should keep its channel conversation mapped to the correct Agentforce
+session. For a club selection, check the returned `clubId` against that session's
+latest results before continuing the conversation. This callback handling is
+still pending with Jon. A Custom Connection does not automatically add buttons,
+share conversations across channels, or provide a human-support transfer.
+
+**Next integration check:** enable the Custom surface in the Apple adapter, search
+for clubs, display the choices, select one, and verify the follow-up stays in the
+same conversation. Then test the website and ChatGPT mappings against the same
+contract. Existing Enhanced Chat and Omni-Channel support remain separate.
+See the [setup and deployment notes](docs/agentforce/CUSTOM_CONNECTIONS.md).
+
 ### Hand-drawn architecture views
 
-Current September 2026 views include the public team website, the ready private
+These earlier September 2026 views include the public team website, the ready private
 **Sports 4 ALL** ChatGPT app, Salesforce-hosted chat, and separate human support.
 The ChatGPT app is private, not a public directory listing. Its availability is
 team-reported; the earlier local development app and tunnel remain retired.
+The images predate the Custom Connection and Apple mapping described above.
 
 ![Sport Compass system architecture: public and private clients use Salesforce AI guidance, while separate human chat routes through Enhanced Chat and Omni-Channel.](docs/architecture/system-design-v2.png)
 
@@ -257,6 +330,7 @@ multi-org routing feature.
 - `force-app/`: editable Agent Script, Apex, objects, public club metadata, permissions and reporting.
 - `knowledge/`: curated sources and retrieval fixtures.
 - `data/`: labeled synthetic seed data.
+- `contracts/`: versioned structured club-response schema for channel adapters.
 - `mcp-server/`: live public and mock entrypoints, session handling, UI resource, credential helper source and tests.
 - `mcp-server/ui/`: interactive first-visit HTML, CSS and JavaScript.
 - `assets/branding/`: original icon, compact ChatGPT upload asset and design notes.
@@ -295,12 +369,13 @@ The UI uses the official MCP Apps SDK with a self-contained bundle. Existing MCP
 
 ## Verified and still pending
 
+- Custom Connections: guide version 7 activated; Apex and the two new metadata components passed validation with 13 Apex tests. The Apple, website and ChatGPT structured-response journeys have not been verified end to end. These results do not establish exact model adherence to the schema.
 - Verified locally: 69 tests; prior compact-card checks covered 375-pixel width, dark theme, optional checklist, one-step keyboard controls and return navigation. The export document was visually inspected and the local host received its download request.
 - Verified in ChatGPT: the combined Kaysville lookup returned a v3 Wasatch card and built its checklist. The download attempt produced a selected-text fallback, not a confirmed saved file. Earlier checks covered source links, changing topics, keyboard navigation and manual-copy fallback with developer-mode CSP enforcement enabled. ChatGPT can still add a summary beneath the card.
 - Still pending: broader query/multi-turn/adversarial tests, domain review, complete screen-reader/keyboard review and the organizer-provided Accessibility Expert and RAI Self Check skills. File download is not an accepted ChatGPT demo feature.
 - Not implemented: email sending, outbound calls, bookings, payments, public-channel Case creation, server-persisted plans, verified provider-accessibility feeds, public ChatGPT app-directory submission or a production operations/support commitment. The Salesforce public page is deployed in the hackathon org.
 
-The two supported card identities mirror committed Salesforce public-club metadata and appear only when the latest Salesforce reply includes the exact identity and approved website. This is not a direct structured Apex result or an accessibility audit. Card choices reset when the card is recreated; they are not persisted to Salesforce or used as proof of attendance.
+The retired development app's two supported card identities mirror committed Salesforce public-club metadata and appear only when the latest Salesforce reply includes the exact identity and approved website. That older card implementation does not consume the new structured Apex contract. Card choices reset when the card is recreated; they are not persisted to Salesforce or used as proof of attendance.
 
 Start with [interactive planner](docs/agentforce/INTERACTIVE_FIRST_VISIT.md), [live Salesforce/ChatGPT connection](docs/agentforce/LIVE_PUBLIC_CHATGPT.md), [current status](docs/STATUS.md), [support evidence](docs/agentforce/SUPPORT_FIX_V8.md) and [MCP setup](mcp-server/README.md). Earlier checkpoint documents are historical. Architecture images show the intended design, not proof that every component is live.
 

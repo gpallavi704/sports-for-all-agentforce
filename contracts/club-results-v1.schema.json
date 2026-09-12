@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sports-4-all.org/contracts/club-results-v1.schema.json",
+  "title": "Sport Compass Club Results",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "status": {
+      "type": "string",
+      "enum": ["LISTINGS", "NO_LISTINGS", "NEEDS_ZIP", "INVALID_INPUT", "LOCATION_UNAVAILABLE", "DIRECTORY_UNAVAILABLE", "STALE_DIRECTORY"]
+    },
+    "summary": { "type": "string" },
+    "fallbackText": { "type": "string" },
+    "radiusMiles": { "type": "integer", "enum": [10, 25, 50, 100] },
+    "distanceBasis": { "const": "straight_line_from_zip_center" },
+    "sourceRetrievedAt": { "type": ["string", "null"] },
+    "hasMore": { "type": "boolean" },
+    "clubs": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "clubId": { "type": "string" },
+          "name": { "type": "string" },
+          "city": { "type": ["string", "null"] },
+          "state": { "type": ["string", "null"] },
+          "distanceMiles": { "type": "number", "minimum": 0 },
+          "specialties": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["Epee", "Foil", "Saber", "Para"] },
+            "uniqueItems": true
+          },
+          "paraListed": { "type": "boolean" },
+          "websiteUrl": { "type": ["string", "null"] },
+          "directoryUrl": { "type": ["string", "null"] },
+          "accessibilityNote": { "const": "Contact the club to confirm access and equipment." }
+        },
+        "required": ["clubId", "name", "city", "state", "distanceMiles", "specialties", "paraListed", "websiteUrl", "directoryUrl", "accessibilityNote"]
+      }
+    }
+  },
+  "required": ["schemaVersion", "status", "summary", "fallbackText", "radiusMiles", "distanceBasis", "sourceRetrievedAt", "hasMore", "clubs"]
+}

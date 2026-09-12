@@ -74,6 +74,16 @@ private class FencingDirectoryTest {
         FindNearbyFencingClubsAction.Response response=search(request);
         System.assertEquals('LISTINGS',response.status);
         System.assertEquals(2,((List<Object>)JSON.deserializeUntyped(response.resultsJson)).size());
+        Map<String,Object> structured=(Map<String,Object>)JSON.deserializeUntyped(response.structuredResultJson);
+        System.assertEquals('1.0',structured.get('schemaVersion'));
+        System.assertEquals('LISTINGS',structured.get('status'));
+        System.assertEquals('straight_line_from_zip_center',structured.get('distanceBasis'));
+        System.assertEquals(2,((List<Object>)structured.get('clubs')).size());
+        Map<String,Object> firstClub=(Map<String,Object>)((List<Object>)structured.get('clubs'))[0];
+        System.assertEquals('1',firstClub.get('clubId'));
+        System.assertEquals('Contact the club to confirm access and equipment.',firstClub.get('accessibilityNote'));
+        System.assertEquals(null,firstClub.get('websiteUrl'));
+        System.assert(((String)structured.get('fallbackText')).contains('Near Para'));
         System.assert(!response.resultsJson.contains('Far Club'));
         System.assert(!response.resultsJson.contains('Inactive'));
         request.weapons='Para';
@@ -91,7 +101,9 @@ private class FencingDirectoryTest {
     @IsTest static void validatesInputs() {
         FindNearbyFencingClubsAction.Request request=input();
         request.location='Park City, Utah';
-        System.assertEquals('NEEDS_ZIP',search(request).status);
+        FindNearbyFencingClubsAction.Response needsZip=search(request);
+        System.assertEquals('NEEDS_ZIP',needsZip.status);
+        System.assertEquals('NEEDS_ZIP',((Map<String,Object>)JSON.deserializeUntyped(needsZip.structuredResultJson)).get('status'));
         request.location='84060'; request.radiusMiles=26;
         System.assertEquals('INVALID_INPUT',search(request).status);
         request.radiusMiles=25; request.weapons='Para OR private';

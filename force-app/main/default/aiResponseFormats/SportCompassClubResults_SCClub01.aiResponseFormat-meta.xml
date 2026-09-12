@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiResponseFormat xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Use after Find Nearby Fencing Clubs returns the result of a club search. This format supports listings, empty results and directory or location errors.</description>
+    <input>{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"properties":{"schemaVersion":{"const":"1.0"},"status":{"type":"string","enum":["LISTINGS","NO_LISTINGS","NEEDS_ZIP","INVALID_INPUT","LOCATION_UNAVAILABLE","DIRECTORY_UNAVAILABLE","STALE_DIRECTORY"]},"summary":{"type":"string"},"fallbackText":{"type":"string"},"radiusMiles":{"type":"integer","enum":[10,25,50,100]},"distanceBasis":{"const":"straight_line_from_zip_center"},"sourceRetrievedAt":{"type":["string","null"]},"hasMore":{"type":"boolean"},"clubs":{"type":"array","maxItems":10,"items":{"type":"object","additionalProperties":false,"properties":{"clubId":{"type":"string"},"name":{"type":"string"},"city":{"type":["string","null"]},"state":{"type":["string","null"]},"distanceMiles":{"type":"number","minimum":0},"specialties":{"type":"array","items":{"type":"string","enum":["Epee","Foil","Saber","Para"]},"uniqueItems":true},"paraListed":{"type":"boolean"},"websiteUrl":{"type":["string","null"]},"directoryUrl":{"type":["string","null"]},"accessibilityNote":{"const":"Contact the club to confirm access and equipment."}},"required":["clubId","name","city","state","distanceMiles","specialties","paraListed","websiteUrl","directoryUrl","accessibilityNote"]}}},"required":["schemaVersion","status","summary","fallbackText","radiusMiles","distanceBasis","sourceRetrievedAt","hasMore","clubs"]}</input>
+    <instructions>
+        <instruction>Use this format only for the current result returned by Find Nearby Fencing Clubs. Copy the fields from structuredResultJson exactly.</instruction>
+        <sortOrder>1</sortOrder>
+    </instructions>
+    <instructions>
+        <instruction>Do not invent clubs, URLs, distances, specialties, freshness or accessibility details. Keep missing URLs null and preserve the accessibilityNote exactly.</instruction>
+        <sortOrder>2</sortOrder>
+    </instructions>
+    <instructions>
+        <instruction>For other fencing guidance, greetings, classification questions and human support turns, use the normal plain-text response instead of this format.</instruction>
+        <sortOrder>3</sortOrder>
+    </instructions>
+    <masterLabel>Sport Compass Club Results</masterLabel>
+</AiResponseFormat>
